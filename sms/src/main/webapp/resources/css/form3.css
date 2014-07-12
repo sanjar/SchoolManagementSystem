@@ -1,0 +1,58 @@
+@charset "utf-8";
+/* CSS Document */
+
+.main-fees{width:950px;
+height:360px;
+background-color:#e5e6e6;
+
+}
+
+.main-fees1{width:50px;
+height:360px;
+
+float:left;
+
+}
+
+.main-fees-h{width:49px;
+height:22px;
+
+float:left;
+border:1px solid #88898a;
+text-align:center;
+
+padding-top:3px;
+}
+
+
+.main-fees-h1{width:689px;
+height:22px;
+
+float:left;
+border:1px solid #88898a;
+text-align:left;
+
+padding-top:3px;
+padding-left:10px;
+}
+
+.main-fees-h2{width:189px;
+height:22px;
+
+float:left;
+border:1px solid #88898a;
+text-align:left;
+
+padding-top:3px;
+padding-left:10px;
+}
+.main-fees2{width:500px;
+height:360px;
+
+float:left;
+}
+.main-fees3{width:200px;
+height:360px;
+
+float:left;
+}
