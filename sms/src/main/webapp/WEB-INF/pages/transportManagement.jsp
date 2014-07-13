@@ -62,8 +62,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a id="manageFixedFee" href="">Manage Fixed Fee</a> | <a id="manageVariableFee" href="">Manage Variable Fee</a> | <a id="manageDiscountsAndConcessions" href="">Manage Discounts and Concessions</a> |
-
+				<span class="hidden">Navigation:</span> <a id="manageTransport" href="">Manage Transport</a> 
 			</p>
 		</div>
 	</div>

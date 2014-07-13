@@ -116,6 +116,10 @@
 					event.preventDefault();
 					window.open('admin/payrollManagement',"_blank",'toolbar=0,location=0,menubar=0');
 				});
+				$('#transportManagement').click(function(event){
+					event.preventDefault();
+					window.open('admin/transportManagement',"_blank",'toolbar=0,location=0,menubar=0');
+				});
 			}); 
 			
 		
@@ -181,7 +185,7 @@
                                 <li id="current"><a href="">Dashboard</a></li>
                                 <li><a href="">Authorisation</a></li>
                                 <li><a href="">Purchase</a></li>
-                                <li><a href="">Transport</a></li>
+                                <li><a id="transportManagement" href="">Transport</a></li>
                                 <li><a href="">Discounts</a></li>
                             </ul>
                         </div>
