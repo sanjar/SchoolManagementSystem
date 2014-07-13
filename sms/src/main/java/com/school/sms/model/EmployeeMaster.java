@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +13,6 @@ import javax.persistence.Table;
 public class EmployeeMaster {
 
 	@Id
-	@GeneratedValue
 	@Column(name="employee_id")
 	private Integer employeeId;
 	
@@ -21,8 +22,8 @@ public class EmployeeMaster {
 	@Column(name="gender")
 	private String gender;
 	
-	@Column(name="est_no")
-	private String ESTNo;
+	@Column(name="esi_no")
+	private String ESINo;
 	
 	@Column(name="eps_no")
 	private String EPSNo;
@@ -48,14 +49,17 @@ public class EmployeeMaster {
 	@Column(name="date_of_joining")
 	private String dateOfJoining;
 	
-	@Column(name="department")
-	private String department;
+	@ManyToOne
+	@JoinColumn(name = "department_id")
+	private Department department;
+	
 	
 	@Column(name="designation")
-	private String Designation;
+	private String designation;
 	
-	@Column(name="grade")
-	private String grade;
+	@ManyToOne
+	@JoinColumn(name = "grade_id")
+	private GradeMaster grade;
 	
 	
 	public Integer getEmployeeId() {
@@ -76,12 +80,7 @@ public class EmployeeMaster {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getESTNo() {
-		return ESTNo;
-	}
-	public void setESTNo(String eSTNo) {
-		ESTNo = eSTNo;
-	}
+	
 	public String getEPSNo() {
 		return EPSNo;
 	}
@@ -130,23 +129,30 @@ public class EmployeeMaster {
 	public void setDateOfJoining(String dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
 	}
-	public String getDepartment() {
-		return department;
+		
+	public String getESINo() {
+		return ESINo;
 	}
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setESINo(String eSINo) {
+		ESINo = eSINo;
 	}
 	public String getDesignation() {
-		return Designation;
+		return designation;
 	}
 	public void setDesignation(String designation) {
-		Designation = designation;
+		this.designation = designation;
 	}
-	public String getGrade() {
+	public GradeMaster getGrade() {
 		return grade;
 	}
-	public void setGrade(String grade) {
+	public void setGrade(GradeMaster grade) {
 		this.grade = grade;
+	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	
 }

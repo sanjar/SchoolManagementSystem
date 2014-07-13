@@ -79,7 +79,7 @@ public class FeeManagementController {
 		}
 		modelAndView.addObject("sessionList", Arrays.asList(Constants.SESSION_ARRAY));
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
-		modelAndView.addObject("monthList", Arrays.asList(Constants.YEAR_ARRAY));
+		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		modelAndView.addObject("studentNameClassRollList", this.studentNameClassRollList);
 		// model.setViewName("fixed-fees");
 
@@ -120,7 +120,7 @@ public class FeeManagementController {
 		}
 		modelAndView.addObject("sessionList", Arrays.asList(Constants.SESSION_ARRAY));
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
-		modelAndView.addObject("monthList", Arrays.asList(Constants.YEAR_ARRAY));
+		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		modelAndView.addObject("studentNameClassRollList", this.studentNameClassRollList);
 	//	modelAndView.setViewName("fixed-fees");
 		
@@ -231,7 +231,7 @@ public class FeeManagementController {
 		}
 		modelAndView.addObject("sessionList", Arrays.asList(Constants.SESSION_ARRAY));
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
-		modelAndView.addObject("monthList", Arrays.asList(Constants.YEAR_ARRAY));
+		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		modelAndView.addObject("studentNameClassRollList", this.studentNameClassRollDiscountList);
 		// model.setViewName("fixed-fees");
 
@@ -280,7 +280,7 @@ public class FeeManagementController {
 		}
 		modelAndView.addObject("sessionList", Arrays.asList(Constants.SESSION_ARRAY));
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
-		modelAndView.addObject("monthList", Arrays.asList(Constants.YEAR_ARRAY));
+		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		modelAndView.addObject("studentNameClassRollList", this.discountsAndConcessionList);
 	//	modelAndView.setViewName("fixed-fees");
 		

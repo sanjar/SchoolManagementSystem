@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>form</title>
+<title>Discount and Concession</title>
 <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css'/>" type="text/css"
 	media="screen" />
@@ -34,7 +34,7 @@
 	<div id="header">
 		<div class="left">
 			<p>
-				<a href="">School<span class="alt">Management</span></a>
+				<a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a>
 			</p>
 		</div>
 

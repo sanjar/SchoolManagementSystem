@@ -9,7 +9,7 @@ public class Constants {
 		STUDENT, ADMIN, VENDOR, TEACHER;
 	}
 
-	public static final String[] YEAR_ARRAY = new String[] { "JANUARY",
+	public static final String[] MONTH_ARRAY = new String[] { "JANUARY",
 			"FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
 			"SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER" };
 	
@@ -20,6 +20,10 @@ public class Constants {
 	public static final String[] SESSION_ARRAY = new String[] { "2010-2011",
 		"2011-2012", "2012-2013", "2013-2014", "2014-2015", "2015-2016", "2016-2017", "2017-2018",
 		"2018-2019", "2019-2020", "2020-2021", "2021-2022","2022-2023","2023-2024","2024-2024","2024-2025"};
+	public static final String[] DESIGNATION_ARRAY = new String[] { "Teacher",
+		"Principal", "Librarian", "Clerk", "Others"};
 	
+	public static final String[] GENDER_ARRAY = new String[] { "Male",
+		"Female"};
 	
 }

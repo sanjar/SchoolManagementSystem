@@ -105,7 +105,7 @@
     	<!-- Header -->
         <div id="header">
   <div class="left">
-    <p><a href="">School<span class="alt">Management</span></a></p>
+    <p><a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a></p>
   </div>
 
   <div class="right">
