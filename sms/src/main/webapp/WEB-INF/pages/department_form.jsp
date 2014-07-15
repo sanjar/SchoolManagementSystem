@@ -39,11 +39,7 @@
     <p><a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a></p>
   </div>
 
-  <div class="right">
-    <span class="hidden">Useful links:</span>
-    <a href="">Home</a> |
-    <a href="">Login</a> |
-    <a href="">Contact</a> |
+  
     
   </div>
 
@@ -51,7 +47,6 @@
     <p>
       <span class="hidden">Navigation:</span>
       <a href="" class="highlight">Home</a> |
-      <a  href="">Login</a> |
       <a href="">Contact</a> |
      
     </p>

@@ -26,4 +26,7 @@ public class Constants {
 	public static final String[] GENDER_ARRAY = new String[] { "Male",
 		"Female"};
 	
+	public static final String[] CUSTOMER_TYPE = new String[] { "Supplier",
+	"Dealer"};
+	
 }

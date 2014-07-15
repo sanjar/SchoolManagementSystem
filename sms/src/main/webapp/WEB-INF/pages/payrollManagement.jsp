@@ -99,11 +99,7 @@
 			</p>
 		</div>
 
-		<div class="right">
-			<span class="hidden">Useful links:</span> <a href="">Home</a> | <a
-				href="">Login</a> | <a href="">Contact</a> |
-
-		</div>
+		
 
 		<div class="subheader">
 			<p>

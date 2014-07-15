@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Salary Master Form</title>
+<title>Purchase</title>
 <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css' />" type="text/css"
 	media="screen" />
@@ -15,6 +15,9 @@
 	href="<c:url value='/resources/css/style4.css' />" />
 <link href='http://fonts.googleapis.com/css?family=Engagement'
 	rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js">
 <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -26,7 +29,15 @@
 <script type="text/javascript" charset="utf-8">
       $(function(){
         $("input:checkbox, input:radio, input:file, select").uniform();
+        $( "#dateOfCreation" ).datepicker({
+            showOn: "button",
+            dateFormat: "dd/mm/yy",
+            disabled: false,
+            buttonImage: "<c:url value='/resources/images/calendar.png'/>",
+            buttonImageOnly: true
+        });
       });
+      
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
@@ -48,8 +59,6 @@
 			</p>
 		</div>
 
-		
-
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
@@ -67,8 +76,8 @@
 
 	<article>
 
-		<form:form class="mrg-top" id="salary_master"
-			action="processSalaryMaster">
+		<form:form class="mrg-top" id="customerCreation"
+			action="manageCustomer">
 
 			<ul>
 
@@ -78,51 +87,53 @@
 				<c:if test="${isFormIncomplete}">
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>
 				</c:if>
-				<li class="f"><label for="name" class="fl">Grade<span style="color: red">*</span></label> <form:select
-						path="grade.gradeId" class="fl" onChange="document.getElementById('gradeName').value=this[this.selectedIndex].text;">
-						<option value="-1">Please Select Grade</option>
-						<form:options items="${gradeList}" itemLabel="gradeName" itemValue="gradeId"/>
-						<form:input id="gradeName" type="hidden" path="grade.gradeName"/>
-					</form:select></li>
-				<li class="f"><label for="name" class="fl">Salary Id<span style="color: red">*</span> </label>
-					<form:input type="text" size="25" id="salaryId" class="fl" path="salaryId" />
+				
+				<li class="f"><label for="name" class="fl">Customer Code<span style="color: red">*</span></label> <form:input
+					type="text" size="25" id="customerCode" class="fl" path="customerCode" />
 					<button class="left" name="action" value="search" style="margin-left: 30px">Search</button>
-					<c:if test="${noSalaryMasterFound}">
+					<c:if test="${noCustomerFound}">
 						<label style="color:red">No Salary Master Found.</label>
 					</c:if>
-					<c:if test="${salarySaved}">
-						<label style="color: green">Grade Saved!!!</label>
-					</c:if> <c:if test="${salaryDeleted}">
-						<label style="color: green">Grade Deleted!!!</label>
+					<c:if test="${customerSaved}">
+						<label style="color: green">Customer Saved!!!</label>
+					</c:if> <c:if test="${customerDeleted}">
+						<label style="color: green">Customer Deleted!!!</label>
 					</c:if> 
 				</li>
 
 
-				<li class="f"><label for="name" class="fl">Salary Name<span style="color: red">*</span></label> <form:input
-					type="text" size="25" id="salaryName" class="fl" path="salaryName" />
+				<li class="f"><label for="name" class="fl">Customer Type<span style="color: red">*</span></label> 
+				<form:select
+						path="customerType" class="fl">
+						<option value="-1">Please Select Type</option>
+						<form:options items="${customerType}"/>
+					</form:select>
+					
+				</li>
+					
+					
+					
+				<li class="f"><label for="name" class="fl">Customer Name<span style="color: red">*</span></label> 
+				<form:input	type="text" size="25" id="customerName" class="fl" path="customerName" /> 
 				</li>
 
-				<li class="f"><label for="name" class="fl">Basic Salary </label> 
-				<form:input	type="text" size="25" id="basicSalary" class="fl" path="basicSalary" /> 
+				<li class="f"><label for="name" class="fl">Address<span style="color: red">*</span></label> 
+						<form:input type="text" size="25" id="address" class="fl" path="address" /> 
 				</li>
-
-				<li class="f"><label for="name" class="fl">HRA </label> 
-						<form:input type="text" size="25" id="hra" class="fl" path="HRA" /> 
+				<li class="f"><label for="name" class="fl">PIN<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" id="pin" class="fl" path="pin" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Conveyance </label> 
-						<form:input type="text" size="25" id="conveyance" class="fl" path="conveyance" /> 
+				<li class="f"><label for="name" class="fl">Phone<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" id="phone" class="fl" path="phone" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Medical </label> 
-						<form:input type="text" size="25" id="medical" class="fl" path="medical" /> 
+				<li class="f"><label for="name" class="fl">Contact Person<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" id="contactPerson" class="fl" path="contactPerson" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Extra1 </label> 
-						<form:input type="text" size="25" id="extra1" class="fl" path="extra1" /> 
+				<li class="f"><label for="name" class="fl">Tin No.<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" id="tinNo" class="fl" path="tinNo" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Extra2 </label> 
-						<form:input type="text" size="25" id="extra2" class="fl" path="extra2" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">Extra3 </label> 
-						<form:input type="text" size="25" id="extra3" class="fl" path="extra3" /> 
+				<li class="f"><label for="name" class="fl">Date<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" style="margin-right:10px" id="dateOfCreation" class="fl" path="dateOfCreation" /> 
 				</li>
 				
 

@@ -2,7 +2,7 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <html>
 <head>
-<title>School Management System</title>
+<title>SCHOOL ACCOUNTS MANAGEMENT SYSTEM</title>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
@@ -52,20 +52,15 @@ $(document).ready(function(){
 	<div id="header">
 		<div class="left">
 			<p>
-				<a href="">School <span class="alt">Management</span> System</a>
+				<a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a>
 			</p>
 		</div>
 
-		<div class="right">
-			<span class="hidden">Useful links:</span> <a href="">Home</a> | <a
-				href="">Login</a> | <a href="">Contact</a> |
-
-		</div>
+		
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="">Home</a> | <a
-					class="highlight" href="">Login</a> | <a href="">Contact</a> |
+				<span class="hidden">Navigation:</span> <a href="">Home</a> | <a href="">Contact</a> |
 
 			</p>
 		</div>

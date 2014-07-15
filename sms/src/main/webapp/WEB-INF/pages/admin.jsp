@@ -120,6 +120,10 @@
 					event.preventDefault();
 					window.open('admin/transportManagement',"_blank",'toolbar=0,location=0,menubar=0');
 				});
+				$('#purchase').click(function(event){
+					event.preventDefault();
+					window.open('admin/purchase/manageCustomer',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
+				});
 			}); 
 			
 		
@@ -154,19 +158,12 @@
     <p><a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a></p>
   </div>
 
-  <div class="right">
-    <span class="hidden">Useful links:</span>
-    <a href="">Home</a> |
-    <a href="">Login</a> |
-    <a href="">Contact</a> |
-    
-  </div>
+  
 
   <div class="subheader">
     <p>
       <span class="hidden">Navigation:</span>
       <a href="" class="highlight">Home</a> |
-      <a  href="">Login</a> |
       <a href="">Contact</a> |
       <a href="javascript:formSubmit();" id="logout">Logout</a>
      
@@ -184,7 +181,7 @@
                 <ul id="nav">
                                 <li id="current"><a href="">Dashboard</a></li>
                                 <li><a href="">Authorisation</a></li>
-                                <li><a href="">Purchase</a></li>
+                                <li><a id="purchase" href="">Purchase</a></li>
                                 <li><a id="transportManagement" href="">Transport</a></li>
                                 <li><a href="">Discounts</a></li>
                             </ul>
@@ -744,7 +741,7 @@
   <br />
 
   This web site is maintained by
- <a href="www.dsisoftware.net" target="_blank">www.dsisoftware.net</a>.
+ <a href="https://www.dsisoftware.net" target="_blank">www.dsisoftware.net</a>.
   
 </div> <!-- End #footer -->
 	</body>

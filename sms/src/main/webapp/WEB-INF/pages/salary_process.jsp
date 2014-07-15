@@ -48,16 +48,12 @@
 			</p>
 		</div>
 
-		<div class="right">
-			<span class="hidden">Useful links:</span> <a href="">Home</a> | <a
-				href="">Login</a> | <a href="">Contact</a> |
-
-		</div>
+		
 
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
-				| <a href="">Login</a> | <a href="">Contact</a> |
+				|  <a href="">Contact</a> |
 
 			</p>
 		</div>
