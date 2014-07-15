@@ -22,6 +22,7 @@ import com.school.sms.model.Customer;
 import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.GradeMaster;
+import com.school.sms.model.Product;
 import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.service.PayrollManagementService;
 import com.school.sms.service.PurchaseService;
@@ -31,6 +32,9 @@ public class PurchaseController {
 	
 	private Integer customerIndex;
 	private List<Customer> customerList = new ArrayList<Customer>();
+	
+	private Integer productIndex;
+	private List<Product> productList = new ArrayList<Product>();
 	
 	@Resource(name = "purchaseService")
 	private PurchaseService purchaseService;
@@ -132,6 +136,102 @@ public class PurchaseController {
 	}
 	private void initializeCustomerList() {
 		this.customerList=purchaseService.loadCustomerList();
+		
+	}
+	
+	
+	@RequestMapping(value = "admin/purchase/manageProduct", method = RequestMethod.GET)
+	public ModelAndView manageProduct() {
+		productIndex=-1;
+		initializeProductList();
+		ModelAndView model = new ModelAndView("product_master_form","command",new Product());
+		model.addObject("productList", this.productList);
+		model.addObject("productUOMList", Arrays.asList(Constants.PRODUCT_UOM));
+
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/admin/purchase/manageProduct", method = RequestMethod.POST)
+	public ModelAndView processProductCreation(@ModelAttribute("product")Product product,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView modelAndView;
+		if("search".equalsIgnoreCase(action)){
+			Product product2= purchaseService.findProduct((String)request.getParameter("productParentCode"));
+			if(null==product2){
+				modelAndView = new ModelAndView("product_master_form","command",product);
+				modelAndView.addObject("noProductFound",true);
+				
+			}
+			else{
+			modelAndView = new ModelAndView("product_master_form","command",product2);
+			productIndex = getExactProductIndex(product2);
+			}
+						
+		}
+		else if("save".equalsIgnoreCase(action)) {
+			if (null != product.getProductParentCode()
+					&& null!=product.getMRP()) {
+			purchaseService.updateProduct(product);
+			initializeProductList();
+			modelAndView = new ModelAndView("product_master_form","command",product);
+			productIndex = getExactProductIndex(product);
+			modelAndView.addObject("productSaved",true);
+			}
+			else{
+				modelAndView = new ModelAndView("product_master_form","command",product);
+				modelAndView.addObject("isFormIncomplete",true);
+			}
+		}
+		
+		else if("delete".equalsIgnoreCase(action)) {
+			purchaseService.deleteProduct(product);
+			initializeProductList();
+			modelAndView = new ModelAndView("product_master_form","command",new Product());
+			productIndex= productIndex-1;
+			modelAndView.addObject("productDeleted",true);
+		}
+		
+		else if("next".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("product_master_form","command",this.productList.get(++productIndex));
+		}
+		else if("previous".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("product_master_form","command",this.productList.get(--productIndex));
+		}
+		else if("first".equalsIgnoreCase(action)) {
+			productIndex =0;
+			modelAndView = new ModelAndView("product_master_form","command",this.productList.get(productIndex));
+		}
+		else if("last".equalsIgnoreCase(action)) {
+			productIndex =this.productList.size()-1;
+			modelAndView = new ModelAndView("product_master_form","command",this.productList.get(productIndex));
+		}
+		else{
+			modelAndView = new ModelAndView("product_master_form","command",product);
+		}
+		if(productIndex==this.productList.size()-1){
+			modelAndView.addObject("disableNext", true);
+		}
+		if(productIndex<=0){
+			modelAndView.addObject("disablePrevious", true);
+		}
+		modelAndView.addObject("productList", this.productList);
+		modelAndView.addObject("productUOMList", Arrays.asList(Constants.PRODUCT_UOM));
+		return modelAndView;
+	}
+	private Integer getExactProductIndex(Product product) {
+		int i=0;
+		for(Product pro : productList){
+			if(pro.equals(product)){
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
+	
+	private void initializeProductList() {
+		this.productList=purchaseService.loadProductList();
 		
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
 import com.school.sms.model.GradeMaster;
+import com.school.sms.model.Product;
 
 @Service("purchaseDaoService")
 @Transactional
@@ -52,5 +53,35 @@ private EntityManager entityManager;
 			return (Customer) list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public List<Product> loadProductList() {
+		Query query = entityManager.createQuery("FROM Product p order by p.productParentCode ASC");
+		return query.getResultList();
+	}
+
+	@Override
+	public Product findProduct(String productParentCode) {
+		List list= entityManager.createQuery("FROM Product p WHERE p.productParentCode="+"'"+productParentCode+"'").getResultList();
+		if(list.size()>0){
+			return (Product) list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		entityManager.merge(product);
+		entityManager.flush();
+		
+	}
+
+	@Override
+	public void deleteProduct(Product product) {
+		Product grade = entityManager.find(Product.class,product.getProductParentCode());
+		entityManager.remove(grade);
+		entityManager.flush();
+		
 	}
 }

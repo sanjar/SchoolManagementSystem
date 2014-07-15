@@ -73,7 +73,7 @@
 			<ul>
 
 				<li class="f">
-					<h3 class="back">Salary Master</h3>
+					<h3 class="back">Salary Process</h3>
 				</li>
 				<c:if test="${isFormIncomplete}">
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>

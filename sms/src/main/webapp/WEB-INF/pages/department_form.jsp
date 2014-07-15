@@ -39,11 +39,7 @@
     <p><a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a></p>
   </div>
 
-  
-    
-  </div>
-
-  <div class="subheader">
+    <div class="subheader">
     <p>
       <span class="hidden">Navigation:</span>
       <a href="" class="highlight">Home</a> |

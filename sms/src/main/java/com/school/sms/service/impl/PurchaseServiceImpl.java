@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.school.sms.dao.PayrollDao;
 import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
+import com.school.sms.model.Product;
 import com.school.sms.service.PurchaseService;
 
 @Service("purchaseService")
@@ -36,6 +37,28 @@ public class PurchaseServiceImpl implements PurchaseService{
 	@Override
 	public void deleteCustomer(Customer customer) {
 		purchaseDao.deleteCustomer(customer);
+		
+	}
+
+	@Override
+	public List<Product> loadProductList() {
+		return purchaseDao.loadProductList();
+	}
+
+	@Override
+	public Product findProduct(String productParentCode) {
+		return purchaseDao.findProduct(productParentCode);
+	}
+
+	@Override
+	public void updateProduct(Product product) {
+		purchaseDao.updateProduct(product);
+		
+	}
+
+	@Override
+	public void deleteProduct(Product product) {
+		purchaseDao.deleteProduct(product);
 		
 	}
 

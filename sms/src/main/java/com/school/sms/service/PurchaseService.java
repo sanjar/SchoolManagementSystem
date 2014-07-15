@@ -3,6 +3,7 @@ package com.school.sms.service;
 import java.util.List;
 
 import com.school.sms.model.Customer;
+import com.school.sms.model.Product;
 
 public interface PurchaseService {
 
@@ -13,5 +14,13 @@ public interface PurchaseService {
 	List<Customer> loadCustomerList();
 
 	void deleteCustomer(Customer customer);
+
+	List<Product> loadProductList();
+
+	Product findProduct(String productParentCode);
+
+	void updateProduct(Product product);
+
+	void deleteProduct(Product product);
 
 }

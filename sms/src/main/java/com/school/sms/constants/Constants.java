@@ -29,4 +29,6 @@ public class Constants {
 	public static final String[] CUSTOMER_TYPE = new String[] { "Supplier",
 	"Dealer"};
 	
+	public static final String[] PRODUCT_UOM = new String[] { "BAG",
+		"BUCKET", "BOX", "BOOK", "SHEET", "TUBE" };
 }

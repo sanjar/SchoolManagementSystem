@@ -41,12 +41,6 @@
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
-    	$('#manageProduct').click(function(event){
-			event.preventDefault();
-			window.open('manageProduct',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
-    	
-    	
     	if('${disableNext}'){
     		$('#nextButton').attr('disabled','disabled');
     	}
@@ -68,7 +62,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
-				| <a href="">Contact</a> | <a id="manageProduct" href="">Manage Product</a>
+				| <a href="">Contact</a> |
 
 			</p>
 		</div>
@@ -82,66 +76,60 @@
 
 	<article>
 
-		<form:form class="mrg-top" id="manageCustomer"
-			action="manageCustomer">
+		<form:form class="mrg-top" id="customerCreation"
+			action="manageProduct">
 
 			<ul>
 
 				<li class="f">
-					<h3 class="back">Customer Creation</h3>
+					<h3 class="back">Product Master</h3>
 				</li>
 				<c:if test="${isFormIncomplete}">
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>
 				</c:if>
 				
-				<li class="f"><label for="name" class="fl">Customer Code<span style="color: red">*</span></label> <form:input
-					type="text" size="25" id="customerCode" class="fl" path="customerCode" />
+				<li class="f">
+					<label for="name" class="fl">Product & Parent Code<span style="color: red">*</span></label> 
+				<form:input	type="text" size="25" id="productParentCode" class="fl" path="productParentCode" /> 
 					<button class="left" name="action" value="search" style="margin-left: 30px">Search</button>
-					<c:if test="${noCustomerFound}">
-						<label style="color:red">No Customer Found.</label>
+					<c:if test="${noProductFound}">
+						<label style="color:red">No Product Found.</label>
 					</c:if>
-					<c:if test="${customerSaved}">
-						<label style="color: green">Customer Saved!!!</label>
-					</c:if> <c:if test="${customerDeleted}">
-						<label style="color: green">Customer Deleted!!!</label>
+					<c:if test="${productSaved}">
+						<label style="color: green">Product Saved!!!</label>
+					</c:if> <c:if test="${productDeleted}">
+						<label style="color: green">Product Deleted!!!</label>
 					</c:if> 
+				</li>		
+					
+				<li class="f"><label for="name" class="fl">Description</label> 
+				<form:input	type="text" size="25" id="description" class="fl" path="description" /> 
 				</li>
 
-
-				<li class="f"><label for="name" class="fl">Customer Type<span style="color: red">*</span></label> 
+				<li class="f"><label for="name" class="fl">MRP<span style="color: red">*</span></label> 
+						<form:input type="text" size="25" id="MRP" class="fl" path="MRP" /> 
+				</li>
+				<li class="f"><label for="name" class="fl">Offer Price </label> 
+						<form:input type="text" size="25" id="offerPrice" class="fl" path="offerPrice" /> 
+				</li>
+				<li class="f"><label for="name" class="fl">Tax Code</label> 
+						<form:input type="text" size="25" id="taxCode" class="fl" path="taxCode" /> 
+				</li>
+				<li class="f"><label for="name" class="fl">Sale Price </label> 
+						<form:input type="text" size="25" id="salePrice" class="fl" path="salePrice" /> 
+				</li>
+				<li class="f"><label for="name" class="fl">Category</label> 
+						<form:input type="text" size="25" id="category" class="fl" path="category" /> 
+				
+				
+				<li class="f"><label for="name" class="fl">UOM</label> 
 				<form:select
-						path="customerType" class="fl">
+						path="productUOM" class="fl">
 						<option value="-1">Please Select Type</option>
-						<form:options items="${customerType}"/>
+						<form:options items="${productUOMList}"/>
 					</form:select>
 					
 				</li>
-					
-					
-					
-				<li class="f"><label for="name" class="fl">Customer Name<span style="color: red">*</span></label> 
-				<form:input	type="text" size="25" id="customerName" class="fl" path="customerName" /> 
-				</li>
-
-				<li class="f"><label for="name" class="fl">Address<span style="color: red">*</span></label> 
-						<form:input type="text" size="25" id="address" class="fl" path="address" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">PIN<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="pin" class="fl" path="pin" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">Phone<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="phone" class="fl" path="phone" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">Contact Person<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="contactPerson" class="fl" path="contactPerson" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">Tin No.<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="tinNo" class="fl" path="tinNo" /> 
-				</li>
-				<li class="f"><label for="name" class="fl">Date<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" style="margin-right:10px" id="dateOfCreation" class="fl" path="dateOfCreation" /> 
-				</li>
-				
 
 				<li  class="f">
 				 <button class="left" name="action" value="save">Save</button>
