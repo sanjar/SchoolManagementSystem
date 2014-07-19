@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.school.sms.constants.Constants;
 import com.school.sms.model.DiscountsAndConcessions;
+import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.VariableFeeBatchYearMonth;
 import com.school.sms.service.FeeManagementService;
@@ -41,6 +42,9 @@ public class FeeManagementController {
 	private Set<String> studentNameClassRollDiscountList = new TreeSet<String>();
 	private boolean isAllDiscountsAndConcessionListPopulated;
 
+	private Integer variableFeeIndex;
+	private Integer fixedFeeIndex;
+	
 	@RequestMapping(value = "admin/feeManagement", method = RequestMethod.GET)
 	public ModelAndView feeManagement() {
 
@@ -68,6 +72,7 @@ public class FeeManagementController {
 		if (null != list) {
 			this.variableFeeStructureList= list;
 		}
+		variableFeeIndex=-1;
 		ModelAndView modelAndView = new ModelAndView("variable-fees", "command",
 				new VariableFeeBatchYearMonth());
 		/*
@@ -94,30 +99,67 @@ public class FeeManagementController {
 		if("search".equalsIgnoreCase(action)){
 			VariableFeeBatchYearMonth fee= feeService.findVariableFee((String)request.getParameter("session"), 
 					String.valueOf(request.getParameter("batch")), (String)request.getParameter("month"),(String)request.getParameter("studentNameClassRoll"));
-			boolean noVariableFeeStructureFound=false;
 			if(null==fee){
-				noVariableFeeStructureFound=true;
+				modelAndView = new ModelAndView("variable-fees","command",variableFee);
+				modelAndView.addObject("noFeeStructureFound",true);
 				fee= new VariableFeeBatchYearMonth();
 			}
-			modelAndView = new ModelAndView("variable-fees","command",fee);
-			if(noVariableFeeStructureFound){
-				modelAndView.addObject("noFeeStructureFound",noVariableFeeStructureFound);
-			}
 			
+			else{
+				modelAndView = new ModelAndView("variable-fees","command",fee);
+				variableFeeIndex = getExactVariableFeeIndex(fee);
+			}
 		}
 		else if("save".equalsIgnoreCase(action)) {
+			if(!variableFee.getBatch().equals("-1") && !variableFee.getMonth().equals("-1") && !variableFee.getSession().equals("-1")){
 			modelAndView = new ModelAndView("variable-fees","command",variableFee);
 			feeService.updateVariableFee(variableFee);
 			isAllVariableSessionMonthBatchListPopulated=false;
+			variableFeeIndex = getExactVariableFeeIndex(variableFee);
+			}
+			else{
+				modelAndView = new ModelAndView("variable-fees","command",variableFee);
+				modelAndView.addObject("isFormIncomplete",true);
+			}
+		}
+		
+		else if("delete".equalsIgnoreCase(action)) {
+			feeService.deleteVariableFee(variableFee);
+			initializeVariableFeeList();
+			modelAndView = new ModelAndView("variable-fees","command",new VariableFeeBatchYearMonth());
+			variableFeeIndex= variableFeeIndex-1;
+			modelAndView.addObject("variableFeeIndexDeleted",true);
+		}
+		
+		else if("next".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("variable-fees","command",this.variableFeeStructureList.get(++variableFeeIndex));
+		}
+		else if("previous".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("variable-fees","command",this.variableFeeStructureList.get(--variableFeeIndex));
+		}
+		else if("first".equalsIgnoreCase(action)) {
+			variableFeeIndex =0;
+			modelAndView = new ModelAndView("variable-fees","command",this.variableFeeStructureList.get(variableFeeIndex));
+		}
+		else if("last".equalsIgnoreCase(action)) {
+			variableFeeIndex =this.variableFeeStructureList.size()-1;
+			modelAndView = new ModelAndView("variable-fees","command",this.variableFeeStructureList.get(variableFeeIndex));
 		}
 		else{
 			modelAndView = new ModelAndView("variable-fees","command",variableFee);
 		}
-		
+		if(variableFeeIndex==this.variableFeeStructureList.size()-1){
+			modelAndView.addObject("disableNext", true);
+		}
+		if(variableFeeIndex<=0){
+			modelAndView.addObject("disablePrevious", true);
+		}
 		
 		if(!isAllVariableSessionMonthBatchListPopulated){
 			populateVariableSessionBatchMonthLists();
 		}
+		
+		
 		modelAndView.addObject("sessionList", Arrays.asList(Constants.SESSION_ARRAY));
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
 		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
@@ -128,8 +170,20 @@ public class FeeManagementController {
 		return modelAndView;
 
 	}
-	
-	
+	private Integer getExactVariableFeeIndex(VariableFeeBatchYearMonth variableFeeBatchYearMonth) {
+		int i=0;
+		for(VariableFeeBatchYearMonth fee : variableFeeStructureList){
+			if(fee.equals(variableFeeBatchYearMonth)){
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
+	private void initializeVariableFeeList() {
+		this.variableFeeStructureList=feeService.loadVariableFeeStructures();
+		
+	}
 	
 	private void populateVariableSessionBatchMonthLists() {
 		for (VariableFeeBatchYearMonth row : this.variableFeeStructureList) {
@@ -144,6 +198,7 @@ public class FeeManagementController {
 
 		ModelAndView model = new ModelAndView("fixed-fees", "command",
 				new FixedFeeBatchYearMonth());
+		fixedFeeIndex=-1;
 		/*
 		 * model.addObject("title", "Spring Security Custom Login Form");
 		 * model.addObject("message", "This is protected page!");
@@ -166,24 +221,58 @@ public class FeeManagementController {
 		ModelAndView modelAndView;
 		if("search".equalsIgnoreCase(action)){
 			FixedFeeBatchYearMonth fee= feeService.findFixedFee((String)request.getParameter("session"), Integer.valueOf(request.getParameter("batchId")), (String)request.getParameter("month"));
-			boolean noFeeStructureFound=false;
 			if(null==fee){
-				noFeeStructureFound=true;
-				fee= new FixedFeeBatchYearMonth();
+				modelAndView = new ModelAndView("fixed-fees","command",fixedFee);
+				modelAndView.addObject("noFeeStructureFound",true);
 			}
-			modelAndView = new ModelAndView("fixed-fees","command",fee);
-			if(noFeeStructureFound){
-				modelAndView.addObject("noFeeStructureFound",noFeeStructureFound);
+			else{
+				modelAndView = new ModelAndView("fixed-fees","command",fee);
+				fixedFeeIndex = getExactFixedFeeIndex(fee);
 			}
 			
 		}
 		else if("save".equalsIgnoreCase(action)) {
+			if(!fixedFee.getBatchId().equals(-1) && fixedFee.getMonth().equals("-1") && fixedFee.getSession().equals("-1")){
 			modelAndView = new ModelAndView("fixed-fees","command",fixedFee);
 			feeService.updateFixedFee(fixedFee);
+			initializeFixedFeeList();
 			isAllSessionMonthBatchListPopulated=false;
+			}
+			else{
+				modelAndView = new ModelAndView("fixed-fees","command",fixedFee);
+			}
+		}
+		else if("delete".equalsIgnoreCase(action)) {
+			feeService.deleteFixedFee(fixedFee);
+			initializeFixedFeeList();
+			modelAndView = new ModelAndView("fixed-fees","command",new FixedFeeBatchYearMonth());
+			fixedFeeIndex = getExactFixedFeeIndex(fixedFee);
+			fixedFeeIndex= fixedFeeIndex-1;
+			modelAndView.addObject("fixedFeeDeleted",true);
+		}
+		
+		else if("next".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("fixed-fees","command",this.fixedFeeStructureList.get(++fixedFeeIndex));
+		}
+		else if("previous".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("fixed-fees","command",this.fixedFeeStructureList.get(--fixedFeeIndex));
+		}
+		else if("first".equalsIgnoreCase(action)) {
+			fixedFeeIndex =0;
+			modelAndView = new ModelAndView("fixed-fees","command",this.fixedFeeStructureList.get(fixedFeeIndex));
+		}
+		else if("last".equalsIgnoreCase(action)) {
+			fixedFeeIndex =this.fixedFeeStructureList.size()-1;
+			modelAndView = new ModelAndView("fixed-fees","command",this.fixedFeeStructureList.get(fixedFeeIndex));
 		}
 		else{
 			modelAndView = new ModelAndView("fixed-fees","command",fixedFee);
+		}
+		if(fixedFeeIndex==this.fixedFeeStructureList.size()-1){
+			modelAndView.addObject("disableNext", true);
+		}
+		if(fixedFeeIndex<=0){
+			modelAndView.addObject("disablePrevious", true);
 		}
 		
 		/*
@@ -201,6 +290,22 @@ public class FeeManagementController {
 		
 		return modelAndView;
 
+	}
+
+	private void initializeFixedFeeList() {
+		this.fixedFeeStructureList=feeService.loadFeeStructures();
+		
+	}
+
+	private Integer getExactFixedFeeIndex(FixedFeeBatchYearMonth fixedFeeBatchYearMonth) {
+		int i=0;
+		for(FixedFeeBatchYearMonth fee : fixedFeeStructureList){
+			if(fee.equals(fixedFeeBatchYearMonth)){
+				return i;
+			}
+			i++;
+		}
+		return 0;
 	}
 
 	private void populateSessionBatchMonthLists() {

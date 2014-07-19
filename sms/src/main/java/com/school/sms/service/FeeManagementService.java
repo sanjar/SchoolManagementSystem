@@ -21,4 +21,6 @@ public interface FeeManagementService {
 			String valueOf, String parameter2, String parameter3);
 	public void updateDiscountsAndConcession(
 			DiscountsAndConcessions discountsAndConcession);
+	public void deleteVariableFee(VariableFeeBatchYearMonth variableFee);
+	public void deleteFixedFee(FixedFeeBatchYearMonth fixedFee);
 }

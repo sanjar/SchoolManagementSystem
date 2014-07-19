@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.school.sms.dao.FixedFeeDao;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.GradeMaster;
 import com.school.sms.model.VariableFeeBatchYearMonth;
 
 
@@ -96,5 +97,21 @@ public class FixedFeeDaoImpl implements FixedFeeDao {
 	public List<DiscountsAndConcessions> loadDiscountsAndConcession() {
 		Query query = entityManager.createQuery("FROM DiscountsAndConcessions f order by f.discountsConscessionsId ASC");
 		return query.getResultList();
+	}
+
+	@Override
+	public void deleteVariableFee(VariableFeeBatchYearMonth variableFee) {
+		VariableFeeBatchYearMonth variableFeeBatchYearMonth = entityManager.find(VariableFeeBatchYearMonth.class,variableFee.getVariableFeeId());
+		entityManager.remove(variableFeeBatchYearMonth);
+		entityManager.flush();
+		
+	}
+
+	@Override
+	public void deleteFixedFee(FixedFeeBatchYearMonth fixedFee) {
+		FixedFeeBatchYearMonth fixedFeeBatchYearMonth = entityManager.find(FixedFeeBatchYearMonth.class,fixedFee.getFixedFeeId());
+		entityManager.remove(fixedFeeBatchYearMonth);
+		entityManager.flush();
+		
 	}
 }

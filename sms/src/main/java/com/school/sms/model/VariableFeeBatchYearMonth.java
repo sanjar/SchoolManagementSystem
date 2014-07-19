@@ -123,4 +123,14 @@ public class VariableFeeBatchYearMonth {
 		this.batch = batch;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof VariableFeeBatchYearMonth) {
+			if (((VariableFeeBatchYearMonth) obj).getVariableFeeId().equals(
+					this.variableFeeId)) {
+				return true;
+			}
+		}
+		return super.equals(obj);
+	}
 }

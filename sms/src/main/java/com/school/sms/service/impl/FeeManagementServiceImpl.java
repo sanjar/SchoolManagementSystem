@@ -74,4 +74,16 @@ public class FeeManagementServiceImpl implements FeeManagementService {
 		fixedFeeDao.updateDiscountsAndConcession(discountsAndConcession);
 		
 	}
+
+	@Override
+	public void deleteVariableFee(VariableFeeBatchYearMonth variableFee) {
+		fixedFeeDao.deleteVariableFee(variableFee);
+		
+	}
+
+	@Override
+	public void deleteFixedFee(FixedFeeBatchYearMonth fixedFee) {
+		fixedFeeDao.deleteFixedFee(fixedFee);
+		
+	}
 }

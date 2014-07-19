@@ -23,6 +23,7 @@ import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.GradeMaster;
 import com.school.sms.model.Product;
+import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.service.PayrollManagementService;
 import com.school.sms.service.PurchaseService;
@@ -234,4 +235,21 @@ public class PurchaseController {
 		this.productList=purchaseService.loadProductList();
 		
 	}
+	
+	/********   Purchase Receipt  *****************/
+	
+	
+	@RequestMapping(value = "admin/purchase/purchaseReceipt", method = RequestMethod.GET)
+	public ModelAndView purchaseReceipt() {
+		ModelAndView model = new ModelAndView("purchase_receipt","command",new PurchaseReceipt());
+		
+		//model.addObject("customerType", Arrays.asList(Constants.CUSTOMER_TYPE));
+		//model.setViewName("purchase_form");
+
+		return model;
+
+	}
+	
+	/********   Purchase Receipt ends *****************/
+	
 }

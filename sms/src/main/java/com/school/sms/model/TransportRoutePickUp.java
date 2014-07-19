@@ -1,17 +1,26 @@
 package com.school.sms.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 
 @Entity
 @Table(name = "sms_transport_pick_up_master")
-public class TransportRoutePickUp {
+public class TransportRoutePickUp  implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="pick_up_master_id")
@@ -22,6 +31,9 @@ public class TransportRoutePickUp {
 	
 	@Column(name="pick_up_id")
 	private String pickUpId;
+	
+	@Column(name="pick_up_name")
+	private String pickUpName;
 	
 	@Column(name="vehicle_id")
 	private Integer vehicleId;
@@ -202,7 +214,24 @@ public class TransportRoutePickUp {
 	}
 
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof TransportRoutePickUp) {
+			if (((TransportRoutePickUp) obj).getPickUpMasterId().equals(
+					this.pickUpMasterId)) {
+				return true;
+			}
+		}
+		return super.equals(obj);
+	}
 
+	public String getPickUpName() {
+		return pickUpName;
+	}
+
+	public void setPickUpName(String pickUpName) {
+		this.pickUpName = pickUpName;
+	}
 
 	
 	

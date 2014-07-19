@@ -22,4 +22,6 @@ public interface FixedFeeDao {
 	public void updateDiscountsAndConcession(
 			DiscountsAndConcessions discountsAndConcession);
 	public List<DiscountsAndConcessions> loadDiscountsAndConcession();
+	public void deleteVariableFee(VariableFeeBatchYearMonth variableFee);
+	public void deleteFixedFee(FixedFeeBatchYearMonth fixedFee);
 }

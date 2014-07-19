@@ -165,5 +165,13 @@ public class FixedFeeBatchYearMonth implements Serializable{
 		this.registrationFee = registrationFee;
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof FixedFeeBatchYearMonth){
+			if(((FixedFeeBatchYearMonth)obj).getFixedFeeId().equals(this.fixedFeeId)){
+				return true;
+			}
+		}
+		return super.equals(obj);
+	}
 }

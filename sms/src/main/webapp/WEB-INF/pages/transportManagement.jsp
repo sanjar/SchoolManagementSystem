@@ -24,17 +24,9 @@
 			document.backuprestore.submit();
 		}
 		
-		$('#manageFixedFee').click(function(event){
+		$('#manageTransportFee').click(function(event){
 			event.preventDefault();
-			window.open('manageFixedFee',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
-		$('#manageVariableFee').click(function(event){
-			event.preventDefault();
-			window.open('manageVariableFee',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
-		$('#manageDiscountsAndConcessions').click(function(event){
-			event.preventDefault();
-			window.open('manageDiscountsAndConcessions',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
+			window.open('transportManagement/manageTransportFee',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
 		});
 	});
 </script>
@@ -50,7 +42,7 @@
 	<div id="header">
 		<div class="left">
 			<p>
-				<a href="">School<span class="alt">Management</span></a>
+				<a href="">SCHOOL ACCOUNTS MANAGEMENT SYSTEM<!-- <span class="alt">Management</span> --></a>
 			</p>
 		</div>
 
@@ -58,7 +50,8 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a id="manageTransport" href="">Manage Transport</a> 
+				<span class="hidden">Navigation:</span> <a id="manageTransportFee" href="">Manage Transport Fee</a>
+
 			</p>
 		</div>
 	</div>
