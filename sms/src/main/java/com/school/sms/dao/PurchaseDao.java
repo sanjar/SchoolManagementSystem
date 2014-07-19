@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.school.sms.model.Customer;
 import com.school.sms.model.Product;
+import com.school.sms.model.PurchaseReceipt;
 
 public interface PurchaseDao {
 
@@ -24,5 +25,11 @@ public interface PurchaseDao {
 	void updateProduct(Product product);
 
 	void deleteProduct(Product product);
+
+	void updatePurchaseReceipt(PurchaseReceipt purchaseReceipt);
+
+	void deletePurchaseReceipt(PurchaseReceipt purchaseReceipt);
+
+	PurchaseReceipt findPurchaseReceipt(Integer receiptNo);
 
 }

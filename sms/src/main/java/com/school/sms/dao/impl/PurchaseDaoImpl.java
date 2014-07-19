@@ -13,6 +13,7 @@ import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
 import com.school.sms.model.GradeMaster;
 import com.school.sms.model.Product;
+import com.school.sms.model.PurchaseReceipt;
 
 @Service("purchaseDaoService")
 @Transactional
@@ -83,5 +84,29 @@ private EntityManager entityManager;
 		entityManager.remove(grade);
 		entityManager.flush();
 		
+	}
+
+	@Override
+	public void updatePurchaseReceipt(PurchaseReceipt purchaseReceipt) {
+		entityManager.merge(purchaseReceipt);
+		entityManager.flush();
+		
+	}
+
+	@Override
+	public void deletePurchaseReceipt(PurchaseReceipt purchaseReceipt) {
+		PurchaseReceipt purchaseReceipt1 = entityManager.find(PurchaseReceipt.class,purchaseReceipt.getReceiptNo());
+		entityManager.remove(purchaseReceipt1);
+		entityManager.flush();
+		
+	}
+
+	@Override
+	public PurchaseReceipt findPurchaseReceipt(Integer receiptNo) {
+		List list= entityManager.createQuery("FROM PurchaseReceipt p WHERE p.receiptNo="+"'"+receiptNo+"'").getResultList();
+		if(list.size()>0){
+			return (PurchaseReceipt) list.get(0);
+		}
+		return null;
 	}
 }

@@ -3,12 +3,17 @@ package com.school.sms.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.ListUtils;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="sms_purchase_receipt")
@@ -49,8 +54,8 @@ public class PurchaseReceipt {
 	@Column(name="stk_pnt")
 	private String stkPnt;
 	
-	@OneToMany(mappedBy = "purchaseReceipt")
-	private List<PurchaseReceiptItem> purchaseReceiptItemList = new ArrayList<PurchaseReceiptItem>();
+	@OneToMany(mappedBy = "purchaseReceipt",cascade={CascadeType.ALL},fetch=FetchType.EAGER)
+	private List<PurchaseReceiptItem> purchaseReceiptItemList = ListUtils.lazyList(new ArrayList<PurchaseReceiptItem>(), FactoryUtils.instantiateFactory(PurchaseReceiptItem.class));
 
 	public Integer getReceiptNo() {
 		return receiptNo;

@@ -31,4 +31,10 @@ public class Constants {
 	
 	public static final String[] PRODUCT_UOM = new String[] { "BAG",
 		"BUCKET", "BOX", "BOOK", "SHEET", "TUBE" };
+
+	public static final String[] YES_NO_ARRAY =  new String[] { "Yes",
+		"No"};
+
+	public static final String[] PURCHASE_TYPE_ARRAY = new String[] { "Credit",
+		"Cash"};
 }

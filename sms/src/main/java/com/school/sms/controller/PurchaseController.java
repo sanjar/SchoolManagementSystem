@@ -24,6 +24,7 @@ import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.GradeMaster;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
+import com.school.sms.model.PurchaseReceiptItem;
 import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.service.PayrollManagementService;
 import com.school.sms.service.PurchaseService;
@@ -242,12 +243,61 @@ public class PurchaseController {
 	@RequestMapping(value = "admin/purchase/purchaseReceipt", method = RequestMethod.GET)
 	public ModelAndView purchaseReceipt() {
 		ModelAndView model = new ModelAndView("purchase_receipt","command",new PurchaseReceipt());
-		
-		//model.addObject("customerType", Arrays.asList(Constants.CUSTOMER_TYPE));
-		//model.setViewName("purchase_form");
-
+		model.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));
+		model.addObject("purchaseTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
 		return model;
 
+	}
+	
+	@RequestMapping(value = "/admin/purchase/processPurchaseReceipt", method = RequestMethod.POST)
+	public ModelAndView processPurchaseReceipt(@ModelAttribute("product")PurchaseReceipt purchaseReceipt,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView modelAndView=new ModelAndView("purchase_receipt","command",new PurchaseReceipt());
+		
+		if("search".equalsIgnoreCase(action)){
+			PurchaseReceipt receipt= purchaseService.findPurchaseReceipt(Integer.valueOf(request.getParameter("receiptNo")));
+			if(null==receipt){
+				modelAndView = new ModelAndView("purchase_receipt","command",purchaseReceipt);
+				modelAndView.addObject("noPurchaseReceiptFound",true);
+				
+			}
+			else{
+			modelAndView = new ModelAndView("purchase_receipt","command",receipt);
+			}
+						
+		}
+		else if("save".equalsIgnoreCase(action)) {
+			if (null != purchaseReceipt.getReceiptNo() && !purchaseReceipt.getReceiptDate().isEmpty()) {
+				gatherAddedItems(purchaseReceipt);
+				purchaseService.updatePurchaseReceipt(purchaseReceipt);
+				modelAndView = new ModelAndView("purchase_receipt","command",purchaseReceipt);
+				modelAndView.addObject("purchaseReceiptSaved",true);
+			}
+			else{
+				modelAndView = new ModelAndView("purchase_receipt","command",purchaseReceipt);
+				modelAndView.addObject("isFormIncomplete",true);
+			}
+		}
+		
+		else if("delete".equalsIgnoreCase(action)) {
+			purchaseService.deletePurchaseReceipt(purchaseReceipt);
+			modelAndView.addObject("purchaseReceiptDeleted",true);
+		}
+	   modelAndView.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));
+	   modelAndView.addObject("purchaseTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
+		return modelAndView;
+	}
+
+	private void gatherAddedItems(PurchaseReceipt purchaseReceipt) {
+		List<PurchaseReceiptItem> list = new ArrayList<PurchaseReceiptItem>();
+		
+		for(PurchaseReceiptItem item:purchaseReceipt.getPurchaseReceiptItemList()){
+			if(!item.getProductCode().isEmpty()){
+				item.getPurchaseReceipt().setReceiptNo(purchaseReceipt.getReceiptNo());
+				list.add(item);
+			}
+		}
+		purchaseReceipt.setPurchaseReceiptItemList(list);
 	}
 	
 	/********   Purchase Receipt ends *****************/

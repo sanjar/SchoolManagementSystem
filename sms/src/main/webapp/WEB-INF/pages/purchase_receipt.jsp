@@ -5,10 +5,18 @@
 <head>
 <meta charset="utf-8">
 <title>Purchase Receipt</title>
+<style type="text/css">
+<!--
+.style2 {color: #0000FF}
+-->
+</style>
 <link rel="StyleSheet" href="<c:url value='/resources/css/main-screen.css' />" type="text/css" media="screen" />
   <link rel="StyleSheet" href="<c:url value='/resources/css/main-print.css' />" type="text/css" media="print" />
 <link rel="stylesheet" href="<c:url value='/resources/css/style4.css' />" />
 <link href='http://fonts.googleapis.com/css?family=Engagement' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js">
 <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -23,14 +31,25 @@
     <script type="text/javascript">
     
     $(document).ready(function(){
+    	$( "#receiptDate" ).datepicker({
+            dateFormat: "dd/mm/yy",
+            disabled: false
+        });
+    	$( "#invoiceDate" ).datepicker({
+            dateFormat: "dd/mm/yy",
+            disabled: false
+        });
+    	$( "#chequeDate" ).datepicker({
+            dateFormat: "dd/mm/yy",
+            disabled: false
+        });
     	
-    	
-    	if('${disableNext}'){
+    /* 	if('${disableNext}'){
     		$('#nextButton').attr('disabled','disabled');
     	}
     	if('${disablePrevious}'){
     		$('#previousButton').attr('disabled','disabled');
-    	}
+    	} */
     });
     
     </script>
@@ -62,7 +81,7 @@
 
 <article>
 
-<form:form class="mrg-top" id="employee_master" action="processEmployeeMaster">
+<form:form class="mrg-top" id="processPurchaseReceipt" action="processPurchaseReceipt">
 
 	<ul>
     
@@ -159,14 +178,53 @@
 <li  class="f">
 				 <button class="left" name="action" value="save">Save</button>
 				 <button class="left" name="action" value="delete">Delete</button>
-				 <button id="nextButton" class="left" name="action" value="next">Next</button>
+				 <button class="left" name="print" value="print" onclick="window.print(); return false;">Print</button>
+				 <button class="left" name="action" value="new">Create New</button>
+				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
+				 <button class="left" name="action" value="search">Search</button>
+				 <!-- <button id="nextButton" class="left" name="action" value="next">Next</button>
 				 <button id="previousButton" class="left" name="action" value="previous">Previous</button>
 				 <button class="left" name="action" value="last">Last</button>
-				 <button class="left" name="action" value="first">First</button>
+				 <button class="left" name="action" value="first">First</button> -->
 				</li>
 
 </ul>
-<iframe name="items" src="<c:url value='/resources/jsp/item_table.jsp'/>" height="1000" width="1250" style="overflow:auto" draggable="true"></iframe>
+<%-- <iframe name="items" src="<c:url value='/resources/jsp/item_table.jsp'/>" height="1000" width="1250" style="overflow:auto" draggable="true"></iframe> --%>
+
+<table border="1" style="width:100px;height: 500px;overflow: scroll;" >
+<thead>
+  <tr>
+    <th width="10" scope="col"><span class="style2">S.No </span></th>
+    <th width="20" scope="col"><span class="style2">P. Code </span></th>
+    <th width="80" scope="col"><span class="style2">Description</span></th>
+    <th width="10" scope="col"><span class="style2">Pur. Price </span></th>
+    <th width="78" scope="col"><span class="style2">Qty(Box)</span></th>
+    <th width="78" scope="col"><span class="style2">Qty(Unit)</span></th>
+    <th width="78" scope="col"><span class="style2">Stk Type </span></th>
+    <th width="78" scope="col"><span class="style2">Discount</span></th>
+    <th width="115" scope="col"><span class="style2">Total Amount </span></th>
+    <th width="67" scope="col"><span class="style2">A/P</span></th>
+  </tr>
+</thead>
+<tbody>
+  <c:forEach begin="0" end="29" var="x" >
+  <tr>
+    <th scope="row">${x+1}</th>
+    <td style="width: 100px"><form:input  path="purchaseReceiptItemList[${x}].productCode" id="productCode" style="width: 100px"/></td>
+    <td style="width: 300px"><form:input path="purchaseReceiptItemList[${x}].description" id="description" style="width: 300px"/></td>
+    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].purchasePrice" id="purchasePrice" style="width: 100px"/></td>
+    <td style="width: 78px"><form:input path="purchaseReceiptItemList[${x}].quantityBox"  id="quantityBox" style="width: 78px"/></td>
+    <td style="width: 78px"><form:input path="purchaseReceiptItemList[${x}].quantityUnit"  id="quantityUnit" style="width: 78px"/></td>
+    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].sktType"  id="sktType" style="width: 100px"/></td>
+    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].discount"  id="discount" style="width: 100px"/></td>
+    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].totalAmount"  id="totalAmount" style="width: 100px"/></td>
+    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].AP"  id="AP" style="width: 100px"/></td>
+    <form:input type="hidden" path="purchaseReceiptItemList[${x}].purchaseReceipt.receiptNo"/>
+    <form:input type="hidden" path="purchaseReceiptItemList[${x}].itemId"/>
+  </tr>
+  </c:forEach>
+  </tbody>
+</table>
 </form:form>
 
 </article>

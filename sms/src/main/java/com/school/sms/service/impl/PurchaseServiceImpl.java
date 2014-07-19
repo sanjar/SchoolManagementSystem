@@ -10,6 +10,7 @@ import com.school.sms.dao.PayrollDao;
 import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
 import com.school.sms.model.Product;
+import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.service.PurchaseService;
 
 @Service("purchaseService")
@@ -60,6 +61,23 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public void deleteProduct(Product product) {
 		purchaseDao.deleteProduct(product);
 		
+	}
+
+	@Override
+	public void updatePurchaseReceipt(PurchaseReceipt purchaseReceipt) {
+		purchaseDao.updatePurchaseReceipt(purchaseReceipt);
+		
+	}
+
+	@Override
+	public void deletePurchaseReceipt(PurchaseReceipt purchaseReceipt) {
+		purchaseDao.deletePurchaseReceipt(purchaseReceipt);
+		
+	}
+
+	@Override
+	public PurchaseReceipt findPurchaseReceipt(Integer receiptNo) {
+		return purchaseDao.findPurchaseReceipt(receiptNo);
 	}
 
 	

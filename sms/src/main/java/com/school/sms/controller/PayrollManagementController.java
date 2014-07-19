@@ -122,6 +122,8 @@ public class PayrollManagementController {
 				new EmployeeMaster());
 		model.addObject("departmentList", this.departmentList);
 		model.addObject("gradeSalaryCodeMap", this.gradeSalaryCodeMap);
+		model.addObject("designationList", Arrays.asList(Constants.DESIGNATION_ARRAY));
+		model.addObject("genderList", Arrays.asList(Constants.GENDER_ARRAY));
 		return model;
 
 	}
