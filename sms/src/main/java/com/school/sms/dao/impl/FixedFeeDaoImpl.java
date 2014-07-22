@@ -13,6 +13,8 @@ import com.school.sms.dao.FixedFeeDao;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.GradeMaster;
+import com.school.sms.model.Student;
+import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
 
 
@@ -111,6 +113,40 @@ public class FixedFeeDaoImpl implements FixedFeeDao {
 	public void deleteFixedFee(FixedFeeBatchYearMonth fixedFee) {
 		FixedFeeBatchYearMonth fixedFeeBatchYearMonth = entityManager.find(FixedFeeBatchYearMonth.class,fixedFee.getFixedFeeId());
 		entityManager.remove(fixedFeeBatchYearMonth);
+		entityManager.flush();
+		
+	}
+
+	@Override
+	public List<Student> loadStudentsList() {
+		Query query = entityManager.createQuery("FROM Student");
+		return query.getResultList();
+	}
+
+	@Override
+	public Student loadStudentDeatil(String enrolementNo) {
+		/*Query query = entityManager.createQuery("FROM Student");
+		return query.getResultList();*/
+		return null;
+	}
+
+	@Override
+	public List<StudentFeeDetails> loadStudentFeeDetails(String enrolementNo) {
+		Query query = entityManager.createQuery("FROM StudentFeeDetails s where s.enrolementNo="+"'"+enrolementNo+"'");
+		return query.getResultList();
+	}
+
+	@Override
+	public FixedFeeBatchYearMonth loadStudentFeeDetails(String month,
+			String session) {
+		/*Query query = entityManager.createQuery("FROM FixedFeeBatchYearMonth f where s.enrolementNo="+"'"+enrolementNo+"'");
+		return query.getResultList();*/
+		return null;
+	}
+
+	@Override
+	public void saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils) {
+		entityManager.merge(studentFeeDeatils);
 		entityManager.flush();
 		
 	}

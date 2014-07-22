@@ -37,4 +37,6 @@ public class Constants {
 
 	public static final String[] PURCHASE_TYPE_ARRAY = new String[] { "Credit",
 		"Cash"};
+
+	public static final String[] MODE_OF_PAYMENT= new String[] { "Cash","Cheque","Draft"};;
 }

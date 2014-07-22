@@ -2,7 +2,9 @@ package com.school.sms.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -18,8 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.school.sms.constants.Constants;
 import com.school.sms.model.DiscountsAndConcessions;
-import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.Student;
+import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
 import com.school.sms.service.FeeManagementService;
 
@@ -40,10 +43,14 @@ public class FeeManagementController {
 
 	private List<DiscountsAndConcessions> discountsAndConcessionList;
 	private Set<String> studentNameClassRollDiscountList = new TreeSet<String>();
+	private Set<String> studentClassBatchList = new TreeSet<String>();
+	private Map<String,Map<String,String>> batchStudentFatherEnrolementMap=  new HashMap<String,Map<String,String>>();
 	private boolean isAllDiscountsAndConcessionListPopulated;
-
+	private List<Student> studentsList = new ArrayList<Student>();
 	private Integer variableFeeIndex;
 	private Integer fixedFeeIndex;
+	private List<StudentFeeDetails> details = new ArrayList<StudentFeeDetails>();
+	Map<String,Double> feeHeaderFeeMap =  new HashMap<String, Double>();
 	
 	@RequestMapping(value = "admin/feeManagement", method = RequestMethod.GET)
 	public ModelAndView feeManagement() {
@@ -393,6 +400,146 @@ public class FeeManagementController {
 		return modelAndView;
 
 	}
+	
+	
+	
+	/******* fee payment  start*******/
+	
+	@RequestMapping(value = "/admin/feePayment", method = RequestMethod.GET)
+	public ModelAndView feePayment() {
+
+		ModelAndView model = new ModelAndView("fee_payment_form", "command",
+				new StudentFeeDetails());
+		
+		studentsList = feeService.loadStudentsList();
+		initalizeBatchAndStudentFatherEnrolementMap();
+		model.addObject("studentsList", this.studentsList);
+		model.addObject("modeOfPaymentList", Arrays.asList(Constants.MODE_OF_PAYMENT));
+		model.addObject("studentClassBatchList", /*this.studentClassBatchList*/ Arrays.asList(Constants.BATCH_ARRAY));
+		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
+		// model.setViewName("fixed-fees");
+
+		return model;
+
+	}
+	
+	private void initalizeBatchAndStudentFatherEnrolementMap() {
+		for(Student student: studentsList){
+			if(null!=student.getCurrentClassBatch()){
+			studentClassBatchList.add(student.getCurrentClassBatch());
+			}
+		}
+		
+	}
+
+	@RequestMapping(value = "/admin/feePayment", method = RequestMethod.POST)
+	public ModelAndView processFeePayment(@ModelAttribute("studentFeeDeatils")StudentFeeDetails studentFeeDeatils,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("fee_payment_form", "command",
+				new StudentFeeDetails());
+		if("getDetails".equalsIgnoreCase(action)){
+			Student student = getStudent(studentFeeDeatils.getEnrolementNo());/*feeService.loadStudentDeatil(studentFeeDeatils.getEnrolementNo());*/
+			if(student!=null){
+			String middleName= student.getMiddleName() != null?student.getMiddleName():"";
+			String lastName=student.getLastName()!=null?student.getLastName():"";
+			studentFeeDeatils.setStudentName(student.getFirstName() + " "+middleName+" "+lastName);
+			studentFeeDeatils.setBatch(request.getParameter("batch"));
+			//studentFeeDeatils.setSession(student.g);
+		    this.details = feeService.loadStudentFeeDetails(studentFeeDeatils.getEnrolementNo());
+			if(!studentFeeDeatils.getMonth().equals("-1") && studentFeeDeatils.getSession()!=null && !studentFeeDeatils.getSession().isEmpty()){
+				FixedFeeBatchYearMonth fixedFee=getFixedFee(studentFeeDeatils.getMonth(),studentFeeDeatils.getSession());/*feeService.loadFixedFeeBatchYearMonth(studentFeeDeatils.getMonth(),studentFeeDeatils.getSession());*/
+				if(null!=fixedFee){
+					this.feeHeaderFeeMap = prepareFeeHeaderFeeMap(fixedFee);
+					Double amount=calculatePayableAmountOfMonth(feeHeaderFeeMap);
+					studentFeeDeatils.setTotalAmount(amount);
+						
+					//model.addObject("fixedFee", fixedFee);
+				}
+			}
+			}
+			
+		}
+		else if("save".equalsIgnoreCase(action)){
+			feeService.saveStudentFeeDetails(studentFeeDeatils);
+			
+		}
+		else if("calculate".equalsIgnoreCase(action)){
+			calculateFinalAmount(studentFeeDeatils);
+		}
+		if("getDetails".equalsIgnoreCase(action) || "save".equalsIgnoreCase(action) || "calculate".equalsIgnoreCase(action)){
+			model = new ModelAndView("fee_payment_form", "command",
+					studentFeeDeatils);
+			model.addObject("fixedFeeMap", feeHeaderFeeMap);
+			model.addObject("studenFeeDetailstList", details);
+		}
+		model.addObject("modeOfPaymentList", Arrays.asList(Constants.MODE_OF_PAYMENT));
+		model.addObject("studentClassBatchList", this.studentClassBatchList);
+		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
+		// model.setViewName("fixed-fees");
+
+		return model;
+
+	}
+	
+	private void calculateFinalAmount(StudentFeeDetails studentFeeDeatils) {
+		Double amountTobeAdded = studentFeeDeatils.getPreviousDue()+studentFeeDeatils.getLateFine()+studentFeeDeatils.getOtherFine();
+		Double amountTobeSubstracted = studentFeeDeatils.getConcession()+studentFeeDeatils.getDiscount();
+		studentFeeDeatils.setTotalAmount(studentFeeDeatils.getTotalAmount()+amountTobeAdded-amountTobeSubstracted);
+		
+	}
+
+	private Double calculatePayableAmountOfMonth(Map<String, Double> map) {
+		Double amount=0.00;
+		for(Double value:map.values()){
+			amount=amount+value;
+		}
+		return amount;
+	}
+
+	private FixedFeeBatchYearMonth getFixedFee(String month, String session) {
+		for(FixedFeeBatchYearMonth fixedFee:this.fixedFeeStructureList){
+			if(fixedFee.getMonth().equalsIgnoreCase(month) && fixedFee.getSession().equals(session)){
+				return fixedFee;
+			}
+		}
+		return null;
+	}
+
+	private Map<String, Double> prepareFeeHeaderFeeMap(
+			FixedFeeBatchYearMonth fixedFee) {
+		Map <String,Double> map = new HashMap<String, Double>();
+		map.put("Tuition Fee", fixedFee.getTuitionFee());
+		map.put("Examination Fee", fixedFee.getExaminationFee());
+		map.put("Maintainance Fee", fixedFee.getMaintainanceFee());
+		map.put("ReportCard Fee", fixedFee.getReportCardFee());
+		map.put("Book Fee", fixedFee.getBookFee());
+		map.put("Icard Fee", fixedFee.getIcardFee());
+		map.put("Water Electricity Fee", fixedFee.getWaterElectricFee());
+		map.put("Misc Fee", fixedFee.getMiscFee());
+		map.put("Sports Culture Fee", fixedFee.getSportsCultureFee());
+		map.put("Activity Fee", fixedFee.getActivityFee());
+		map.put("Registration Fee", fixedFee.getRegistrationFee());
+		
+		return map;
+	}
+
+	private Student getStudent(String enrolementNo) {
+		for(Student student: studentsList){
+			if(null!=student.getEnrolementNo() && student.getEnrolementNo().equalsIgnoreCase(enrolementNo)){
+			return student;
+			}
+		}
+		return null;
+	}
+
+	/******* fee payment  ends*******/
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public List<FixedFeeBatchYearMonth> getFixedFeeStructureList() {

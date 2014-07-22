@@ -21,7 +21,7 @@ import com.school.sms.service.FeeManagementService;
 public class AdminController {
 
 	
-	@RequestMapping(value = "/admin/createUser**", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/createStudent**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
 
 		ModelAndView model = new ModelAndView();
@@ -47,7 +47,7 @@ public class AdminController {
 		 * model.addObject("message", "This is protected page!");
 		 */
 
-		model.setViewName("employee-form");
+		model.setViewName("userManagement");
 
 		return model;
 

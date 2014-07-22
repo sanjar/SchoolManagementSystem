@@ -54,6 +54,28 @@ public class PurchaseReceipt {
 	@Column(name="stk_pnt")
 	private String stkPnt;
 	
+	@Column(name="commission")
+	private Double commission=0.00;
+	
+	@Column(name="scheme")
+	private Double scheme=0.00;
+	
+	@Column(name="tds")
+	private Double TDS=0.00;
+	
+	@Column(name="discount")
+	private Double discount=0.00;
+	
+	@Column(name="tax")
+	private Double tax=0.00;
+	
+	@Column(name="gross_value")
+	private Double grossValue=0.00;
+	
+	@Column(name="net_value")
+	private Double netValue=0.00;
+	
+	
 	@OneToMany(mappedBy = "purchaseReceipt",cascade={CascadeType.ALL},fetch=FetchType.EAGER)
 	private List<PurchaseReceiptItem> purchaseReceiptItemList = ListUtils.lazyList(new ArrayList<PurchaseReceiptItem>(), FactoryUtils.instantiateFactory(PurchaseReceiptItem.class));
 
@@ -152,5 +174,61 @@ public class PurchaseReceipt {
 	public void setPurchaseReceiptItemList(
 			List<PurchaseReceiptItem> purchaseReceiptItemList) {
 		this.purchaseReceiptItemList = purchaseReceiptItemList;
+	}
+
+	public Double getCommission() {
+		return commission;
+	}
+
+	public void setCommission(Double commission) {
+		this.commission = commission;
+	}
+
+	public Double getScheme() {
+		return scheme;
+	}
+
+	public void setScheme(Double scheme) {
+		this.scheme = scheme;
+	}
+
+	public Double getTDS() {
+		return TDS;
+	}
+
+	public void setTDS(Double tDS) {
+		TDS = tDS;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
+
+	public Double getTax() {
+		return tax;
+	}
+
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
+	public Double getGrossValue() {
+		return grossValue;
+	}
+
+	public void setGrossValue(Double grossValue) {
+		this.grossValue = grossValue;
+	}
+
+	public Double getNetValue() {
+		return netValue;
+	}
+
+	public void setNetValue(Double netValue) {
+		this.netValue = netValue;
 	}
 }

@@ -124,6 +124,10 @@
 					event.preventDefault();
 					window.open('admin/purchase/manageCustomer',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
 				});
+				$('#reportGeneration').click(function(event){
+					event.preventDefault();
+					window.open('admin/generateReport',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
+				});
 			}); 
 			
 		
@@ -217,7 +221,7 @@
                 	<img src="<c:url value='/resources/images/Crystal_Clear_user.gif'/>" alt="" width="64" height="64" /> <span>My profile</span>
                 </a>
                 
-                <a href="" class="dashboard-module">
+                <a id="reportGeneration" href="" class="dashboard-module">
                 	<img src="<c:url value='/resources/images/Crystal_Clear_stats.gif'/>" alt="" width="64" height="64" /> <span>Reports</span>
                 </a>
                 
@@ -245,7 +249,7 @@
                 </div>
                 <div style="clear:both;"></div>
             </div> <!-- End .grid_5 -->
-            <div>
+            <!-- <div>
             Create User:
             <select id="userCreationType" class="input-short">
             	<option value="" selected="selected">Select User Type</option>
@@ -255,7 +259,7 @@
             	<option value="Vendor">Vendor</option>
             </select>
             <input type="button" onclick="createUser()" value='GO>>'></input>
-            </div>
+            </div> -->
             <div style="clear:both;"></div>
             
             
@@ -272,11 +276,11 @@
                 <span class="notification n-error">Error notification.</span>
                 
                 
-                <div class="bottom-spacing">
+               <!--  <div class="bottom-spacing">
                 
                   
                     
-                    <!-- Table records filtering -->
+                    Table records filtering
                     Filter: 
                     <select class="input-short">
                     	<option value="1" selected="selected">Select filter</option>
@@ -286,11 +290,11 @@
                         <option value="5">Edited last month</option>
                     </select>
                     
-                </div>
+                </div> -->
                 
                 
                 <!-- Example table -->
-                <div class="module">
+                <%-- <div class="module">
                 	<h2><span>Sample table</span></h2>
                     
                     <div class="module-table-body">
@@ -692,7 +696,7 @@
                 
 
                 
-			</div> <!-- End .grid_12 -->
+			</div> <!-- End .grid_12 -->--%> 
                 
 
                 

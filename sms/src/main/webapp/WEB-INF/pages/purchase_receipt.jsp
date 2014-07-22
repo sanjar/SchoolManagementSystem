@@ -225,6 +225,33 @@
   </c:forEach>
   </tbody>
 </table>
+
+
+<table>
+	<tr>
+	<td><span >Gross Value :</span></td>
+	<td><form:label id="grossValue" path="grossValue" cssStyle="color:blue">${command.grossValue}</form:label></td>
+	<td><span>Scheme :</span></td>
+	<td><form:label id="scheme" path="scheme" cssStyle="color:blue">${command.scheme}</form:label></td>
+	<td><span>Discount :</span></td>
+	<td><form:label id="discount" path="discount" cssStyle="color:blue">${command.discount}</form:label></td>
+	<td><span>Tax </span></td>
+	<td><form:label id="tax" path="tax" cssStyle="color:blue">${command.tax}</form:label></td>
+	<td style="float:right"><span>Net Value :</span></td>
+	<td><form:label id="netValue" path="netValue" cssStyle="color:blue">${command.netValue}</form:label></td>
+	</tr>
+	<tr>
+	<td><span>Commission :</span></td>
+	<td><form:label id="commission" path="commission" cssStyle="color:blue">${command.commission}</form:label></td>
+	<td><span>TDS :</span></td>
+	<td><form:label id="TDS" path="TDS" cssStyle="color:blue">${command.TDS}</form:label></td>
+	
+	
+	
+	</tr>
+
+
+</table>
 </form:form>
 
 </article>

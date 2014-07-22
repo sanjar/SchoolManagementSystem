@@ -32,40 +32,40 @@ public class FixedFeeBatchYearMonth implements Serializable{
 	private String month;
 	
 	@Column(name="examination_fee")
-	private Integer examinationFee;
+	private Double examinationFee;
 	
 	@Column(name="maintainance_fee")
-	private Integer maintainanceFee;
+	private Double maintainanceFee;
 	
 	@Column(name="tuition_fee")
-	private Integer tuitionFee;
+	private Double tuitionFee;
 	
 	@Column(name="report_card_fee")
-	private Integer reportCardFee;
+	private Double reportCardFee;
 	
 	@Column(name="book_fee")
-	private Integer bookFee;
+	private Double bookFee;
 	
 	@Column(name="icard_fee")
-	private Integer icardFee;
+	private Double icardFee;
 	
 	@Column(name="water_electric_fee")
-	private Integer waterElectricFee;
+	private Double waterElectricFee;
 	
 	@Column(name="misc_Fee")
-	private Integer miscFee;
+	private Double miscFee;
 	
 	@Column(name="sports_culture_fee")
-	private Integer sportsCultureFee;
+	private Double sportsCultureFee;
 	
 	@Column(name="library_fee")
-	private Integer libraryFee;
+	private Double libraryFee;
 	
 	@Column(name="activity_fee")
-	private Integer activityFee;
+	private Double activityFee;
 	
 	@Column(name="registration_fee")
-	private Integer registrationFee;
+	private Double registrationFee;
 	
 	
 	public Integer getFixedFeeId() {
@@ -92,78 +92,7 @@ public class FixedFeeBatchYearMonth implements Serializable{
 	public void setMonth(String month) {
 		this.month = month;
 	}
-	public Integer getExaminationFee() {
-		return examinationFee;
-	}
-	public void setExaminationFee(Integer examinationFee) {
-		this.examinationFee = examinationFee;
-	}
-	public Integer getMaintainanceFee() {
-		return maintainanceFee;
-	}
-	public void setMaintainanceFee(Integer maintainanceFee) {
-		this.maintainanceFee = maintainanceFee;
-	}
-	public Integer getTuitionFee() {
-		return tuitionFee;
-	}
-	public void setTuitionFee(Integer tuitionFee) {
-		this.tuitionFee = tuitionFee;
-	}
-	public Integer getReportCardFee() {
-		return reportCardFee;
-	}
-	public void setReportCardFee(Integer reportCardFee) {
-		this.reportCardFee = reportCardFee;
-	}
-	public Integer getBookFee() {
-		return bookFee;
-	}
-	public void setBookFee(Integer bookFee) {
-		this.bookFee = bookFee;
-	}
-	public Integer getIcardFee() {
-		return icardFee;
-	}
-	public void setIcardFee(Integer icardFee) {
-		this.icardFee = icardFee;
-	}
-	public Integer getWaterElectricFee() {
-		return waterElectricFee;
-	}
-	public void setWaterElectricFee(Integer waterElectricFee) {
-		this.waterElectricFee = waterElectricFee;
-	}
-	public Integer getMiscFee() {
-		return miscFee;
-	}
-	public void setMiscFee(Integer miscFee) {
-		this.miscFee = miscFee;
-	}
-	public Integer getSportsCultureFee() {
-		return sportsCultureFee;
-	}
-	public void setSportsCultureFee(Integer sportsCultureFee) {
-		this.sportsCultureFee = sportsCultureFee;
-	}
-	public Integer getLibraryFee() {
-		return libraryFee;
-	}
-	public void setLibraryFee(Integer libraryFee) {
-		this.libraryFee = libraryFee;
-	}
-	public Integer getActivityFee() {
-		return activityFee;
-	}
-	public void setActivityFee(Integer activityFee) {
-		this.activityFee = activityFee;
-	}
-	public Integer getRegistrationFee() {
-		return registrationFee;
-	}
-	public void setRegistrationFee(Integer registrationFee) {
-		this.registrationFee = registrationFee;
-	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -173,5 +102,80 @@ public class FixedFeeBatchYearMonth implements Serializable{
 			}
 		}
 		return super.equals(obj);
+	}
+	public Double getExaminationFee() {
+		return examinationFee;
+	}
+	public void setExaminationFee(Double examinationFee) {
+		this.examinationFee = examinationFee;
+	}
+	public Double getMaintainanceFee() {
+		return maintainanceFee;
+	}
+	public void setMaintainanceFee(Double maintainanceFee) {
+		this.maintainanceFee = maintainanceFee;
+	}
+	public Double getTuitionFee() {
+		return tuitionFee;
+	}
+	public void setTuitionFee(Double tuitionFee) {
+		this.tuitionFee = tuitionFee;
+	}
+	public Double getReportCardFee() {
+		return reportCardFee;
+	}
+	public void setReportCardFee(Double reportCardFee) {
+		this.reportCardFee = reportCardFee;
+	}
+	public Double getBookFee() {
+		return bookFee;
+	}
+	public void setBookFee(Double bookFee) {
+		this.bookFee = bookFee;
+	}
+	public Double getIcardFee() {
+		return icardFee;
+	}
+	public void setIcardFee(Double icardFee) {
+		this.icardFee = icardFee;
+	}
+	public Double getWaterElectricFee() {
+		return waterElectricFee;
+	}
+	public void setWaterElectricFee(Double waterElectricFee) {
+		this.waterElectricFee = waterElectricFee;
+	}
+	public Double getMiscFee() {
+		return miscFee;
+	}
+	public void setMiscFee(Double miscFee) {
+		this.miscFee = miscFee;
+	}
+	public Double getSportsCultureFee() {
+		return sportsCultureFee;
+	}
+	public void setSportsCultureFee(Double sportsCultureFee) {
+		this.sportsCultureFee = sportsCultureFee;
+	}
+	public Double getLibraryFee() {
+		return libraryFee;
+	}
+	public void setLibraryFee(Double libraryFee) {
+		this.libraryFee = libraryFee;
+	}
+	public Double getActivityFee() {
+		return activityFee;
+	}
+	public void setActivityFee(Double activityFee) {
+		this.activityFee = activityFee;
+	}
+	public Double getRegistrationFee() {
+		return registrationFee;
+	}
+	public void setRegistrationFee(Double registrationFee) {
+		this.registrationFee = registrationFee;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 }
