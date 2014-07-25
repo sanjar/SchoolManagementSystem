@@ -52,7 +52,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
+				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
 				|  <a href="">Contact</a> |
 
 			</p>
@@ -109,7 +109,7 @@
 
 				<li  class="f">
 				 <button class="left" name="action" value="process">Process</button>
-				 <button class="left" name="action" value="delete" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>
 				</ul>
 		</form:form>

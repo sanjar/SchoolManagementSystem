@@ -888,4 +888,9 @@ table.formtable fieldset th {
    display:         none !important;
 }
 
-
+.error {
+    color:red;
+}
+.valid {
+    color:green;
+}

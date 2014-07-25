@@ -9,12 +9,13 @@
   <link rel="StyleSheet" href="<c:url value='/resources/css/main-print.css' />" type="text/css" media="print" />
 <link rel="stylesheet" href="<c:url value='/resources/css/style4.css' />" />
 <link href='http://fonts.googleapis.com/css?family=Engagement' rel='stylesheet' type='text/css'>
-<!--[if IE]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-    
+
+   
     <script src="<c:url value='/resources/js/multi.js'/>" type="text/javascript" charset="utf-8"></script>
     <script src="<c:url value='/resources/js/jquery.uniform.min.js'/>" type="text/javascript" charset="utf-8"></script>
+     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+     <script src="<c:url value='/resources/js/main.js'/>"
+	type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
       $(function(){
         $("input:checkbox, input:radio, input:file, select").uniform();
@@ -40,8 +41,35 @@
     	if('${disablePrevious}'){
     		$('#previousButton').attr('disabled','disabled');
     	}
+    	
+    	/*  $("#employee_master").validate({
+			rules: {
+				department:"required"
+			},
+			messages: {
+				department:"<br>Please select Department"
+			}
+			
+			
+	  });  */
+	  
+	  $('#employeeId').change(function(){
+		  if($('#employeeId').val().trim()==""){
+	    		$('#employeeIdMissing').show();
+	    	}
+		  else{
+			  $('#employeeIdMissing').hide();
+		  }
+	  });
     });
-    
+    function checkEmployeeId(){
+    	
+    	if($('#employeeId').val().trim()==""){
+    		$('#employeeIdMissing').show();
+    		return false;
+    	}
+    	return true;
+    }
     </script>
 </head>
 <body>
@@ -56,7 +84,7 @@
   <div class="subheader">
     <p>
       <span class="hidden">Navigation:</span>
-      <a href="" class="highlight">Home</a> |
+      <a href="/sms/home" class="highlight">Home</a> |
       <a href="">Contact</a> |
      
     </p>
@@ -74,7 +102,7 @@
 <form:form class="mrg-top" id="employee_master" action="processEmployeeMaster">
 
 	<ul>
-    
+	
     <li class="f">
 <h3 class="back">Employee Master</h3>
 </li>
@@ -98,12 +126,14 @@
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>
 						</li>
 				</c:if>
-				
+		<li class="f" hidden="true" style="color:red" id="employeeIdMissing">
+		<span>Please Enter Employee Id</span>
+		</li>		
         <li class="f">
         
         	<label for="name" class="fl">Employee Id:</label>
-            <form:input type="text" size="25" id="employeeId" class="fl" path="employeeId" />
-            <button class="left" name="action" value="search" style="margin-left: 30px">Search</button>
+            <form:input type="text" size="25" id="employeeId" class="fl numeric" path="employeeId"  />
+            <button class="left" name="action" value="search" style="margin-left: 30px" id="searchButton" onclick="return checkEmployeeId();">Search</button>
             
      
            
@@ -169,7 +199,7 @@
            </li>
 <li  class="f">
 
-<label for="name" class="fl">Department<span style="color: red">*</span></label> <form:select
+<label for="name" class="fl">Department<span style="color: red">*</span></label> <form:select id="department" 
 						path="department.departmentId" class="fl" onChange="document.getElementById('departmentName').value=this[this.selectedIndex].text;">
 						<option value="-1">Please Select Department</option>
 						<form:options items="${departmentList}" itemLabel="departmentName" itemValue="departmentId"/>
@@ -214,6 +244,7 @@
 				 <button id="previousButton" class="left" name="action" value="previous">Previous</button>
 				 <button class="left" name="action" value="last">Last</button>
 				 <button class="left" name="action" value="first">First</button>
+				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 				</li>
 
 </ul>

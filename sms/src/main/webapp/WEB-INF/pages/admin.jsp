@@ -102,31 +102,31 @@
 				
 				$('#dataBackup').click(function(event){
 					event.preventDefault();
-					window.open('admin/databackupNrestore',"_blank",'toolbar=0,location=0,menubar=0');
+					window.open('admin/databackupNrestore',"_blank" /* ,'toolbar=0,location=0,menubar=0' */);
 				});
 				$('#userManagement').click(function(event){
 					event.preventDefault();
-					window.open('admin/userManagement',"_blank",'toolbar=0,location=0,menubar=0');
+					window.open('admin/userManagement',"_blank"/* ,'toolbar=0,location=0,menubar=0' */);
 				});
 				$('#feeManagement').click(function(event){
 					event.preventDefault();
-					window.open('admin/feeManagement',"_blank",'toolbar=0,location=0,menubar=0');
+					window.open('admin/feeManagement',"_blank"/* ,'toolbar=0,location=0,menubar=0' */);
 				});
 				$('#payrollManagement').click(function(event){
 					event.preventDefault();
-					window.open('admin/payrollManagement',"_blank",'toolbar=0,location=0,menubar=0');
+					window.open('admin/payrollManagement',"_blank");
 				});
 				$('#transportManagement').click(function(event){
 					event.preventDefault();
-					window.open('admin/transportManagement',"_blank",'toolbar=0,location=0,menubar=0');
+					window.open('admin/transportManagement',"_blank"/* ,'toolbar=0,location=0,menubar=0' */);
 				});
 				$('#purchase').click(function(event){
 					event.preventDefault();
-					window.open('admin/purchase/manageCustomer',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
+					window.open('admin/purchase/manageCustomer',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
 				});
 				$('#reportGeneration').click(function(event){
 					event.preventDefault();
-					window.open('admin/generateReport',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
+					window.open('admin/generateReport',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
 				});
 			}); 
 			
@@ -145,7 +145,7 @@
 			}
 			
 			function createUser(){
-				window.open('admin/createUser',"_blank",'toolbar=0,location=0,menubar=0');
+				window.open('admin/createUser',"_blank"/* ,'toolbar=0,location=0,menubar=0' */);
 			}
 		</script>
 	</head>
@@ -167,7 +167,7 @@
   <div class="subheader">
     <p>
       <span class="hidden">Navigation:</span>
-      <a href="" class="highlight">Home</a> |
+      <a href="/sms/home" class="highlight">Home</a> |
       <a href="">Contact</a> |
       <a href="javascript:formSubmit();" id="logout">Logout</a>
      
@@ -239,9 +239,16 @@
                         <div class="module-body">
                         
                         	<p>
-                                <strong>User: </strong>User X<br />
-                                <strong>Your last visit was on: </strong>20 January 2010,<br />
-                                <strong>From IP: </strong>000.000.00.00
+                                <strong>User: </strong>
+                                
+                                 <c:if test="${pageContext.request.userPrincipal.name != null}">
+									${pageContext.request.userPrincipal.name}
+								</c:if>
+                                
+                                
+                                <br />
+                               <!--  <strong>Your last visit was on: </strong>20 January 2010,<br />
+                                <strong>From IP: </strong>000.000.00.00 -->
                             </p>
                         
 
@@ -249,21 +256,11 @@
                 </div>
                 <div style="clear:both;"></div>
             </div> <!-- End .grid_5 -->
-            <!-- <div>
-            Create User:
-            <select id="userCreationType" class="input-short">
-            	<option value="" selected="selected">Select User Type</option>
-            	<option value="Admin">Admin</option>
-            	<option value="Student">Student</option>
-            	<option value="Teacher">Teacher</option>
-            	<option value="Vendor">Vendor</option>
-            </select>
-            <input type="button" onclick="createUser()" value='GO>>'></input>
-            </div> -->
+            
             <div style="clear:both;"></div>
             
             
-            
+         <%--    
             <div class="grid_12">
                 
                 <!-- Notification boxes -->
@@ -276,428 +273,7 @@
                 <span class="notification n-error">Error notification.</span>
                 
                 
-               <!--  <div class="bottom-spacing">
-                
-                  
-                    
-                    Table records filtering
-                    Filter: 
-                    <select class="input-short">
-                    	<option value="1" selected="selected">Select filter</option>
-                        <option value="2">Created last week</option>
-                        <option value="3">Created last month</option>
-                        <option value="4">Edited last week</option>
-                        <option value="5">Edited last month</option>
-                    </select>
-                    
-                </div> -->
-                
-                
-                <!-- Example table -->
-                <%-- <div class="module">
-                	<h2><span>Sample table</span></h2>
-                    
-                    <div class="module-table-body">
-                    	<form action="">
-                        <table id="myTable" class="tablesorter">
-                        	<thead>
-                                <tr>
-                                    <th style="width:5%">#</th>
-                                    <th style="width:20%">Teacher Name</th>
-                                    <th style="width:21%">Student Name</th>
-                                    <th style="width:13%">Category</th>
-                                    <th style="width:13%">Marks</th>
-                                    <th style="width:13%">Div.</th>
-                                    <th style="width:15%"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="align-center">1</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>992</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif'/>" alt="" width="16" height="16" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif'/>" alt="" width="16" height="16" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif'/>" alt="" width="16" height="16" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif'/>" alt="" width="16" height="16" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">2</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>400</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif'/>" alt="" width="16" height="16" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif'/>" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">3</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>528</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif'/>" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif'/>"/></a>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif'/>" /></a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif'/>" /></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">4</td>
-                                    <td><a href=""></a>xyz</td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>1024</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/> </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">5</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>592</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">6</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>464</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/> </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">7</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>190</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> </a>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/> </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">8</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>304</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> 
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/> 
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">9</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>112</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> 
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/> </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">10</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>144</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/> 
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/> 
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">11</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>256</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">12</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>94</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">13</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>288</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">14</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>464</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">15</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>176</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">16</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>448</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">17</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>512</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">18</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>113</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/minus-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">19</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>400</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">20</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>288</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-center">21</td>
-                                    <td><a href="">xyz</a></td>
-                                    <td>xyz</td>
-                                    <td>xyz</td>
-                                    <td>384</td>
-                                    <td>1</td>
-                                    <td>
-                                    	<input type="checkbox" />
-                                        <a href=""><img src="<c:url value='/resources/images/tick-circle.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/pencil.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/balloon.gif' />"/>
-                                        <a href=""><img src="<c:url value='/resources/images/bin.gif' />"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </form>
-                        <div class="pager" id="pager">
-                            <form action="">
-                                <div>
-                                <img class="first" src="<c:url value='/resources/images/arrow-stop-180.gif' />"/> 
-                                <img class="prev" src="<c:url value='/resources/images/arrow-180.gif' />"/>  
-                                <input type="text" class="pagedisplay input-short align-center' />"/> 
-                                <img class="next" src="<c:url value='/resources/images/arrow.gif' />"/> 
-                                <img class="last" src="<c:url value='/resources/images/arrow-stop.gif' />"/>  
-                                <select class="pagesize input-short align-center">
-                                    <option value="10" selected="selected">10</option>
-                                    <option value="20">20</option>
-                                    <option value="30">30</option>
-                                    <option value="40">40</option>
-                                </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="table-apply">
-                            <form action="">
-                            <div>
-                            <span>Apply action to selected:</span> 
-                            <select class="input-medium">
-                                <option value="1" selected="selected">Select action</option>
-                                <option value="2">Publish</option>
-                                <option value="3">Unpublish</option>
-                                <option value="4">Delete</option>
-                            </select>
-                            </div>
-                            </form>
-                        </div>
-                        <div style="clear: both"></div>
-                     </div> <!-- End .module-table-body -->
-                </div> <!-- End .module -->
-                
-                
-                     <div class="pagination">           
-                		<a href="" class="button"><span><img src="<c:url value='/resources/images/arrow-stop-180-small.gif' />"/>  First</span></a> 
-                        <a href="" class="button"><span><img src="<c:url value='/resources/images/arrow-180-small.gif' />"/>  Prev</span></a>
-                        <div class="numbers">
-                            <span>Page:</span> 
-                            <a href="">1</a> 
-                            <span>|</span> 
-                            <a href="">2</a> 
-                            <span>|</span> 
-                            <span class="current">3</span> 
-                            <span>|</span> 
-                            <a href="">4</a> 
-                            <span>|</span> 
-                            <a href="">5</a> 
-                            <span>|</span> 
-                            <a href="">6</a> 
-                            <span>|</span> 
-                            <a href="">7</a> 
-                            <span>|</span> 
-                            <span>...</span> 
-                            <span>|</span> 
-                            <a href="">99</a>
-                        </div> 
-                        <a href="" class="button"><span>Next <img src="<c:url value='/resources/images/arrow-000-small.gif' />"/> </span></a> 
-                        <a href="" class="button last"><span>Last <img src="<c:url value='/resources/images/arrow-stop-000-small.gif' />"/> </span></a>
-                        <div style="clear: both;"></div> 
-                     </div>
-                
-                
-
-                
-			</div> <!-- End .grid_12 -->--%> 
-                
+              
 
                 
             <!-- Password -->
@@ -731,7 +307,7 @@
 
             
             <div style="clear:both;"></div>
-        </div> <!-- End .container_12 -->
+        </div>  --%><!-- End .container_12 -->
 		
            
         <!-- Footer -->

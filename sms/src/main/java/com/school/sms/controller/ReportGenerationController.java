@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.school.sms.constants.Constants;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
+import com.school.sms.service.FeeManagementService;
 import com.school.sms.service.ReportService;
 
 @Controller
@@ -31,6 +32,9 @@ public class ReportGenerationController {
 	
 	@Resource(name = "reportService")
 	private ReportService reportService;
+	
+	@Resource(name = "feeManagementService")
+	private FeeManagementService fixedFee;
 	
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.GET)
 	public ModelAndView generateReport(HttpServletRequest request) {
@@ -66,10 +70,18 @@ public class ReportGenerationController {
 	public ModelAndView processReport(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if(request.getParameter("action").equalsIgnoreCase("view")){
-	        if(request.getParameter("feeCollectionRequest").equalsIgnoreCase("feeCollectionRequest")){
+	        if("feeCollectionRequest".equalsIgnoreCase(request.getParameter("feeCollectionRequest"))){
+	        	model.addObject("feeCollectionRequest", "feeCollectionRequest");
 	        	model.addObject("studentFixedFeeDetails", studentFixedFeeDetails);
 	        	model.addObject("enrolementFatherMap", enrolementFatherMap);
 	        	model.addObject("month", request.getParameter("month"));
+	        }
+	        if("feeCollectionRequestDateWise".equalsIgnoreCase(request.getParameter("feeCollectionRequestDateWise"))){
+	        	model.addObject("feeCollectionRequestDateWise", "feeCollectionRequestDateWise");
+	        	model.addObject("fromDate", request.getParameter("fromDate"));
+	        	model.addObject("toDate", request.getParameter("toDate"));
+	        	model.addObject("studentFixedFeeDetails", studentFixedFeeDetails);
+	        	model.addObject("fixedFeeList", fixedFee.loadFeeStructures());
 	        }
 		}
       /*  request.getParameter("session");

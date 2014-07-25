@@ -27,15 +27,18 @@
 	type="text/javascript" charset="utf-8"></script>
 <script src="<c:url value='/resources/js/jquery.uniform.min.js'/>"
 	type="text/javascript" charset="utf-8"></script>
+	<script src="<c:url value='/resources/js/main.js'/>"
+	type="text/javascript" charset="utf-8"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 	$(function() {
 		$("input:checkbox, input:radio, input:file, select").uniform();
+		
 	});
 	
 	$(document).ready(function(){
 		
 		function validateGetDetails(){
-			alert("hi");
 			var enrolementNo= $('#enrolementNo').val();
 			if(enrolementNo==""){
 				$('#enrolementNoMissing').show();
@@ -68,6 +71,19 @@
 				$('#totalAmount').val(totalAmount-amount);
 			}
 		} */
+		
+		$("#feePayment").validate({
+			rules: {
+				enrolementNo:"required",
+				receiptNo:"required"
+			},
+			messages: {
+				enrolementNo:"<br>Please enter Enrolement No",
+				receiptNo:"<br>Please enter Receipt No"
+			}
+			
+		});
+		
 	});
 </script>
 </head>
@@ -84,7 +100,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
+				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
 				| <a href="">Contact</a> |
 
 			</p>
@@ -96,14 +112,22 @@
 			<h3 class="back33">Fixed Fee Details</h3>
 		</li>
 		<div class="main_colle">
-		<form:form class="c" action="feePayment" method="POST" >
+		<form:form class="c" action="feePayment" method="POST" id="feePayment">
 			<div class="main_coll_cover">
 				
 					<div class="coll_left">
 						<ul class="c1">
+						<c:if test="${studentNotfound}">
+						<li class="f">
+						<label style="color:red">No Student details found</label>
+						</li>
+						</c:if>
 							<li class="f"><label for="name" class="fl">Manual
 									Reciept Number:</label> <form:input type="text" size="15" id="receiptNo"
-								class="fl" path="receiptNo" /></li>
+								class="fl numeric" path="receiptNo" /></li>
+								<li class="f digit" style="color: Red; display: none">
+								<span>* Input digits (0 - 9)</span>
+								</li>
 							<li class="f"><label for="name" class="fl">Enter
 									Enrollment Number:</label> <form:input type="text" size="15" id="enrolementNo"
 								class="fl" path="enrolementNo" /></li>

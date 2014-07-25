@@ -42,8 +42,8 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
-				| <a href="">Login</a> | <a href="">Contact</a> |
+				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
+				| <a href="">Contact</a> |
 
 			</p>
 		</div>
@@ -253,6 +253,7 @@
 					<button type="" class="left"name="action" value="previous">Previous</button>
 					<button type="" class="left"name="action" value="first">First</button>
 					<button type="" class="left"name="action" value="last">Last</button>
+					<button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 					
 				</li>
 		</form:form>

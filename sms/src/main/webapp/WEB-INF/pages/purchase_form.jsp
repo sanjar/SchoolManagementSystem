@@ -41,14 +41,14 @@
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
-    	$('#manageProduct').click(function(event){
+    	/* $('#manageProduct').click(function(event){
 			event.preventDefault();
 			window.open('manageProduct',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
 		});
 		$('#purchaseReceipt').click(function(event){
 			event.preventDefault();
 			window.open('purchaseReceipt',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
+		}); */
     	
     	if('${disableNext}'){
     		$('#nextButton').attr('disabled','disabled');
@@ -70,8 +70,8 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
-				| <a href="">Contact</a> | <a id="manageProduct" href="">Manage Product</a> |<a id="purchaseReceipt" href="">Purchase Receipt</a>
+				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
+				| <a href="">Contact</a> | <a id="manageProduct" href="manageProduct">Manage Product</a> |<a id="purchaseReceipt" href="purchaseReceipt">Purchase Receipt</a>
 
 			</p>
 		</div>
@@ -153,6 +153,7 @@
 				 <button id="previousButton" class="left" name="action" value="previous">Previous</button>
 				 <button class="left" name="action" value="last">Last</button>
 				 <button class="left" name="action" value="first">First</button>
+				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 				</li>
 				</ul>
 		</form:form>

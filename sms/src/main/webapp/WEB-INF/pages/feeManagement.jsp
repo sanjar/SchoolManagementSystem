@@ -24,7 +24,7 @@
 			document.backuprestore.submit();
 		}
 		
-		$('#manageFixedFee').click(function(event){
+		/* $('#manageFixedFee').click(function(event){
 			event.preventDefault();
 			window.open('manageFixedFee',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
 		});
@@ -40,7 +40,7 @@
 		$('#feePayment').click(function(event){
 			event.preventDefault();
 			window.open('feePayment',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
+		}); */
 	});
 </script>
 <style type="text/css">
@@ -64,9 +64,9 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a id="manageFixedFee"
-					href="">Manage Fixed Fee</a> | <a id="manageVariableFee" href="">Manage
-					Variable Fee</a> | <a id="manageDiscountsAndConcessions" href="">Manage
-					Discounts and Concessions</a> | <a id="feePayment" href="">Fee Payment</a> |
+					href="manageFixedFee">Manage Fixed Fee</a> | <a id="manageVariableFee" href="manageVariableFee">Manage
+					Variable Fee</a> | <a id="manageDiscountsAndConcessions" href="manageDiscountsAndConcessions">Manage
+					Discounts and Concessions</a> | <a id="feePayment" href="feePayment">Fee Payment</a> |
 
 			</p>
 		</div>

@@ -30,7 +30,7 @@
 							document.backuprestore.submit();
 						}
 
-						$('#manageEmployeeMaster')
+					/* 	$('#manageEmployeeMaster')
 								.click(
 										function(event) {
 											event.preventDefault();
@@ -39,8 +39,8 @@
 															'payrollManagement/manageEmployeeMaster',
 															"_blank",
 															'scrollbars=1,toolbar=0,location=0,menubar=0');
-										});
-						$('#manageGradeMaster')
+										}); */
+						/* $('#manageGradeMaster')
 								.click(
 										function(event) {
 											event.preventDefault();
@@ -48,8 +48,8 @@
 													.open('payrollManagement/manageGradeMaster',
 															"_blank",
 															'scrollbars=1,toolbar=0,location=0,menubar=0');
-										});
-						$('#manageSalaryMaster')
+										}); */
+						/* $('#manageSalaryMaster')
 								.click(
 										function(event) {
 											event.preventDefault();
@@ -58,8 +58,8 @@
 															'payrollManagement/manageSalaryMaster',
 															"_blank",
 															'scrollbars=1,toolbar=0,location=0,menubar=0');
-										});
-						$('#manageDepartmentMaster')
+										}); */
+						/* $('#manageDepartmentMaster')
 						.click(
 								function(event) {
 									event.preventDefault();
@@ -68,8 +68,8 @@
 													'payrollManagement/manageDepartmentMaster',
 													"_blank",
 													'scrollbars=1,toolbar=0,location=0,menubar=0');
-								});
-						$('#processSalary')
+								}); */
+						/* $('#processSalary')
 						.click(
 								function(event) {
 									event.preventDefault();
@@ -78,7 +78,7 @@
 													'payrollManagement/processSalary',
 													"_blank",
 													'scrollbars=1,toolbar=0,location=0,menubar=0');
-								});
+								}); */
 					});
 </script>
 <style type="text/css">
@@ -104,10 +104,10 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a id="manageEmployeeMaster"
-					href="">Manage Employee Master</a> | <a id="manageGradeMaster"
-					href="">Manage Grade Master</a> | <a id="manageSalaryMaster"
-					href="">Manage Salary Master</a> |<a id="manageDepartmentMaster"
-					href="">Manage Department Master</a>|<a id="processSalary" href="">Process
+					href="payrollManagement/manageEmployeeMaster">Manage Employee Master</a> | <a id="manageGradeMaster"
+					href="payrollManagement/manageGradeMaster">Manage Grade Master</a> | <a id="manageSalaryMaster"
+					href="payrollManagement/manageSalaryMaster">Manage Salary Master</a> |<a id="manageDepartmentMaster"
+					href="payrollManagement/manageDepartmentMaster">Manage Department Master</a>|<a id="processSalary" href="payrollManagement/processSalary">Process
 					Salary</a>
 
 			</p>

@@ -5,7 +5,8 @@
 <title>SCHOOL ACCOUNTS MANAGEMENT SYSTEM</title>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+<!-- <script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script> -->
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
  <script>
         history.forward();
     </script>
@@ -34,7 +35,22 @@ $(document).ready(function(){
 		$('#User').parent().removeClass("highlight");
 		$('#Admin').parent().addClass("highlight");
 	}
+	
+	$('#username').focus();
+	$("#userLoginForm").validate({
+		rules: {
+			username:"required",
+			password:"required"
+		},
+		messages: {
+			username:"<br>Please specify Username",
+			password:"<br>Please specify Passowrd"
+		}
+		
+	});
 });
+
+
 
 </script>
 
@@ -108,15 +124,15 @@ $(document).ready(function(){
 				<H2>Login</H2>
 				<br /> <br />
 				
-				<div id="login-box-name" style="margin-top: 20px;">User Name:</div>
+				<div id="login-box-name" style="margin-top: 20px;"><b>User Name:</b></div>
 				<div id="login-box-field" style="margin-top: 20px;">
-					<input name="username" class="form-login" title="Username" value=""
+					<input name="username" id="username" class="form-login" title="Username"
 						size="30" maxlength="2048" />
 				</div>
-				<div id="login-box-name">Password:</div>
+				<div id="login-box-name"><b>Password:</b></div>
 				<div id="login-box-field">
-					<input name="password" type="password" class="form-login" title="Password"
-						value="" size="30" maxlength="2048" />
+					<input name="password" id="password" type="password" class="form-login" title="Password"
+						 size="30" maxlength="2048" />
 				</div>
 				
 				

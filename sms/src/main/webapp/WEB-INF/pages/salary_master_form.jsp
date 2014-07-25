@@ -23,6 +23,7 @@
 	type="text/javascript" charset="utf-8"></script>
 <script src="<c:url value='/resources/js/jquery.uniform.min.js'/>"
 	type="text/javascript" charset="utf-8"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 <script type="text/javascript" charset="utf-8">
       $(function(){
         $("input:checkbox, input:radio, input:file, select").uniform();
@@ -36,6 +37,23 @@
     	if('${disablePrevious}'){
     		$('#previousButton').attr('disabled','disabled');
     	}
+    	/* $("#salary_master").validate({
+    		rules: {
+    			salaryId:"required",
+    			gradeId: {
+    	            required: {
+    	                depends: function(element) {
+    	                    return $("#gradeId").val() == -1;
+    	                }
+    	            }
+    	        }
+    		},
+    		messages: {
+    			salaryId:"<br/><li class='f'>Please enter salary Id </li>" ,
+    			gradeId:"<br>Please select Grade Code"
+    		}
+    		
+    	}); */
     });
     </script>
 </head>
@@ -52,7 +70,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="" class="highlight">Home</a>
+				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
 				| <a href="">Contact</a> |
 
 			</p>
@@ -79,7 +97,7 @@
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>
 				</c:if>
 				<li class="f"><label for="name" class="fl">Grade<span style="color: red">*</span></label> <form:select
-						path="grade.gradeId" class="fl" onChange="document.getElementById('gradeName').value=this[this.selectedIndex].text;">
+						path="grade.gradeId" class="fl" onChange="document.getElementById('gradeName').value=this[this.selectedIndex].text;" id="gradeId" >
 						<option value="-1">Please Select Grade</option>
 						<form:options items="${gradeList}" itemLabel="gradeName" itemValue="gradeId"/>
 						<form:input id="gradeName" type="hidden" path="grade.gradeName"/>
@@ -88,7 +106,7 @@
 					<form:input type="text" size="25" id="salaryId" class="fl" path="salaryId" />
 					<button class="left" name="action" value="search" style="margin-left: 30px">Search</button>
 					<c:if test="${noSalaryMasterFound}">
-						<label style="color:red">No Salary Master Found.</label>
+						<span style="color:red">No Salary Master Found.</span>
 					</c:if>
 					<c:if test="${salarySaved}">
 						<label style="color: green">Grade Saved!!!</label>
@@ -133,6 +151,7 @@
 				 <button id="previousButton" class="left" name="action" value="previous">Previous</button>
 				 <button class="left" name="action" value="last">Last</button>
 				 <button class="left" name="action" value="first">First</button>
+				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 				</li>
 				</ul>
 		</form:form>

@@ -17,12 +17,12 @@
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
-<script src="<c:url value='/resources/js/multi.js'/>"
-	type="text/javascript" charset="utf-8"></script>
-<script src="<c:url value='/resources/js/jquery.uniform.min.js'/>"
+<%-- <script src="<c:url value='/resources/js/multi.js'/>"
+	type="text/javascript" charset="utf-8"></script> --%>
+<%-- <script src="<c:url value='/resources/js/jquery.uniform.min.js'/>"
 	type="text/javascript" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script> --%>
  <script>
         history.forward();
     </script>
@@ -33,14 +33,23 @@ $(document).ready(function(){
 	$('.link').click(function(event) {
 		$('#links li').removeClass("highlight");
 		$(this).parent().addClass("highlight");
-		
-		
+		//alert();
+		$('.report').hide();
+		if($(this).attr("id")=="collectionDateWise"){
+			$('#feeCollectionDateWise').show();
+		}
 	    //$('#userType').val($(this).text().split(" ")[0]);
 	    $('#user_type').val($(this).attr("id"));
 	    //alert($('#user_type').val());
 	  // or use return false;
 	});
-	
+	 $(".dateWiseFeeCalender").datepicker({
+         showOn: "button",
+         dateFormat: "dd/mm/yy",
+         disabled: false,
+         buttonImage: "<c:url value='/resources/images/calendar.png'/>",
+         buttonImageOnly: true
+     });
 });
 
 </script>
@@ -80,8 +89,8 @@ $(document).ready(function(){
 		<div>
 
 			<ul id="links">
-				<li class="highlight"><a id="feeCollectionDetails" class="link" href="">Fee Collection details</a></li>
-				<li><a id="Admin1" class="link" href="">fee</a></li>
+				<li class="highlight"><a id="feeCollectionDetails" class="link" href="#">Fee Collection details</a></li>
+				<li><a id="collectionDateWise" class="link" href="#">Fee Collection Date Wise</a></li>
 			</ul>
 		</div>
 		<input type="hidden" name="user_type" id ="user_type" value="" />
@@ -91,10 +100,10 @@ $(document).ready(function(){
 	<!-- ======== Main Content ======== -->
 
 	<div id="main">
-			<div id="feeCollection">
+			<div id="feeCollection" class="report">
 				
 				<h1>Fee Collection Details</h1>
-				<form action="generateReport" method="POST">
+				<form action="generateReport" method="POST" target="_blank">
 				<article>
 				<ul>
 				<li class="f">
@@ -134,7 +143,31 @@ $(document).ready(function(){
 					</form>
 			</div>
 
-
+			<div id="feeCollectionDateWise" class="report" hidden="true">
+				
+				<h1>Fee Collection Details Date Wise</h1>
+				<form action="generateReport" method="POST" target="_blank">
+				<article>
+				<ul>
+				<li class="f">
+				<label class="fl">From Date : </label>
+				<input type="text" size="25" style="margin-right:10px" id="fromDate" class="fl dateWiseFeeCalender" name="fromDate" readonly="readonly"/>
+				</li>
+					
+					<li class="f">
+				<label class="fl">To Date : </label>
+				<input type="text" size="25" style="margin-right:10px" id="toDate" class="fl dateWiseFeeCalender" name="toDate" readonly="readonly"/>
+				</li>
+					
+					<li  class="f">
+				<input type="hidden" name ="feeCollectionRequestDateWise" value="feeCollectionRequestDateWise">	
+				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				</li>
+					</ul>
+					</article>
+					</form>
+			</div>
 
 
 			<br id="endmain" />

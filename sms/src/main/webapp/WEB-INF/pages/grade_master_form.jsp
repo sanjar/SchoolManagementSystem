@@ -29,7 +29,27 @@
     	if('${disablePrevious}'){
     		$('#previousButton').attr('disabled','disabled');
     	}
+    	if($('#gradeId').val().trim()==""){
+    		$('#delete').attr('disabled','disabled');
+    	}
+    	 $('#gradeId').change(function(){
+   		  if($('#gradeId').val().trim()==""){
+   	    		$('#gradeIdMissing').show();
+   	    	}
+   		  else{
+   			  $('#gradeIdMissing').hide();
+   		  }
+   	  });
     });
+    
+function checkGradeId(){
+    	
+    	if($('#gradeId').val().trim()==""){
+    		$('#gradeIdMissing').show();
+    		return false;
+    	}
+    	return true;
+    }
     </script>
 </head>
 <body>
@@ -44,7 +64,7 @@
   <div class="subheader">
     <p>
       <span class="hidden">Navigation:</span>
-      <a href="" class="highlight">Home</a> |
+      <a href="/sms/home" class="highlight">Home</a> |
       <a href="">Contact</a> |
      
     </p>
@@ -54,14 +74,16 @@
 <article>
 
 <form:form class="mrg-top" id="grade_master" action="processGradeMaster">
-
+<li class="f" hidden="true" style="color:red" id="gradeIdMissing">
+		<span>Please Enter Grade Id</span>
+		</li>
 <li class="f">
 	<table>
 	<tr>
 		<td><label>Grade Id</label></td> 
-		<td><form:input path="gradeId"/></td><td><button class="left" name="action" value="search">Search</button></td>
+		<td><form:input path="gradeId" id="gradeId" /></td><td><button class="left" name="action" value="search" onclick="return checkGradeId();">Search</button></td>
 		<td><c:if test="${noGradeMasterFound}">
-						<label style="color:red">No Grade Master Found.</label>
+						<span style="color:red">No Grade Master Found.</span>
 					</c:if></td>
 	</tr>
 	<tr>
@@ -88,12 +110,13 @@
 </li>
 
 <li  class="f">
- <button class="left" name="action" value="save">Save</button>
- <button class="left" name="action" value="delete">Delete</button>
+ <button class="left" name="action" value="save" onclick="return checkGradeId();">Save</button>
+ <button class="left" name="action" value="delete" id="delete" >Delete</button>
  <button id="nextButton" class="left" name="action" value="next">Next</button>
  <button id="previousButton" class="left" name="action" value="previous">Previous</button>
  <button class="left" name="action" value="last">Last</button>
  <button class="left" name="action" value="first">First</button>
+ <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 </li>
 
 </form:form>

@@ -42,7 +42,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="">Home</a> | <a href="">Contact</a> |
+				<span class="hidden">Navigation:</span> <a href="/sms/home">Home</a> | <a href="">Contact</a> |
 
 			</p>
 		</div>

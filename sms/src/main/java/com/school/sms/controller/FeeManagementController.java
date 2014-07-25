@@ -437,6 +437,7 @@ public class FeeManagementController {
 			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("fee_payment_form", "command",
 				new StudentFeeDetails());
+		Boolean studentNotfound=false;
 		if("getDetails".equalsIgnoreCase(action)){
 			Student student = getStudent(studentFeeDeatils.getEnrolementNo());/*feeService.loadStudentDeatil(studentFeeDeatils.getEnrolementNo());*/
 			if(student!=null){
@@ -457,6 +458,9 @@ public class FeeManagementController {
 				}
 			}
 			}
+			else{
+				studentNotfound=true;
+			}
 			
 		}
 		else if("save".equalsIgnoreCase(action)){
@@ -471,9 +475,12 @@ public class FeeManagementController {
 					studentFeeDeatils);
 			model.addObject("fixedFeeMap", feeHeaderFeeMap);
 			model.addObject("studenFeeDetailstList", details);
+			if(studentNotfound){
+				model.addObject("studentNotfound", true);
+			}
 		}
 		model.addObject("modeOfPaymentList", Arrays.asList(Constants.MODE_OF_PAYMENT));
-		model.addObject("studentClassBatchList", this.studentClassBatchList);
+		model.addObject("studentClassBatchList", Arrays.asList(Constants.BATCH_ARRAY));
 		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		// model.setViewName("fixed-fees");
 

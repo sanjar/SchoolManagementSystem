@@ -24,10 +24,10 @@
 			document.backuprestore.submit();
 		}
 		
-		$('#manageTransportFee').click(function(event){
+		/* $('#manageTransportFee').click(function(event){
 			event.preventDefault();
 			window.open('transportManagement/manageTransportFee',"_blank",'scrollbars=1,toolbar=0,location=0,menubar=0');
-		});
+		}); */
 	});
 </script>
 <style type="text/css">
@@ -50,7 +50,7 @@
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a id="manageTransportFee" href="">Manage Transport Fee</a>
+				<span class="hidden">Navigation:</span> <a id="manageTransportFee" href="transportManagement/manageTransportFee">Manage Transport Fee</a>
 
 			</p>
 		</div>
