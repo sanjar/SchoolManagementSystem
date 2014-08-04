@@ -38,12 +38,21 @@ $(document).ready(function(){
 		if($(this).attr("id")=="collectionDateWise"){
 			$('#feeCollectionDateWise').show();
 		}
+		if($(this).attr("id")=="feeCollectionDetails"){
+			$('#feeCollection').show();
+		}
+		if($(this).attr("id")=="collectionDateSessionBatchWise"){
+			$('#feeCollectionDateSessionBatchWise').show();
+		}
 	    //$('#userType').val($(this).text().split(" ")[0]);
 	    $('#user_type').val($(this).attr("id"));
 	    //alert($('#user_type').val());
 	  // or use return false;
 	});
 	 $(".dateWiseFeeCalender").datepicker({
+		 changeMonth: true,
+		 changeYear: true,
+		 yearRange:'-90:+0',
          showOn: "button",
          dateFormat: "dd/mm/yy",
          disabled: false,
@@ -91,6 +100,7 @@ $(document).ready(function(){
 			<ul id="links">
 				<li class="highlight"><a id="feeCollectionDetails" class="link" href="#">Fee Collection details</a></li>
 				<li><a id="collectionDateWise" class="link" href="#">Fee Collection Date Wise</a></li>
+				<li><a id="collectionDateSessionBatchWise" class="link" href="#">Fee Collection Date/Session/Batch Wise</a></li>
 			</ul>
 		</div>
 		<input type="hidden" name="user_type" id ="user_type" value="" />
@@ -168,7 +178,46 @@ $(document).ready(function(){
 					</article>
 					</form>
 			</div>
-
+			<div id="feeCollectionDateSessionBatchWise" class="report" hidden="true">
+				
+				<h1>Fee Collection Date/Session/Batch Wise</h1>
+				<form action="generateReport" method="POST" target="_blank">
+				<article>
+				<ul>
+				<li class="f">
+				<label class="fl">From Date : </label>
+				<input type="text" size="25" style="margin-right:10px" id="fromDate" class="fl dateWiseFeeCalender" name="fromDate" readonly="readonly"/>
+				</li>
+					
+					<li class="f">
+				<label class="fl">To Date : </label>
+				<input type="text" size="25" style="margin-right:10px" id="toDate" class="fl dateWiseFeeCalender" name="toDate" readonly="readonly"/>
+				</li>
+					<li class="f">
+				<label class="fl">Select Session : </label>
+				<select name="session" class="fl">
+						<option value="-1">Please Select Session</option>
+						<c:forEach items="${sessionList}" var="session">
+							<option value="${session}">${session}</option>
+						</c:forEach>
+					</select></li>
+					<li class="f">
+				<label class="fl">Select Batch : </label>
+				<select name="batch" class="fl">
+						<option value="-1">Please Select Batch</option>
+						<c:forEach items="${batchList}" var="batch">
+							<option value="${batch}">${batch}</option>
+						</c:forEach>
+					</select></li>
+					<li  class="f">
+				<input type="hidden" name ="feeCollectionType" value="feeCollectionDateSessionBatchWise">	
+				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				</li>
+					</ul>
+					</article>
+					</form>
+			</div>
 
 			<br id="endmain" />
 	</div>

@@ -13,6 +13,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -102,7 +103,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 		cell1.setPadding(5);
 		Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
 		font1.setColor(BaseColor.BLACK);
-		font1.setSize(10);
+		font1.setSize(5);
 		Double totalAmount=0.00;
 		for(StudentFeeDetails detail: studentFixedFeeDetailsList){
 			table.addCell(getCell(cell1,detail.getDateOfPayment(),font1,1,Element.ALIGN_CENTER));
@@ -134,13 +135,14 @@ public class PDFBuilder extends AbstractITextPdfView {
 	private void generatePDFForFeeCollectionDateWise(Map<String, Object> model,
 			Document doc, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		doc.setPageSize(PageSize.LETTER_LANDSCAPE.rotate());
 		doc.add(new Paragraph("Fee Collection Details Header Wise"));
 		doc.add(new Paragraph("From : "+model.get("fromDate")+"   to : "+ model.get("toDate")));
 		
 		PdfPTable table = new PdfPTable(23);
 		table.setWidthPercentage(100.0f);
-		table.setWidths(new float[] {1.2f, 1.0f, 1.2f, 1.0f, 1.0f,1.0f,1.8f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f});
-		table.setSpacingBefore(10);
+		table.setWidths(new float[] {1.2f, 1.0f, 1.2f, 1.0f, 1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,1.0f});
+		table.setSpacingBefore(2);
 		
 		// define font for table header row
 				Font font = FontFactory.getFont(FontFactory.HELVETICA);
@@ -150,7 +152,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 				// define table header cell
 				PdfPCell cell = new PdfPCell();
 				cell.setBackgroundColor(BaseColor.BLUE);
-				cell.setPadding(5);
+				cell.setPadding(2);
 				
 				// write table header 
 				cell.setPhrase(new Phrase("Enrolement No", font));
@@ -223,7 +225,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 				
 				PdfPCell cell1 = new PdfPCell();
 				cell1.setBackgroundColor(BaseColor.WHITE);
-				cell1.setPadding(5);
+				cell1.setPadding(2);
 				Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
 				font1.setColor(BaseColor.BLACK);
 				font1.setSize(5);
