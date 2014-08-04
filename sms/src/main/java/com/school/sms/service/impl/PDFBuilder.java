@@ -29,7 +29,7 @@ import com.school.sms.service.AbstractITextPdfView;
  * @author www.codejava.net
  *
  */
-public class PDFBuilder extends AbstractITextPdfView {
+public class PDFBuilder extends AbstractITextPdfView { 
 
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model, Document doc,

@@ -31,7 +31,7 @@
 
 $(document).ready(function(){
 	$('.link').click(function(event) {
-		$('#links li').removeClass("highlight");
+		$('#links li').removeClass("highlight"); 
 		$(this).parent().addClass("highlight");
 		//alert();
 		$('.report').hide();
