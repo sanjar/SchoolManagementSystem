@@ -1,6 +1,7 @@
 package com.school.sms.controller;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,52 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.school.sms.constants.Constants;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.Student;
+import com.school.sms.model.VariableFeeBatchYearMonth;
 import com.school.sms.service.FeeManagementService;
 
 @Controller
 public class AdminController {
 
 	
-	@RequestMapping(value = "/admin/createStudent**", method = RequestMethod.GET)
-	public ModelAndView adminPage() {
-
-		ModelAndView model = new ModelAndView();
-		/*
-		 * model.addObject("title", "Spring Security Custom Login Form");
-		 * model.addObject("message", "This is protected page!");
-		 */
-
-		model.setViewName("createStudent");
-
-		return model;
-
-	}
-	
-	
-	
-	@RequestMapping(value = "admin/userManagement", method = RequestMethod.GET)
-	public ModelAndView userManagement() {
-
-		ModelAndView model = new ModelAndView();
-		/*
-		 * model.addObject("title", "Spring Security Custom Login Form");
-		 * model.addObject("message", "This is protected page!");
-		 */
-
-		model.setViewName("userManagement");
-
-		return model;
-
-	}
-	
-	
-
 	@RequestMapping(value = "admin/databackupNrestore")
 	public ModelAndView dataBackAndRestore(
 			@RequestParam(value = "backup", required = false) String backup,

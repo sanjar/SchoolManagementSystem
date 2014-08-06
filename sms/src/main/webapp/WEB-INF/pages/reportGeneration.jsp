@@ -59,6 +59,16 @@ $(document).ready(function(){
          buttonImage: "<c:url value='/resources/images/calendar.png'/>",
          buttonImageOnly: true
      });
+	 $(".dateWiseFeeCalender1").datepicker({
+		 changeMonth: true,
+		 changeYear: true,
+		 yearRange:'-90:+0',
+         showOn: "button",
+         dateFormat: "dd/mm/yy",
+         disabled: false,
+         buttonImage: "<c:url value='/resources/images/calendar.png'/>",
+         buttonImageOnly: true
+     });
 });
 
 </script>
@@ -186,12 +196,12 @@ $(document).ready(function(){
 				<ul>
 				<li class="f">
 				<label class="fl">From Date : </label>
-				<input type="text" size="25" style="margin-right:10px" id="fromDate" class="fl dateWiseFeeCalender" name="fromDate" readonly="readonly"/>
+				<input type="text" size="25" style="margin-right:10px" id="fromDate1" class="fl dateWiseFeeCalender1" name="fromDate" readonly="readonly"/>
 				</li>
 					
 					<li class="f">
 				<label class="fl">To Date : </label>
-				<input type="text" size="25" style="margin-right:10px" id="toDate" class="fl dateWiseFeeCalender" name="toDate" readonly="readonly"/>
+				<input type="text" size="25" style="margin-right:10px" id="toDate1" class="fl dateWiseFeeCalender1" name="toDate" readonly="readonly"/>
 				</li>
 					<li class="f">
 				<label class="fl">Select Session : </label>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
@@ -43,11 +44,91 @@ public class PDFBuilder extends AbstractITextPdfView {
 		else if("feeCollectionRequest".equalsIgnoreCase((String)model.get("feeCollectionRequest"))){
 			generatePDFForFeeCollection(model,doc,writer,request,response);
 		}
+		else if("feeCollectionDateSessionBatchWise".equalsIgnoreCase((String)model.get("feeCollectionType"))){
+			generatePDFForFeeCollectionDateSessionBatchWise(model,doc,writer,request,response);
+		}
 		
 		
 	}
 
 	
+
+	private void generatePDFForFeeCollectionDateSessionBatchWise(
+			Map<String, Object> model, Document doc, PdfWriter writer,
+			HttpServletRequest request, HttpServletResponse response) throws DocumentException {
+		List<StudentFeeDetails> feeCollectionDateSessionBatchWiseList = (List<StudentFeeDetails>) model.get("feeCollectionDateSessionBatchWiseList");
+		String session = (String) model.get("session");
+		String batch = (String) model.get("batch");
+		doc.add(new Paragraph("Fee Collection Details"));
+		doc.add(new Paragraph("From : "+model.get("fromDate")+"   to : "+ model.get("toDate")));
+		doc.add(new Paragraph("Session : "+session));
+		doc.add(new Paragraph("Batch : "+batch));
+		
+		PdfPTable table = new PdfPTable(8);
+		table.setWidthPercentage(100.0f);
+		table.setWidths(new float[] {2.2f, 2.0f, 2.2f, 3.0f, 3.0f,2.0f,1.8f,2.0f});
+		table.setSpacingBefore(10);
+		
+		// define font for table header row
+		Font font = FontFactory.getFont(FontFactory.HELVETICA);
+		font.setColor(BaseColor.WHITE);
+		font.setSize(10);
+		
+		// define table header cell
+		PdfPCell cell = new PdfPCell();
+		cell.setBackgroundColor(BaseColor.BLUE);
+		cell.setPadding(5);
+		
+		// write table header 
+		cell.setPhrase(new Phrase("Date", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Session", font));
+		table.addCell(cell);
+
+		cell.setPhrase(new Phrase("Batch", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Enrolement No", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Student Name", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Month", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Receipt No", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Amount", font));
+		table.addCell(cell);
+		
+		PdfPCell cell1 = new PdfPCell();
+		cell1.setBackgroundColor(BaseColor.WHITE);
+		cell1.setPadding(5);
+		Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
+		font1.setColor(BaseColor.BLACK);
+		font1.setSize(5);
+		Double totalAmount=0.00;
+		for(StudentFeeDetails detail: feeCollectionDateSessionBatchWiseList){
+			table.addCell(getCell(cell1,detail.getDateOfPayment(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getSession(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getBatch(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getEnrolementNo(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getStudentName(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getMonth(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(detail.getReceiptNo()),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(detail.getAmountReceived()),font1,1,Element.ALIGN_CENTER));
+			totalAmount=totalAmount+detail.getAmountReceived();
+		}
+		table.addCell(getCell(cell1,"Total Collection ",font1,7,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(totalAmount),font1,1,Element.ALIGN_RIGHT));
+		doc.add(table);
+		
+	}
+
+
 
 	private void generatePDFForFeeCollection(Map<String, Object> model,
 			Document doc, PdfWriter writer, HttpServletRequest request,

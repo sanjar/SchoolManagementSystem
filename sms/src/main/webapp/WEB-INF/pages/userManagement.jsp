@@ -88,7 +88,7 @@ $(document).ready(function(){
 	<h1>User Management</h1>
 
 * <h3><a href="createAdminUser">Create Admin User</a></h3>
-* <h3><a href="createStudent">Create Student</a></h3>
+* <h3><a href="userManagement/manageStudent">Manage Student</a></h3>
 			<br id="endmain" />
 	</div>
 

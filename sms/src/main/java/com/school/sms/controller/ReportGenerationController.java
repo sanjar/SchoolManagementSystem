@@ -1,7 +1,10 @@
 package com.school.sms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -67,7 +70,7 @@ public class ReportGenerationController {
 	}
 
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.POST)
-	public ModelAndView processReport(HttpServletRequest request) {
+	public ModelAndView processReport(HttpServletRequest request) throws ParseException {
 		ModelAndView model = new ModelAndView();
 		if(request.getParameter("action").equalsIgnoreCase("view")){
 	        if("feeCollectionRequest".equalsIgnoreCase(request.getParameter("feeCollectionRequest"))){
@@ -83,6 +86,21 @@ public class ReportGenerationController {
 	        	model.addObject("studentFixedFeeDetails", studentFixedFeeDetails);
 	        	model.addObject("fixedFeeList", fixedFee.loadFeeStructures());
 	        }
+	        if("feeCollectionDateSessionBatchWise".equalsIgnoreCase(request.getParameter("feeCollectionType"))){
+	        	model.addObject("fromDate", request.getParameter("fromDate"));
+	        	model.addObject("toDate", request.getParameter("toDate"));
+	        	
+				model.addObject(
+						"feeCollectionDateSessionBatchWiseList",
+						getFeeCollectionDateSessionBatchWiseList(
+								request.getParameter("fromDate"),
+								request.getParameter("toDate"),
+								request.getParameter("session"),
+								request.getParameter("batch")));
+	        	model.addObject("session", request.getParameter("session"));
+	        	model.addObject("batch", request.getParameter("batch"));
+	        	model.addObject("feeCollectionType", "feeCollectionDateSessionBatchWise");
+	        }
 		}
       /*  request.getParameter("session");
         request.getParameter("batch");
@@ -96,6 +114,28 @@ public class ReportGenerationController {
 
 		return model;
 
+	}
+
+	private List<StudentFeeDetails> getFeeCollectionDateSessionBatchWiseList(String fromDate,
+			String toDate, String session, String batch) throws ParseException {
+		
+		List<StudentFeeDetails> list = new ArrayList<StudentFeeDetails>();
+		SimpleDateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+		Date fromDate1 = format.parse(fromDate);
+		Date toDate1 = format.parse(toDate);
+		for(StudentFeeDetails detail: studentFixedFeeDetails){
+			if (!detail.getDateOfPayment().isEmpty()
+					&& fromDate1.compareTo(format.parse(detail
+							.getDateOfPayment())) <= 0
+					&& toDate1
+							.compareTo(format.parse(detail.getDateOfPayment())) >= 0) {
+				if(detail.getSession().equals(session) && detail.getBatch().equalsIgnoreCase(batch)){
+					list.add(detail);
+				}
+
+			}
+		}
+		return list;
 	}
 	
 }
