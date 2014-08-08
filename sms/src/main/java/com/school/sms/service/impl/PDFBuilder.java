@@ -47,11 +47,83 @@ public class PDFBuilder extends AbstractITextPdfView {
 		else if("feeCollectionDateSessionBatchWise".equalsIgnoreCase((String)model.get("feeCollectionType"))){
 			generatePDFForFeeCollectionDateSessionBatchWise(model,doc,writer,request,response);
 		}
+		else if("transportfeePending".equalsIgnoreCase((String)model.get("reportType"))){
+			generatePDFForPendingTransportFee(model,doc,writer,request,response);
+		}
 		
 		
 	}
 
 	
+
+	private void generatePDFForPendingTransportFee(Map<String, Object> model,
+			Document doc, PdfWriter writer, HttpServletRequest request,
+			HttpServletResponse response) throws DocumentException {
+		List<StudentFeeDetails> studentFixedFeeDetailsList = (List<StudentFeeDetails>) model.get("studentFixedFeeDetails");
+		Map<String,String> enrolementFatherMap = (Map<String,String> ) model.get("enrolementFatherMap");
+		String month = (String) model.get("month");
+		doc.add(new Paragraph("Transport Fee Pending Report"));
+		doc.add(new Paragraph("Month : "+month));
+		
+		PdfPTable table = new PdfPTable(6);
+		table.setWidthPercentage(100.0f);
+		table.setWidths(new float[] {2.2f, 2.0f, 2.2f, 3.0f, 3.0f,2.0f});
+		table.setSpacingBefore(10);
+		
+		// define font for table header row
+		Font font = FontFactory.getFont(FontFactory.HELVETICA);
+		font.setColor(BaseColor.WHITE);
+		font.setSize(10);
+		
+		// define table header cell
+		PdfPCell cell = new PdfPCell();
+		cell.setBackgroundColor(BaseColor.BLUE);
+		cell.setPadding(5);
+		
+			
+		
+		cell.setPhrase(new Phrase("Enrolement No", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Student Name", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Batch", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Month", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Parent Name", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Pending Transport Amount", font));
+		table.addCell(cell);
+		
+		PdfPCell cell1 = new PdfPCell();
+		cell1.setBackgroundColor(BaseColor.WHITE);
+		cell1.setPadding(5);
+		Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
+		font1.setColor(BaseColor.BLACK);
+		font1.setSize(10);
+		Double totalAmount=0.00;
+		for(StudentFeeDetails detail: studentFixedFeeDetailsList){
+			
+			table.addCell(getCell(cell1,detail.getEnrolementNo(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getStudentName(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getBatch(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getMonth(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(enrolementFatherMap.get(detail.getEnrolementNo())),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(detail.getTransportDues()),font1,1,Element.ALIGN_CENTER));
+			totalAmount=totalAmount+detail.getTransportDues();
+		}
+		table.addCell(getCell(cell1,"Total Collection ",font1,5,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(totalAmount),font1,1,Element.ALIGN_RIGHT));
+		doc.add(table);
+		
+	}
+
+
 
 	private void generatePDFForFeeCollectionDateSessionBatchWise(
 			Map<String, Object> model, Document doc, PdfWriter writer,

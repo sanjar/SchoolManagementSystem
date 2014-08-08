@@ -44,6 +44,9 @@ $(document).ready(function(){
 		if($(this).attr("id")=="collectionDateSessionBatchWise"){
 			$('#feeCollectionDateSessionBatchWise').show();
 		}
+		if($(this).attr("id")=="transportfeePendingLink"){
+			$('#transportfeePending').show();
+		}
 	    //$('#userType').val($(this).text().split(" ")[0]);
 	    $('#user_type').val($(this).attr("id"));
 	    //alert($('#user_type').val());
@@ -111,6 +114,7 @@ $(document).ready(function(){
 				<li class="highlight"><a id="feeCollectionDetails" class="link" href="#">Fee Collection details</a></li>
 				<li><a id="collectionDateWise" class="link" href="#">Fee Collection Date Wise</a></li>
 				<li><a id="collectionDateSessionBatchWise" class="link" href="#">Fee Collection Date/Session/Batch Wise</a></li>
+				<li><a id="transportfeePendingLink" class="link" href="#">Transport Pending Fee</a></li>
 			</ul>
 		</div>
 		<input type="hidden" name="user_type" id ="user_type" value="" />
@@ -221,6 +225,48 @@ $(document).ready(function(){
 					</select></li>
 					<li  class="f">
 				<input type="hidden" name ="feeCollectionType" value="feeCollectionDateSessionBatchWise">	
+				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				</li>
+					</ul>
+					</article>
+					</form>
+			</div>
+			<div id="transportfeePending" class="report" hidden="true">
+				
+				<h1>Transport Fee Pending Report</h1>
+				<form action="generateReport" method="POST" target="_blank">
+				<article>
+				<ul>
+				<li class="f">
+				<label class="fl">Select Session : </label>
+				<select name="session" class="fl">
+						<option value="-1">Please Select Session</option>
+						<c:forEach items="${sessionList}" var="session">
+							<option value="${session}">${session}</option>
+						</c:forEach>
+					</select></li>
+					
+					<li class="f">
+				<label class="fl">Select Route : </label>
+				<select name="routeCode" class="fl">
+						<option value="-1">Please Select Route</option>
+						<c:forEach items="${routeCodeList}" var="route">
+							<option value="${route.routeCode}">${route.routeName}</option>
+						</c:forEach>
+					</select></li>
+					
+					<li class="f">
+				<label class="fl">Select Month : </label>
+				<select name="month" class="fl">
+						<option value="-1">Please Select Month</option>
+						<c:forEach items="${monthList}" var="month">
+							<option value="${month}">${month}</option>
+						</c:forEach>
+					</select></li>
+					
+					<li  class="f">
+				<input type="hidden" name ="reportType" value="transportfeePending">	
 				 <button class="left" name="action" value="view" id="view">View</button>
 				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>

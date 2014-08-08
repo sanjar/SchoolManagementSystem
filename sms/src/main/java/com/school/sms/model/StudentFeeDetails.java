@@ -61,6 +61,15 @@ public class StudentFeeDetails {
 	@Column(name="cheque_draft_no")
 	private String chequeDraftNo;
 	
+	@Column(name="pick_up_master_id")
+	private Integer pickUpMasterId;
+	
+	@Column(name="transport_dues")
+	private Double transportDues;
+	
+	@Column(name="transport_amount_paid")
+	private Double transportAmountPaid;
+	
 	@Column(name="cheque_draft_date")
 	private String chequeDraftDate;
 	
@@ -209,4 +218,32 @@ public class StudentFeeDetails {
 	public void setAmountReceived(Double amountReceived) {
 		this.amountReceived = amountReceived;
 	}
+
+	
+
+	public Double getTransportDues() {
+		return transportDues;
+	}
+
+	public void setTransportDues(Double transportDues) {
+		this.transportDues = transportDues;
+	}
+
+	public Double getTransportAmountPaid() {
+		return transportAmountPaid;
+	}
+
+	public void setTransportAmountPaid(Double transportAmountPaid) {
+		this.transportAmountPaid = transportAmountPaid;
+	}
+
+	public Integer getPickUpMasterId() {
+		return pickUpMasterId;
+	}
+
+	public void setPickUpMasterId(Integer pickUpMasterId) {
+		this.pickUpMasterId = pickUpMasterId;
+	}
+
+	
 }

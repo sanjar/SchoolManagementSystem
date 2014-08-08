@@ -22,8 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.school.sms.constants.Constants;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
+import com.school.sms.model.TransportRoutePickUp;
 import com.school.sms.service.FeeManagementService;
 import com.school.sms.service.ReportService;
+import com.school.sms.service.TransportManagementService;
 
 @Controller
 public class ReportGenerationController {
@@ -32,6 +34,7 @@ public class ReportGenerationController {
 	Set<String> batchList;
 	Set<String> sessionList;
 	Map<String,String> enrolementFatherMap;
+	List<TransportRoutePickUp> pickUps = new ArrayList<TransportRoutePickUp>();
 	
 	@Resource(name = "reportService")
 	private ReportService reportService;
@@ -39,16 +42,21 @@ public class ReportGenerationController {
 	@Resource(name = "feeManagementService")
 	private FeeManagementService fixedFee;
 	
+	@Resource(name = "transportManagementService")
+	private TransportManagementService transportService;
+	
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.GET)
 	public ModelAndView generateReport(HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		
 		studentFixedFeeDetails = reportService.loadStudentFixedFeeDetailsList();
+		pickUps = transportService.loadTransportStructures();
 		
 		getBatchAndSessionList();
 		model.addObject("batchList", batchList);
 		model.addObject("sessionList", sessionList);
+		model.addObject("routeCodeList", transportService.loadTransportRouteCodeList());
 		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		model.setViewName("reportGeneration");
 
@@ -79,14 +87,14 @@ public class ReportGenerationController {
 	        	model.addObject("enrolementFatherMap", enrolementFatherMap);
 	        	model.addObject("month", request.getParameter("month"));
 	        }
-	        if("feeCollectionRequestDateWise".equalsIgnoreCase(request.getParameter("feeCollectionRequestDateWise"))){
+	        else if("feeCollectionRequestDateWise".equalsIgnoreCase(request.getParameter("feeCollectionRequestDateWise"))){
 	        	model.addObject("feeCollectionRequestDateWise", "feeCollectionRequestDateWise");
 	        	model.addObject("fromDate", request.getParameter("fromDate"));
 	        	model.addObject("toDate", request.getParameter("toDate"));
 	        	model.addObject("studentFixedFeeDetails", studentFixedFeeDetails);
 	        	model.addObject("fixedFeeList", fixedFee.loadFeeStructures());
 	        }
-	        if("feeCollectionDateSessionBatchWise".equalsIgnoreCase(request.getParameter("feeCollectionType"))){
+	        else if("feeCollectionDateSessionBatchWise".equalsIgnoreCase(request.getParameter("feeCollectionType"))){
 	        	model.addObject("fromDate", request.getParameter("fromDate"));
 	        	model.addObject("toDate", request.getParameter("toDate"));
 	        	
@@ -101,6 +109,14 @@ public class ReportGenerationController {
 	        	model.addObject("batch", request.getParameter("batch"));
 	        	model.addObject("feeCollectionType", "feeCollectionDateSessionBatchWise");
 	        }
+	        else if("transportfeePending".equalsIgnoreCase(request.getParameter("reportType"))){
+	        	model.addObject("reportType", "transportfeePending");
+	        	
+	        	List<StudentFeeDetails> details=getstudentFixedFeeDetailsListForRoute(request.getParameter("routeCode"),request.getParameter("session"),request.getParameter("month"));
+	        	model.addObject("studentFixedFeeDetails", details);
+	        	model.addObject("enrolementFatherMap", enrolementFatherMap);
+	        	model.addObject("month", request.getParameter("month"));
+	        }
 		}
       /*  request.getParameter("session");
         request.getParameter("batch");
@@ -114,6 +130,31 @@ public class ReportGenerationController {
 
 		return model;
 
+	}
+
+	private List<StudentFeeDetails> getstudentFixedFeeDetailsListForRoute(String routeCode,
+			String session, String month) {
+		List<StudentFeeDetails> details = new ArrayList<StudentFeeDetails>();
+		for(StudentFeeDetails f: studentFixedFeeDetails){
+			Integer routeCode1 = getRouteCode(f.getPickUpMasterId());
+			
+			if(session.equalsIgnoreCase(f.getSession()) && month.equalsIgnoreCase(f.getMonth()) && routeCode.equals(String.valueOf(routeCode1))){
+				details.add(f);
+			}
+		}
+		
+		return details;
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Integer getRouteCode(Integer pickUpMasterId) {
+		for(TransportRoutePickUp pickUp : pickUps){
+			if(pickUp.getPickUpMasterId().equals(pickUpMasterId)){
+				return pickUp.getRouteCode();
+			}
+		}
+		return -1;
 	}
 
 	private List<StudentFeeDetails> getFeeCollectionDateSessionBatchWiseList(String fromDate,
