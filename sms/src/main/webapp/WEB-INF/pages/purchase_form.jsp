@@ -71,7 +71,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				| <a href="">Contact</a> | <a id="manageProduct" href="manageProduct">Manage Product</a> |<a id="purchaseReceipt" href="purchaseReceipt">Purchase Receipt</a>
+				| <a href="">Contact</a> | <a id="manageProduct" href="manageProduct">Manage Product</a> |<a id="purchaseReceipt" href="purchaseReceipt">Purchase Receipt</a> | <a id="salesReceipt" href="salesReceipt">Sales Receipt</a> 
 
 			</p>
 		</div>
@@ -135,10 +135,10 @@
 				<li class="f"><label for="name" class="fl">Phone<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="phone" class="fl" path="phone" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Contact Person<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Contact Person</label> 
 						<form:input type="text" size="25" id="contactPerson" class="fl" path="contactPerson" /> 
 				</li>
-				<li class="f"><label for="name" class="fl">Tin No.<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Tin No. </label> 
 						<form:input type="text" size="25" id="tinNo" class="fl" path="tinNo" /> 
 				</li>
 				<li class="f"><label for="name" class="fl">Date<span style="color: red">*</span> </label> 

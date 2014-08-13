@@ -2,6 +2,7 @@ package com.school.sms.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,8 +11,9 @@ import javax.persistence.Table;
 public class Product {
 
 	@Id
+	@GeneratedValue
 	@Column(name="product_parent_code")
-	private String productParentCode;
+	private Integer productParentCode;
 	
 	@Column(name="description")
 	private String description;
@@ -34,13 +36,7 @@ public class Product {
 	@Column(name="product_uom")
 	private String productUOM;
 
-	public String getProductParentCode() {
-		return productParentCode;
-	}
-
-	public void setProductParentCode(String productParentCode) {
-		this.productParentCode = productParentCode;
-	}
+	
 
 	public String getDescription() {
 		return description;
@@ -101,11 +97,19 @@ public class Product {
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Product){
-			if(((Product)obj).getProductParentCode().equalsIgnoreCase(this.productParentCode)){
+			if(((Product)obj).getProductParentCode().equals(this.productParentCode)){
 				return true;
 			}
 		}
 		return super.equals(obj);
+	}
+
+	public Integer getProductParentCode() {
+		return productParentCode;
+	}
+
+	public void setProductParentCode(Integer productParentCode) {
+		this.productParentCode = productParentCode;
 	}
 	
 }

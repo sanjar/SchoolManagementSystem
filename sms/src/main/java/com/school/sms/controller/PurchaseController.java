@@ -26,6 +26,8 @@ import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.PurchaseReceiptItem;
 import com.school.sms.model.SalaryProcessDetail;
+import com.school.sms.model.SalesReceipt;
+import com.school.sms.model.SalesReceiptItem;
 import com.school.sms.service.PayrollManagementService;
 import com.school.sms.service.PurchaseService;
 
@@ -37,15 +39,19 @@ public class PurchaseController {
 	
 	private Integer productIndex;
 	private List<Product> productList = new ArrayList<Product>();
+	private static Integer currentReceiptNo; 
 	
 	@Resource(name = "purchaseService")
 	private PurchaseService purchaseService;
 
+	
 	@RequestMapping(value = "admin/purchase/manageCustomer", method = RequestMethod.GET)
 	public ModelAndView manageCustomer() {
 		customerIndex=-1;
 		initializeCustomerList();
-		ModelAndView model = new ModelAndView("purchase_form","command",new Customer());
+		Customer customer1 = new Customer();
+		customer1.setCustomerCode(purchaseService.getCurrentCustomerCode()+1);
+		ModelAndView model = new ModelAndView("purchase_form","command",customer1);
 		
 		model.addObject("customerType", Arrays.asList(Constants.CUSTOMER_TYPE));
 		//model.setViewName("purchase_form");
@@ -146,7 +152,9 @@ public class PurchaseController {
 	public ModelAndView manageProduct() {
 		productIndex=-1;
 		initializeProductList();
-		ModelAndView model = new ModelAndView("product_master_form","command",new Product());
+		Product product1 = new Product();
+		product1.setProductParentCode(purchaseService.getCurrentProductCode()+1);
+		ModelAndView model = new ModelAndView("product_master_form","command",product1);
 		model.addObject("productList", this.productList);
 		model.addObject("productUOMList", Arrays.asList(Constants.PRODUCT_UOM));
 
@@ -242,17 +250,28 @@ public class PurchaseController {
 	
 	@RequestMapping(value = "admin/purchase/purchaseReceipt", method = RequestMethod.GET)
 	public ModelAndView purchaseReceipt() {
-		ModelAndView model = new ModelAndView("purchase_receipt","command",new PurchaseReceipt());
+		populateCurrentReceiptNo();
+		PurchaseReceipt purchaseReceipt = new PurchaseReceipt();
+		purchaseReceipt.setReceiptNo(currentReceiptNo);
+		ModelAndView model = new ModelAndView("purchase_receipt","command",purchaseReceipt);
 		model.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));
 		model.addObject("purchaseTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
 		return model;
 
 	}
 	
+	private void populateCurrentReceiptNo() {
+		currentReceiptNo = purchaseService.getcurrentReceiptNo()+1;
+		
+	}
+
 	@RequestMapping(value = "/admin/purchase/processPurchaseReceipt", method = RequestMethod.POST)
 	public ModelAndView processPurchaseReceipt(@ModelAttribute("product")PurchaseReceipt purchaseReceipt,
 			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
-		ModelAndView modelAndView=new ModelAndView("purchase_receipt","command",new PurchaseReceipt());
+		populateCurrentReceiptNo();
+		PurchaseReceipt purchaseReceipt1 = new PurchaseReceipt();
+		purchaseReceipt.setReceiptNo(currentReceiptNo);
+		ModelAndView modelAndView=new ModelAndView("purchase_receipt","command",purchaseReceipt1);
 		
 		if("search".equalsIgnoreCase(action)){
 			PurchaseReceipt receipt= purchaseService.findPurchaseReceipt(Integer.valueOf(request.getParameter("receiptNo")));
@@ -269,6 +288,7 @@ public class PurchaseController {
 		else if("save".equalsIgnoreCase(action)) {
 			if (null != purchaseReceipt.getReceiptNo() && !purchaseReceipt.getReceiptDate().isEmpty()) {
 				gatherAddedItems(purchaseReceipt);
+				calculateAmount(purchaseReceipt);
 				purchaseService.updatePurchaseReceipt(purchaseReceipt);
 				modelAndView = new ModelAndView("purchase_receipt","command",purchaseReceipt);
 				modelAndView.addObject("purchaseReceiptSaved",true);
@@ -283,11 +303,27 @@ public class PurchaseController {
 			purchaseService.deletePurchaseReceipt(purchaseReceipt);
 			modelAndView.addObject("purchaseReceiptDeleted",true);
 		}
+		else if("calculate".equalsIgnoreCase(action)) {
+			calculateAmount(purchaseReceipt);
+			modelAndView = new ModelAndView("sales_receipt","command",purchaseReceipt);
+		}
+		
 	   modelAndView.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));
 	   modelAndView.addObject("purchaseTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
 		return modelAndView;
 	}
 
+	private void calculateAmount(PurchaseReceipt purchaseReceipt) {
+		Double grossValue= 0.00;
+		Double discount= 0.00;
+		for(PurchaseReceiptItem item: purchaseReceipt.getPurchaseReceiptItemList()){
+			discount = discount+item.getDiscount();
+			grossValue = grossValue+item.getTotalAmount();
+		}
+		purchaseReceipt.setGrossValue(grossValue);
+		purchaseReceipt.setDiscount(discount);
+		purchaseReceipt.setNetValue(grossValue-discount);
+	}
 	private void gatherAddedItems(PurchaseReceipt purchaseReceipt) {
 		List<PurchaseReceiptItem> list = new ArrayList<PurchaseReceiptItem>();
 		

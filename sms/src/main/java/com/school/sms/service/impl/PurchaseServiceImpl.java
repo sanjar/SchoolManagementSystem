@@ -11,6 +11,7 @@ import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
+import com.school.sms.model.SalesReceipt;
 import com.school.sms.service.PurchaseService;
 
 @Service("purchaseService")
@@ -78,6 +79,45 @@ public class PurchaseServiceImpl implements PurchaseService{
 	@Override
 	public PurchaseReceipt findPurchaseReceipt(Integer receiptNo) {
 		return purchaseDao.findPurchaseReceipt(receiptNo);
+	}
+
+	@Override
+	public Integer getcurrentReceiptNo() {
+		return purchaseDao.getcurrentReceiptNo();
+	}
+
+	@Override
+	public Integer getCurrentCustomerCode() {
+		return purchaseDao.getCurrentCustomerCode();
+	}
+
+	@Override
+	public Integer getCurrentProductCode() {
+		// TODO Auto-generated method stub
+		return purchaseDao.getCurrentProductCode();
+	}
+
+	@Override
+	public Integer getcurrentChallanNo() {
+		// TODO Auto-generated method stub
+		return purchaseDao.getcurrentChallanNo();
+	}
+
+	@Override
+	public void updateSalesReceipt(SalesReceipt salesReceipt) {
+		purchaseDao.updateSalesReceipt(salesReceipt);
+		
+	}
+
+	@Override
+	public void deleteSalesReceipt(SalesReceipt salesReceipt) {
+		purchaseDao.deleteSalesReceipt(salesReceipt);
+		
+	}
+
+	@Override
+	public SalesReceipt findSalesReceipt(Integer challanNo) {
+		return purchaseDao.findSalesReceipt(challanNo);
 	}
 
 	

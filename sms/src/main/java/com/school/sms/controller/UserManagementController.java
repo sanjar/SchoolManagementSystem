@@ -1,5 +1,10 @@
 package com.school.sms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +52,10 @@ public class UserManagementController {
 		}
 		else if("save".equalsIgnoreCase(action)) {
 			student.setStatus(true);
+			if(null==student.getEnrolementNo() || student.getEnrolementNo().isEmpty()){
+				createEnrolementNo(student);
+			}
+			
 			userManagementService.updateStudent(student);
 			modelAndView.addObject("studentSaved",true);
 			
@@ -72,6 +81,17 @@ public class UserManagementController {
 	}
 	
 	
+	private void createEnrolementNo(Student student) {
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY");
+			dateFormat.parse(student.getDateOfAdmission());
+			String  enrolementNo= dateFormat.getCalendar().get(Calendar.YEAR) + "/"+	student.getCurrentClassBatch().charAt(0)+student.getCurrentClassSection()+"/"+student.getRoll();
+			student.setEnrolementNo(enrolementNo);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@RequestMapping(value = "admin/userManagement", method = RequestMethod.GET)
 	public ModelAndView userManagement() {
 

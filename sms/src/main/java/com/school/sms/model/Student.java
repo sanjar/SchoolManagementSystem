@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 public class Student {
 
 	@Id
+	@GeneratedValue
 	@Column(name="student_id")
 	private String studentId;
 	
@@ -59,6 +61,12 @@ public class Student {
 	
 	@Column(name="current_class_batch")
 	private String currentClassBatch;
+	
+	@Column(name="current_class_section")
+	private String currentClassSection;
+	
+	@Column(name="roll")
+	private Integer roll;
 	
 	public String getStudentId() {
 		return studentId;
@@ -158,6 +166,18 @@ public class Student {
 	}
 	public void setCurrentClassBatch(String currentClassBatch) {
 		this.currentClassBatch = currentClassBatch;
+	}
+	public String getCurrentClassSection() {
+		return currentClassSection;
+	}
+	public void setCurrentClassSection(String currentClassSection) {
+		this.currentClassSection = currentClassSection;
+	}
+	public Integer getRoll() {
+		return roll;
+	}
+	public void setRoll(Integer roll) {
+		this.roll = roll;
 	}
 	
 	

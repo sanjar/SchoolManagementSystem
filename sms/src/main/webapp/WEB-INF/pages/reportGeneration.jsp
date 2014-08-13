@@ -160,6 +160,7 @@ $(document).ready(function(){
 					<li  class="f">
 				<input type="hidden" name ="feeCollectionRequest" value="feeCollectionRequest">	
 				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
 				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>
 					</ul>
@@ -186,6 +187,7 @@ $(document).ready(function(){
 					<li  class="f">
 				<input type="hidden" name ="feeCollectionRequestDateWise" value="feeCollectionRequestDateWise">	
 				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
 				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>
 					</ul>
@@ -226,6 +228,7 @@ $(document).ready(function(){
 					<li  class="f">
 				<input type="hidden" name ="feeCollectionType" value="feeCollectionDateSessionBatchWise">	
 				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
 				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>
 					</ul>
@@ -268,6 +271,7 @@ $(document).ready(function(){
 					<li  class="f">
 				<input type="hidden" name ="reportType" value="transportfeePending">	
 				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
 				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
 				</li>
 					</ul>

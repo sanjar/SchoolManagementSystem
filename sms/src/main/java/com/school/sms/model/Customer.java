@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,8 +13,9 @@ import javax.persistence.Table;
 public class Customer {
 
 	@Id
+	@GeneratedValue
 	@Column(name="customer_code")
-	private String customerCode;
+	private Integer customerCode;
 	
 	@Column(name="customer_type")
 	private String customerType;
@@ -39,13 +41,7 @@ public class Customer {
 	@Column(name="dateOfCreation")
 	private String  dateOfCreation;
 
-	public String getCustomerCode() {
-		return customerCode;
-	}
-
-	public void setCustomerCode(String customerCode) {
-		this.customerCode = customerCode;
-	}
+	
 
 	public String getCustomerType() {
 		return customerType;
@@ -87,7 +83,7 @@ public class Customer {
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Customer){
-			if(((Customer)obj).getCustomerCode().equalsIgnoreCase(this.customerCode)){
+			if(((Customer)obj).getCustomerCode().equals(this.customerCode)){
 				return true;
 			}
 		}
@@ -124,6 +120,14 @@ public class Customer {
 
 	public void setTinNo(String tinNo) {
 		this.tinNo = tinNo;
+	}
+
+	public Integer getCustomerCode() {
+		return customerCode;
+	}
+
+	public void setCustomerCode(Integer customerCode) {
+		this.customerCode = customerCode;
 	}
 	
 }

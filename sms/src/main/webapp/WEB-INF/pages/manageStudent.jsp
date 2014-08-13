@@ -44,30 +44,32 @@ $(document).ready(function(){
 	 
 	 $("#manageStudent").validate({
 			rules: {
-				enrolementNo:"required",
+				/* enrolementNo:"required", */
 				firstName:"required",
 				lastName:"required",
 				studentId:"required",
 				dateOfBirth:"required",
-				mobileNo:"required",
+				/* mobileNo:"required", */
 				fathername:"required",
 				motherName:"required",
 				dateOfAdmission:"required",
 				address:"required",
-				currentClassBatch:"required"
+				currentClassBatch:"required",
+				roll:"required"
 			},
 			messages: {
-				enrolementNo:"Enter Enrolement No.",
+				/* enrolementNo:"Enter Enrolement No.", */
 				firstName:"Enter First Name.",
 				lastName:"Enter Last Name.",
 				studentId:"Enter Student Id.",
 				dateOfBirth:"Enter Date Of Birth.",
-				mobileNo:"Enter Mobile No.",
+				/* mobileNo:"Enter Mobile No.", */
 				fathername:"Enter Father Name.",
 				motherName:"Enter mother Name.",
 				dateOfAdmission:"Enter Date Of Admission.",
 				address:"Enter Address.",
-				currentClassBatch:"Enter Class"
+				currentClassBatch:"Enter Class",
+				roll:"Enter Roll"
 			}
 			
 		});
@@ -109,12 +111,12 @@ $(document).ready(function(){
 						<span style="color: red">Form Incomplete!!! All mandatory fields are required.</span>
 				</c:if>
 				
-				<li class="f"><label for="name" class="fl">Enrolement No<span style="color: red">*</span></label> <form:input
-					type="text" size="25" id="enrolementNo" class="fl" path="enrolementNo" cssStyle="margin-right: 10px;"/>
-					<button class="left cancel" name="action" value="search" style="margin-left: 30px">Search</button>
+				<li class="f"><label for="name" class="fl">Enrolement No</label> <form:input
+					type="text" size="25" id="enrolementNo" class="fl" path="enrolementNo" cssStyle="margin-right: 10px;" readonly="true"/>
+					<%-- <button class="left cancel" name="action" value="search" style="margin-left: 30px">Search</button>
 					<c:if test="${noStudentFound}">
 						<label style="color:red">No Student Found.</label>
-					</c:if>
+					</c:if> --%>
 					<c:if test="${studentSaved}">
 						<label style="color: green">Student Saved!!!</label>
 					</c:if> <c:if test="${studentDeactivated}">
@@ -144,16 +146,14 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Last Name<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="lastName" class="fl" path="lastName" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Student Id<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="studentId" class="fl" path="studentId" cssStyle="margin-right: 10px;"/> 
-				</li>
+				
 				<li class="f"><label for="name" class="fl">Date Of Birth<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="dateOfBirth" class="fl dateField" path="dateOfBirth" readonly='true' style="margin-right: 10px;"/> 
 				</li>
 				<li class="f"><label for="name" class="fl">Phone No. </label> 
 						<form:input type="text" size="25" id="phoneNo" class="fl" path="phoneNo" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Mobile No<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Mobile No</label> 
 						<form:input type="text" size="25" style="margin-right:10px" id="mobileNo" class="fl" path="mobileNo" cssStyle="margin-right: 10px;"/> 
 				</li>
 				
@@ -176,6 +176,14 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Email Id </label> 
 						<form:input type="text" size="25" id="emailId" class="fl" path="emailId" cssStyle="margin-right: 10px;"/> 
 				</li>
+				<li class="f"><label for="name" class="fl">Section </label> 
+						<form:input type="text" size="25" id="currentClassSection" class="fl" path="currentClassSection" cssStyle="margin-right: 10px;"/> 
+				</li>
+				
+				<li class="f"><label for="name" class="fl">Roll </label> 
+						<form:input type="text" size="25" id="roll" class="fl" path="roll" cssStyle="margin-right: 10px;"/> 
+				</li>
+				<form:input type="hidden" path="studentId" id ="studentId"/>
 
 				<li  class="f">
 				 <button class="left" name="action" value="save">Save</button>

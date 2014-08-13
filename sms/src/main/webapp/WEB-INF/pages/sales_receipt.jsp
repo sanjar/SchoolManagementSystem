@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Purchase Receipt</title>
+<title>Sales Receipt</title>
 <style type="text/css">
 <!--
 .style2 {color: #0000FF}
@@ -35,7 +35,7 @@
             dateFormat: "dd/mm/yy",
             disabled: false
         });
-    	$( "#invoiceDate" ).datepicker({
+    	$( "#challanDate" ).datepicker({
             dateFormat: "dd/mm/yy",
             disabled: false
         });
@@ -81,26 +81,26 @@
 
 <article>
 
-<form:form class="mrg-top" id="processPurchaseReceipt" action="processPurchaseReceipt">
+<form:form class="mrg-top" id="processSalesReceipt" action="processSalesReceipt">
 
 	<ul>
     
     <li class="f">
-<h3 class="back">Purchase Receipt</h3>
+<h3 class="back">Sales Receipt</h3>
 </li>
  
-					<c:if test="${noPurchaseReceiptFound}">
+					<c:if test="${noSalesReceiptFound}">
 					<li class="f">
-						<label style="color:red">No Purchase Receipt Found.</label>
+						<label style="color:red">No Sales Receipt Found.</label>
 						</li>
 					</c:if>
-					<c:if test="${purchaseReceiptSaved}">
+					<c:if test="${salesReceiptSaved}">
 					<li class="f">
-						<label style="color: green">Purchase Receipt Saved!!!</label>
+						<label style="color: green">Sales Receipt Saved!!!</label>
 						</li>
-					</c:if> <c:if test="${purchaseReceiptDeleted}">
+					</c:if> <c:if test="${salesReceiptDeleted}">
 					<li class="f">
-						<label style="color: green">Purchase Receipt Deleted!!!</label>
+						<label style="color: green">Sales Receipt Deleted!!!</label>
 						</li>
 					</c:if>
 					<c:if test="${isFormIncomplete}">
@@ -111,67 +111,28 @@
 				
         <li class="f">
         
-        	<label for="name" class="fl">Receipt No. </label>
-            <form:input type="text" size="20" id="receiptNo" class="fl" path="receiptNo" readonly="true"/>
+        	<label for="name" class="fl">Challan No. </label>
+            <form:input type="text" size="20" id="challanNo" class="fl" path="challanNo" readonly="false"/>
            
-            
-     
-           
-      
             <label for="name" class="fl" style="margin-left: 53px">Date </label>
-            <form:input type="text" size="20" id="receiptDate"  class="fl" path="receiptDate"/>
+            <form:input type="text" size="20" id="challanDate"  class="fl" path="challanDate"/>
             
-            <label for="name" class="fl" style="margin-left: 55px">Ag. St1 </label>
-            <form:select id="agSt1" path="agSt1">
-            	<form:options items="${yesNoList}" />
-            </form:select>
- 			
-   
+            <label for="name" class="fl" style="margin-left: 53px">Invoice No. </label>
+            <form:input type="text" size="20" id="invoiceNo" class="fl" path="invoiceNo" />
+            
 </li>
         <li  class="f">
-        <label for="name" class="fl">Invoice No. </label>
-            <form:input type="text" size="20" id="invoiceNo" class="fl" path="invoiceNo" />
-           
-            
-     
-           
-      
-            <label for="name" class="fl" style="margin-left: 53px">Date </label>
-            <form:input type="text" size="20" id="invoiceDate"  class="fl" path="invoiceDate"/>
-            
-            <label for="name" class="fl" style="margin-left: 53px">Company </label>
-            <form:input type="text" size="20" id="company"  class="fl" path="company"/>
         
+            <label for="name" class="fl">Customer Name </label>
+            <form:input type="text" size="20" id="customerName"  class="fl" path="customerName"/>
+            <label for="name" class="fl" style="margin-left: 53px">Customer Code </label>
+            <form:input type="text" size="20" id="customerCode"  class="fl" path="customerCode"/>
+             <label for="name" class="fl" style="margin-left: 53px">Sale Type </label>
+            <form:select id="saleType" path="saleType" >
+            	<form:options items="${saleTypeList}" />
+            </form:select>
         </li>
         	
-       
- <li  class="f">
-        	<label for="name" class="fl">Cheque No. </label>
-            <form:input type="text" size="20" id="chequeNo" class="fl" path="chequeNo" />
-           
-            
-     
-           
-      
-            <label for="name" class="fl" style="margin-left: 53px">Date </label>
-            <form:input type="text" size="20" id="chequeDate"  class="fl" path="chequeDate"/>
-            
-            <label for="name" class="fl" style="margin-left: 53px">Amount </label>
-            <form:input type="text" size="20" id="amount"  class="fl" path="amount"/>
-       
-</li>
-
- <li  class="f">
- 			<label for="name" class="fl">Purchase Type </label>
-            <form:select id="purchaseType" path="purchaseType" >
-            	<form:options items="${purchaseTypeList}" />
-            </form:select>
-        	<label for="name" class="fl" style="margin-left: 365px">Stk Pnt</label>
-            <form:input type="text" size="20" id="stkPnt" class="fl" path="stkPnt" />
-            
-            
-       
-</li>
 
  
 
@@ -198,30 +159,24 @@
     <th width="10" scope="col"><span class="style2">S.No </span></th>
     <th width="20" scope="col"><span class="style2">P. Code </span></th>
     <th width="80" scope="col"><span class="style2">Description</span></th>
-    <th width="10" scope="col"><span class="style2">Pur. Price </span></th>
+    <th width="78" scope="col"><span class="style2">Type </span></th>
     <th width="78" scope="col"><span class="style2">Qty(Box)</span></th>
-    <th width="78" scope="col"><span class="style2">Qty(Unit)</span></th>
-    <th width="78" scope="col"><span class="style2">Stk Type </span></th>
     <th width="78" scope="col"><span class="style2">Discount</span></th>
     <th width="115" scope="col"><span class="style2">Total Amount </span></th>
-    <th width="67" scope="col"><span class="style2">A/P</span></th>
   </tr>
 </thead>
 <tbody>
-  <c:forEach begin="0" end="29" var="x" >
+  <c:forEach begin="0" end="19" var="x" >
   <tr>
     <th scope="row">${x+1}</th>
-    <td style="width: 100px"><form:input  path="purchaseReceiptItemList[${x}].productCode" id="productCode" style="width: 100px"/></td>
-    <td style="width: 300px"><form:input path="purchaseReceiptItemList[${x}].description" id="description" style="width: 300px"/></td>
-    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].purchasePrice" id="purchasePrice" style="width: 100px"/></td>
-    <td style="width: 78px"><form:input path="purchaseReceiptItemList[${x}].quantityBox"  id="quantityBox" style="width: 78px"/></td>
-    <td style="width: 78px"><form:input path="purchaseReceiptItemList[${x}].quantityUnit"  id="quantityUnit" style="width: 78px"/></td>
-    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].sktType"  id="sktType" style="width: 100px"/></td>
-    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].discount"  id="discount" style="width: 100px"/></td>
-    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].totalAmount"  id="totalAmount" style="width: 100px"/></td>
-    <td style="width: 100px"><form:input path="purchaseReceiptItemList[${x}].AP"  id="AP" style="width: 100px"/></td>
-    <form:input type="hidden" path="purchaseReceiptItemList[${x}].purchaseReceipt.receiptNo"/>
-    <form:input type="hidden" path="purchaseReceiptItemList[${x}].itemId"/>
+    <td style="width: 100px"><form:input  path="salesReceiptItemList[${x}].productCode" id="productCode" style="width: 100px"/></td>
+    <td style="width: 300px"><form:input path="salesReceiptItemList[${x}].description" id="description" style="width: 300px"/></td>
+    <td style="width: 78px"><form:input path="salesReceiptItemList[${x}].quantityBox"  id="quantityBox" style="width: 78px"/></td>
+    <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].type"  id="type" style="width: 100px"/></td>
+    <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].discount"  id="discount" style="width: 100px"/></td>
+    <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].totalAmount"  id="totalAmount" style="width: 100px"/></td>
+    <form:input type="hidden" path="salesReceiptItemList[${x}].salesReceipt.challanNo"/>
+    <form:input type="hidden" path="salesReceiptItemList[${x}].itemId"/>
   </tr>
   </c:forEach>
   </tbody>

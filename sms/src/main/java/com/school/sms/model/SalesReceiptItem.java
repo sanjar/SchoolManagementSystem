@@ -10,16 +10,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="sms_purchase_receipt_item")
-public class PurchaseReceiptItem {
-	
+public class SalesReceiptItem {
+
 	@Id
 	@GeneratedValue
 	@Column(name="item_id")
 	private Integer itemId;
 	
 	@ManyToOne
-	@JoinColumn(name="receipt_no")
-	private PurchaseReceipt purchaseReceipt;
+	@JoinColumn(name="challan_no")
+	private SalesReceipt salesReceipt;
 	
 	@Column(name="product_code")
 	private String productCode;
@@ -27,26 +27,19 @@ public class PurchaseReceiptItem {
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="purchase_price")
-	private Double purchasePrice;
+	@Column(name="type")
+	private String type	;
 	
 	@Column(name="quantity_box")
 	private Double quantityBox;
 	
-	@Column(name="quantity_unit")
-	private Double quantityUnit;
 	
-	@Column(name="skt_type")
-	private String sktType;
 	
 	@Column(name="discount")
 	private Double discount;  /// may be in percentage....
 	
 	@Column(name="total_amount")
 	private Double totalAmount;
-	
-	@Column(name="ap")
-	private String AP;
 
 	public Integer getItemId() {
 		return itemId;
@@ -74,13 +67,7 @@ public class PurchaseReceiptItem {
 		this.description = description;
 	}
 
-	public Double getPurchasePrice() {
-		return purchasePrice;
-	}
-
-	public void setPurchasePrice(Double purchasePrice) {
-		this.purchasePrice = purchasePrice;
-	}
+	
 
 	public Double getQuantityBox() {
 		return quantityBox;
@@ -88,22 +75,6 @@ public class PurchaseReceiptItem {
 
 	public void setQuantityBox(Double quantityBox) {
 		this.quantityBox = quantityBox;
-	}
-
-	public Double getQuantityUnit() {
-		return quantityUnit;
-	}
-
-	public void setQuantityUnit(Double quantityUnit) {
-		this.quantityUnit = quantityUnit;
-	}
-
-	public String getSktType() {
-		return sktType;
-	}
-
-	public void setSktType(String sktType) {
-		this.sktType = sktType;
 	}
 
 	
@@ -116,20 +87,12 @@ public class PurchaseReceiptItem {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getAP() {
-		return AP;
+	public SalesReceipt getSalesReceipt() {
+		return salesReceipt;
 	}
 
-	public void setAP(String aP) {
-		AP = aP;
-	}
-
-	public PurchaseReceipt getPurchaseReceipt() {
-		return purchaseReceipt;
-	}
-
-	public void setPurchaseReceipt(PurchaseReceipt purchaseReceipt) {
-		this.purchaseReceipt = purchaseReceipt;
+	public void setSalesReceipt(SalesReceipt salesReceipt) {
+		this.salesReceipt = salesReceipt;
 	}
 
 	public Double getDiscount() {
@@ -139,7 +102,12 @@ public class PurchaseReceiptItem {
 	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
-	
-	
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }

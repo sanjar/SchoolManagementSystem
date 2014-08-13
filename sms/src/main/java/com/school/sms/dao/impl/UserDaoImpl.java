@@ -34,7 +34,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updateStudent(Student student) {
-		entityManager.merge(student);
+		Student student2 = entityManager.merge(student);
+		student.setStudentId(student2.getStudentId());
 		entityManager.flush();
 		
 	}

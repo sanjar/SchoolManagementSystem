@@ -5,6 +5,7 @@ import java.util.List;
 import com.school.sms.model.Customer;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
+import com.school.sms.model.SalesReceipt;
 
 public interface PurchaseService {
 
@@ -29,5 +30,19 @@ public interface PurchaseService {
 	void deletePurchaseReceipt(PurchaseReceipt purchaseReceipt);
 
 	PurchaseReceipt findPurchaseReceipt(Integer receiptNo);
+
+	Integer getcurrentReceiptNo();
+
+	Integer getCurrentCustomerCode();
+
+	Integer getCurrentProductCode();
+
+	Integer getcurrentChallanNo();
+
+	void updateSalesReceipt(SalesReceipt salesReceipt);
+
+	void deleteSalesReceipt(SalesReceipt salesReceipt);
+
+	SalesReceipt findSalesReceipt(Integer valueOf);
 
 }
