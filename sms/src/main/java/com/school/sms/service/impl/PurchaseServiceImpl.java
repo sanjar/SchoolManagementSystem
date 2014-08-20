@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.school.sms.dao.PayrollDao;
 import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
+import com.school.sms.model.GeneralLedgerEntry;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.SalesReceipt;
@@ -130,6 +131,11 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public List<SalesReceipt> loadSalesReceipts() {
 		// TODO Auto-generated method stub
 		return purchaseDao.loadSalesReceipts();
+	}
+
+	@Override
+	public List<GeneralLedgerEntry> loadGeneralLedgers() {
+		return purchaseDao.loadGeneralLedgers();
 	}
 
 	

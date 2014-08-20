@@ -3,6 +3,7 @@ package com.school.sms.service;
 import java.util.List;
 
 import com.school.sms.model.Customer;
+import com.school.sms.model.GeneralLedgerEntry;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.SalesReceipt;
@@ -48,5 +49,7 @@ public interface PurchaseService {
 	List<PurchaseReceipt> loadPurchaseReceipts();
 
 	List<SalesReceipt> loadSalesReceipts();
+
+	List<GeneralLedgerEntry> loadGeneralLedgers();
 
 }

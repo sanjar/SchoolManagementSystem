@@ -131,6 +131,10 @@
 				$('#settings').click(function(event){
 					event.preventDefault();
 					window.open('admin/settings',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
+				});generalLedger
+				$('#generalLedger').click(function(event){
+					event.preventDefault();
+					window.open('admin/generalLedger',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
 				});
 			}); 
 			
@@ -191,6 +195,7 @@
                                 
                                 <li><a id="purchase" href="">Purchase</a></li>
                                 <li><a id="transportManagement" href="">Transport</a></li>
+                                <li><a id="generalLedger" href="">General Ledger</a></li>
                                
                             </ul>
                         </div>

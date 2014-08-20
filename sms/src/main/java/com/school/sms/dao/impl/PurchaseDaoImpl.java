@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.school.sms.dao.PurchaseDao;
 import com.school.sms.model.Customer;
+import com.school.sms.model.GeneralLedgerEntry;
 import com.school.sms.model.GradeMaster;
 import com.school.sms.model.Product;
 import com.school.sms.model.PurchaseReceipt;
@@ -180,6 +181,12 @@ private EntityManager entityManager;
 	@Override
 	public List<SalesReceipt> loadSalesReceipts() {
 		Query query = entityManager.createQuery("FROM SalesReceipt p order by p.challanNo DESC");
+		return query.getResultList();
+	}
+
+	@Override
+	public List<GeneralLedgerEntry> loadGeneralLedgers() {
+		Query query = entityManager.createQuery("FROM GeneralLedgerEntry p order by p.glCode DESC");
 		return query.getResultList();
 	}
 }
