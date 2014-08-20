@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.school.sms.constants.Constants;
+import com.school.sms.model.OtherPayments;
+import com.school.sms.model.PurchaseReceipt;
+import com.school.sms.model.SalesReceipt;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.TransportRoutePickUp;
 import com.school.sms.service.FeeManagementService;
+import com.school.sms.service.PurchaseService;
 import com.school.sms.service.ReportService;
 import com.school.sms.service.TransportManagementService;
 
@@ -44,6 +48,9 @@ public class ReportGenerationController {
 	
 	@Resource(name = "transportManagementService")
 	private TransportManagementService transportService;
+	
+	@Resource(name = "purchaseService")
+	private PurchaseService purchaseService;
 	
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.GET)
 	public ModelAndView generateReport(HttpServletRequest request) {
@@ -86,6 +93,8 @@ public class ReportGenerationController {
 	        	model.addObject("studentFixedFeeDetails", studentFixedFeeDetails);
 	        	model.addObject("enrolementFatherMap", enrolementFatherMap);
 	        	model.addObject("month", request.getParameter("month"));
+	        	model.addObject("session", request.getParameter("session"));
+	        	model.addObject("batch", request.getParameter("batch"));
 	        }
 	        else if("feeCollectionRequestDateWise".equalsIgnoreCase(request.getParameter("feeCollectionRequestDateWise"))){
 	        	model.addObject("feeCollectionRequestDateWise", "feeCollectionRequestDateWise");
@@ -112,11 +121,54 @@ public class ReportGenerationController {
 	        else if("transportfeePending".equalsIgnoreCase(request.getParameter("reportType"))){
 	        	model.addObject("reportType", "transportfeePending");
 	        	
-	        	List<StudentFeeDetails> details=getstudentFixedFeeDetailsListForRoute(request.getParameter("routeCode"),request.getParameter("session"),request.getParameter("month"));
+	        	List<StudentFeeDetails> details=getstudentFixedFeeDetailsList(request.getParameter("routeCode"),request.getParameter("session"),request.getParameter("month"));
 	        	model.addObject("studentFixedFeeDetails", details);
 	        	model.addObject("enrolementFatherMap", enrolementFatherMap);
 	        	model.addObject("month", request.getParameter("month"));
 	        }
+	        
+	        else if("dayBook".equalsIgnoreCase(request.getParameter("reportType"))){
+	        	model.addObject("reportType", "dayBook");
+	        	Double totalFeeCollection =0.00;
+	        	String date = request.getParameter("dayBookDate");
+	        	for(StudentFeeDetails details: studentFixedFeeDetails){
+	        		if(details.getDateOfPayment().equals(date) && null != details.getAmountReceived()){
+	        			totalFeeCollection = totalFeeCollection + details.getAmountReceived();
+	        		}
+	        	}
+	        	model.addObject("totalFeeCollection", totalFeeCollection);
+	        	
+	        	List<PurchaseReceipt> purchaseReceipts = purchaseService.loadPurchaseReceipts();
+	        	Double totalPurchaseAmount=0.00;
+	        	for(PurchaseReceipt receipt : purchaseReceipts){
+	        		if(receipt.getReceiptDate().equals(date) && null!=receipt.getNetValue()){
+	        			totalPurchaseAmount=totalPurchaseAmount+receipt.getNetValue();
+	        		}
+	        	}
+	        	
+	        	model.addObject("totalPurchaseAmount", totalPurchaseAmount);
+	        	
+	        	List<SalesReceipt> salesReceipts = purchaseService.loadSalesReceipts();
+	        	Double totalSalesAmount=0.00;
+	        	for(SalesReceipt receipt : salesReceipts){
+	        		if(receipt.getChallanDate().equals(date) && null!=receipt.getNetValue()){
+	        			totalSalesAmount=totalSalesAmount+receipt.getNetValue();
+	        		}
+	        	}
+	        	model.addObject("totalSalesAmount", totalSalesAmount);
+	        	
+	        	List<OtherPayments> otherPayments = fixedFee.loadOtherPayments();
+	        	Double totalOtherPaymentsAmount=0.00;
+	        	for(OtherPayments payment : otherPayments){
+	        		if(payment.getPaymentDate().equals(date) && null!=payment.getPaymentAmount()){
+	        			totalOtherPaymentsAmount=totalOtherPaymentsAmount+payment.getPaymentAmount();
+	        		}
+	        	}
+	        	model.addObject("totalOtherPaymentsAmount", totalOtherPaymentsAmount);
+	        	model.addObject("date", date);
+	        	//model.addObject("totalOtherPaymentsAmount", totalOtherPaymentsAmount);
+	        }
+	        
 		}
       /*  request.getParameter("session");
         request.getParameter("batch");
@@ -132,19 +184,16 @@ public class ReportGenerationController {
 
 	}
 
-	private List<StudentFeeDetails> getstudentFixedFeeDetailsListForRoute(String routeCode,
+	private List<StudentFeeDetails> getstudentFixedFeeDetailsList(String batch,
 			String session, String month) {
 		List<StudentFeeDetails> details = new ArrayList<StudentFeeDetails>();
 		for(StudentFeeDetails f: studentFixedFeeDetails){
-			Integer routeCode1 = getRouteCode(f.getPickUpMasterId());
-			
-			if(session.equalsIgnoreCase(f.getSession()) && month.equalsIgnoreCase(f.getMonth()) && routeCode.equals(String.valueOf(routeCode1))){
+			if(session.equalsIgnoreCase(f.getSession()) && month.equalsIgnoreCase(f.getMonth()) && batch.equalsIgnoreCase(f.getBatch())){
 				details.add(f);
 			}
 		}
 		
 		return details;
-		// TODO Auto-generated method stub
 		
 	}
 

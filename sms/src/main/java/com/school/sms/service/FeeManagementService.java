@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.OtherPayments;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
@@ -30,5 +31,10 @@ public interface FeeManagementService {
 	public List<StudentFeeDetails> loadStudentFeeDetails(String enrolementNo);
 	public FixedFeeBatchYearMonth loadFixedFeeBatchYearMonth(String month,
 			String session);
-	public void saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils);
+	public StudentFeeDetails saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils);
+	public OtherPayments findOtherPayments(String receiptNo, String mobileNo,
+			String name);
+	public OtherPayments processOtherPayment(OtherPayments otherPayments);
+	public List<StudentFeeDetails> loadAllStudentFeeDetails();
+	public List<OtherPayments> loadOtherPayments();
 }

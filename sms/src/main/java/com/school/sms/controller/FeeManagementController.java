@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.school.sms.constants.Constants;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.OtherPayments;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
@@ -412,15 +413,26 @@ public class FeeManagementController {
 				new StudentFeeDetails());
 		
 		studentsList = feeService.loadStudentsList();
+		List<String> list = getAllSessionList();
 		initalizeBatchAndStudentFatherEnrolementMap();
 		model.addObject("studentsList", this.studentsList);
 		model.addObject("modeOfPaymentList", Arrays.asList(Constants.MODE_OF_PAYMENT));
 		model.addObject("studentClassBatchList", /*this.studentClassBatchList*/ Arrays.asList(Constants.BATCH_ARRAY));
 		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
+		model.addObject("sessionList",list);
 		// model.setViewName("fixed-fees");
 
 		return model;
 
+	}
+
+	private List<String> getAllSessionList() {
+		List<StudentFeeDetails> feeDetails = feeService.loadAllStudentFeeDetails();
+		List<String> list = new ArrayList<String>();
+		for(StudentFeeDetails detail:feeDetails){
+			list.add(detail.getSession());
+		}
+		return list;
 	}
 	
 	private void initalizeBatchAndStudentFatherEnrolementMap() {
@@ -464,7 +476,7 @@ public class FeeManagementController {
 			
 		}
 		else if("save".equalsIgnoreCase(action)){
-			feeService.saveStudentFeeDetails(studentFeeDeatils);
+			studentFeeDeatils=feeService.saveStudentFeeDetails(studentFeeDeatils);
 			
 		}
 		else if("calculate".equalsIgnoreCase(action)){
@@ -482,6 +494,7 @@ public class FeeManagementController {
 		model.addObject("modeOfPaymentList", Arrays.asList(Constants.MODE_OF_PAYMENT));
 		model.addObject("studentClassBatchList", Arrays.asList(Constants.BATCH_ARRAY));
 		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
+		model.addObject("sessionList",getAllSessionList());
 		// model.setViewName("fixed-fees");
 
 		return model;
@@ -541,8 +554,53 @@ public class FeeManagementController {
 
 	/******* fee payment  ends*******/
 	
+	@RequestMapping(value = "/admin/otherPayments", method = RequestMethod.GET)
+	public ModelAndView otherPayments() {
+		ModelAndView model = new ModelAndView("other_payments", "command",
+				new OtherPayments());
+		
+		return model;
+
+	}
 	
-	
+	@RequestMapping(value = "/admin/otherPayments", method = RequestMethod.POST)
+	public ModelAndView processOtherPayments(@ModelAttribute("otherPayments")OtherPayments otherPayments,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView modelAndView= new ModelAndView("other_payments","command", otherPayments);
+		if("search".equalsIgnoreCase(action)){
+			String receiptNo = request.getParameter("receiptNo");
+			String mobileNo = request.getParameter("mobileNo");
+			String name = request.getParameter("name");
+			if(receiptNo.isEmpty() && mobileNo.isEmpty() && name.isEmpty()){
+				modelAndView.addObject("searchDateIncomplete", true);
+				return modelAndView;
+			}
+			
+			OtherPayments payments= feeService.findOtherPayments(receiptNo,mobileNo,name);
+			boolean noOtherPaymentFound=false;
+			if(null==payments){
+				noOtherPaymentFound=true;
+				modelAndView = new ModelAndView("other_payments","command",otherPayments);
+			}else{
+				modelAndView = new ModelAndView("other_payments","command",payments);
+			}
+			
+			modelAndView.addObject("noOtherPaymentFound",noOtherPaymentFound);
+		}
+		else if("process".equalsIgnoreCase(action)) {
+			otherPayments=feeService.processOtherPayment(otherPayments);
+			modelAndView = new ModelAndView("other_payments","command",otherPayments);
+			modelAndView.addObject("otherPaymentProcessed", true);
+			
+			
+		}
+		else if("reset".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("other_payments","command",new OtherPayments());
+			
+		}
+		return modelAndView;
+
+	}
 	
 	
 	

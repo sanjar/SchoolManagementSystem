@@ -45,4 +45,8 @@ public interface PurchaseService {
 
 	SalesReceipt findSalesReceipt(Integer valueOf);
 
+	List<PurchaseReceipt> loadPurchaseReceipts();
+
+	List<SalesReceipt> loadSalesReceipts();
+
 }

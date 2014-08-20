@@ -71,7 +71,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				| <a href="">Contact</a> | <a id="manageProduct" href="manageProduct">Manage Product</a> |<a id="purchaseReceipt" href="purchaseReceipt">Purchase Receipt</a> | <a id="salesReceipt" href="salesReceipt">Sales Receipt</a> 
+				| <a href="">Contact</a> | <a id="manageProduct" href="manageProduct">Manage Product</a> |<a id="purchaseReceipt" href="purchaseReceipt">Purchase Receipt</a> |<a id="purchaseReceiptList" href="purchaseReceiptList">List Purchase Receipt</a> | <a id="salesReceipt" href="salesReceipt">Sales Receipt</a> | <a id="salesReceiptList" href="salesReceiptList">List Sales Receipt</a> 
 
 			</p>
 		</div>

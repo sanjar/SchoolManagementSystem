@@ -128,6 +128,10 @@
 					event.preventDefault();
 					window.open('admin/generateReport',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
 				});
+				$('#settings').click(function(event){
+					event.preventDefault();
+					window.open('admin/settings',"_blank"/* ,'scrollbars=1,toolbar=0,location=0,menubar=0' */);
+				});
 			}); 
 			
 		
@@ -184,10 +188,10 @@
 <div>
                 <ul id="nav">
                                 <li id="current"><a href="">Dashboard</a></li>
-                                <li><a href="">Authorisation</a></li>
+                                
                                 <li><a id="purchase" href="">Purchase</a></li>
                                 <li><a id="transportManagement" href="">Transport</a></li>
-                                <li><a href="">Discounts</a></li>
+                               
                             </ul>
                         </div>
                         
@@ -225,7 +229,7 @@
                 	<img src="<c:url value='/resources/images/Crystal_Clear_stats.gif'/>" alt="" width="64" height="64" /> <span>Reports</span>
                 </a>
                 
-                <a href="" class="dashboard-module">
+                <a id="settings" href="" class="dashboard-module">
                 	<img src="<c:url value='/resources/images/Crystal_Clear_settings.gif'/>" alt="" width="64" height="64" /> <span>Settings</span>
                 </a>
               <div style="clear: both"></div>

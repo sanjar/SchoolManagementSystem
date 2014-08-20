@@ -27,6 +27,20 @@ public class SalesController {
 	@Resource(name = "purchaseService")
 	private PurchaseService purchaseService;
 	
+	@RequestMapping(value = "admin/purchase/salesReceiptList", method = RequestMethod.GET)
+	public ModelAndView purchase() {
+		List<SalesReceipt> salesReceipts = new ArrayList<SalesReceipt>();
+		salesReceipts = purchaseService.loadSalesReceipts();
+		ModelAndView model = new ModelAndView("sales_receipt_list");
+		
+		model.addObject("salesReceipts", salesReceipts);
+		//model.setViewName("purchase_form");
+
+		return model;
+
+	}
+	
+	
 	@RequestMapping(value = "admin/purchase/salesReceipt", method = RequestMethod.GET)
 	public ModelAndView salesReceipt() {
 		SalesReceipt salesReceipt = new SalesReceipt();

@@ -2,7 +2,7 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <html>
 <head>
-<title>SCHOOL ACCOUNTS MANAGEMENT SYSTEM</title>
+<title>Report Generation</title>
 <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css' />" type="text/css"
 	media="screen" />
@@ -47,6 +47,12 @@ $(document).ready(function(){
 		if($(this).attr("id")=="transportfeePendingLink"){
 			$('#transportfeePending').show();
 		}
+		if($(this).attr("id")=="feeCollectionPendingLink"){
+			$('#feeCollectionPending').show();
+		}
+		if($(this).attr("id")=="dayBookLink"){
+			$('#dayBookDiv').show();
+		}
 	    //$('#userType').val($(this).text().split(" ")[0]);
 	    $('#user_type').val($(this).attr("id"));
 	    //alert($('#user_type').val());
@@ -63,6 +69,16 @@ $(document).ready(function(){
          buttonImageOnly: true
      });
 	 $(".dateWiseFeeCalender1").datepicker({
+		 changeMonth: true,
+		 changeYear: true,
+		 yearRange:'-90:+0',
+         showOn: "button",
+         dateFormat: "dd/mm/yy",
+         disabled: false,
+         buttonImage: "<c:url value='/resources/images/calendar.png'/>",
+         buttonImageOnly: true
+     });
+	 $(".dayBookCalender").datepicker({
 		 changeMonth: true,
 		 changeYear: true,
 		 yearRange:'-90:+0',
@@ -115,6 +131,8 @@ $(document).ready(function(){
 				<li><a id="collectionDateWise" class="link" href="#">Fee Collection Date Wise</a></li>
 				<li><a id="collectionDateSessionBatchWise" class="link" href="#">Fee Collection Date/Session/Batch Wise</a></li>
 				<li><a id="transportfeePendingLink" class="link" href="#">Transport Pending Fee</a></li>
+				<li><a id="feeCollectionPendingLink" class="link" href="#">Pending Fee Collection</a></li>
+				<li><a id="dayBookLink" class="link" href="#">Day Book</a></li>
 			</ul>
 		</div>
 		<input type="hidden" name="user_type" id ="user_type" value="" />
@@ -132,10 +150,19 @@ $(document).ready(function(){
 				<ul>
 				<li class="f">
 				<label class="fl">Select Session : </label>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
 				<select name="session" class="fl">
 						<option value="-1">Please Select Session</option>
 						<c:forEach items="${sessionList}" var="session">
-							<option value="${session}">${session}</option>
+							<c:choose>
+							<c:when test="${session==currentSession}">
+								<option value="${session}" selected="selected">${session}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${session}">${session}</option>
+							</c:otherwise>
+							</c:choose>
+							
 						</c:forEach>
 					</select></li>
 					
@@ -211,10 +238,19 @@ $(document).ready(function(){
 				</li>
 					<li class="f">
 				<label class="fl">Select Session : </label>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
 				<select name="session" class="fl">
 						<option value="-1">Please Select Session</option>
 						<c:forEach items="${sessionList}" var="session">
-							<option value="${session}">${session}</option>
+							<c:choose>
+							<c:when test="${session==currentSession}">
+								<option value="${session}" selected="selected">${session}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${session}">${session}</option>
+							</c:otherwise>
+							</c:choose>
+							
 						</c:forEach>
 					</select></li>
 					<li class="f">
@@ -243,10 +279,19 @@ $(document).ready(function(){
 				<ul>
 				<li class="f">
 				<label class="fl">Select Session : </label>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
 				<select name="session" class="fl">
 						<option value="-1">Please Select Session</option>
 						<c:forEach items="${sessionList}" var="session">
-							<option value="${session}">${session}</option>
+							<c:choose>
+							<c:when test="${session==currentSession}">
+								<option value="${session}" selected="selected">${session}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${session}">${session}</option>
+							</c:otherwise>
+							</c:choose>
+							
 						</c:forEach>
 					</select></li>
 					
@@ -278,7 +323,78 @@ $(document).ready(function(){
 					</article>
 					</form>
 			</div>
-
+			<div id="feeCollectionPending" class="report" hidden="true">
+				
+				<h1>Fee Collection Pending Report</h1>
+				<form action="generateReport" method="POST" target="_blank">
+				<article>
+				<ul>
+				<li class="f">
+				<label class="fl">Select Session : </label>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
+				<select name="session" class="fl">
+						<option value="-1">Please Select Session</option>
+						<c:forEach items="${sessionList}" var="session">
+							<c:choose>
+							<c:when test="${session==currentSession}">
+								<option value="${session}" selected="selected">${session}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${session}">${session}</option>
+							</c:otherwise>
+							</c:choose>
+							
+						</c:forEach>
+					</select></li>
+					
+					<li class="f">
+				<label class="fl">Select Batch : </label>
+				<select name="batch" class="fl">
+						<option value="-1">Please Select Batch</option>
+						<c:forEach items="${batchList}" var="batch">
+							<option value="${batch}">${batch}</option>
+						</c:forEach>
+					</select></li>
+					
+					<li class="f">
+				<label class="fl">Select Month : </label>
+				<select name="month" class="fl">
+						<option value="-1">Please Select Month</option>
+						<c:forEach items="${monthList}" var="month">
+							<option value="${month}">${month}</option>
+						</c:forEach>
+					</select></li>
+					
+					<li  class="f">
+				<input type="hidden" name ="reportType" value="feeCollectionPending">	
+				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				</li>
+					</ul>
+					</article>
+					</form>
+			</div>
+			<div id="dayBookDiv" class="report" hidden="true">
+				
+				<h1>Day Book</h1>
+				<form action="generateReport" method="POST" target="_blank">
+				<article>
+				<ul>
+				<li class="f">
+				<label class="fl">Date : </label>
+				<input type="text" size="25" style="margin-right:10px" id="dayBookDate" class="fl dayBookCalender" name="dayBookDate" readonly="readonly"/>
+				</li>
+					<li  class="f">
+				<input type="hidden" name ="reportType" value="dayBook">	
+				 <button class="left" name="action" value="view" id="view">View</button>
+				 <button class="left" name="action" value="sendSMS" id="view">Send SMS</button>
+				 <button class="left" name="action" value="exit" onclick="window.opener=null; window.close(); return false;">Exit</button>
+				</li>
+					</ul>
+					</article>
+					</form>
+			</div>
 			<br id="endmain" />
 	</div>
 

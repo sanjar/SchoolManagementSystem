@@ -108,7 +108,7 @@
 					href="payrollManagement/manageGradeMaster">Manage Grade Master</a> | <a id="manageSalaryMaster"
 					href="payrollManagement/manageSalaryMaster">Manage Salary Master</a> |<a id="manageDepartmentMaster"
 					href="payrollManagement/manageDepartmentMaster">Manage Department Master</a>|<a id="processSalary" href="payrollManagement/processSalary">Process
-					Salary</a>
+					Salary</a> 
 
 			</p>
 		</div>

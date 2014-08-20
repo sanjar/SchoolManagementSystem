@@ -50,11 +50,166 @@ public class PDFBuilder extends AbstractITextPdfView {
 		else if("transportfeePending".equalsIgnoreCase((String)model.get("reportType"))){
 			generatePDFForPendingTransportFee(model,doc,writer,request,response);
 		}
-		
+		else if("feeCollectionPending".equalsIgnoreCase((String)model.get("reportType"))){
+			generatePDFForFeeCollectionPending(model,doc,writer,request,response);
+		}
+		else if("dayBook".equalsIgnoreCase((String)model.get("reportType"))){
+			generatePDFForDayBook(model,doc,writer,request,response);
+		}
 		
 	}
 
 	
+
+	private void generatePDFForDayBook(Map<String, Object> model, Document doc,
+			PdfWriter writer, HttpServletRequest request,
+			HttpServletResponse response) throws DocumentException {
+		List<StudentFeeDetails> studentFixedFeeDetailsList = (List<StudentFeeDetails>) model.get("studentFixedFeeDetails");
+		Map<String,String> enrolementFatherMap = (Map<String,String> ) model.get("enrolementFatherMap");
+		String date = (String) model.get("date");
+		Double totalFeeCollection = (Double) model.get("totalFeeCollection");
+		Double totalPurchaseAmount = (Double) model.get("totalPurchaseAmount");
+		Double totalSalesAmount = (Double) model.get("totalSalesAmount");
+		Double totalOtherPaymentsAmount = (Double) model.get("totalOtherPaymentsAmount");
+		doc.add(new Paragraph("DAY BOOK"));
+		doc.add(new Paragraph("Date : "+date));
+		
+		
+		PdfPTable table = new PdfPTable(3);
+		table.setWidthPercentage(100.0f);
+		table.setWidths(new float[] {4.0f, 3.0f, 3.0f});
+		table.setSpacingBefore(10);
+		
+		// define font for table header row
+		Font font = FontFactory.getFont(FontFactory.HELVETICA);
+		font.setColor(BaseColor.WHITE);
+		font.setSize(10);
+		
+		// define table header cell
+		PdfPCell cell = new PdfPCell();
+		cell.setBackgroundColor(BaseColor.BLUE);
+		cell.setPadding(5);
+		
+			
+		
+		cell.setPhrase(new Phrase("Header", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Earnings", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Expenses", font));
+		table.addCell(cell);
+		
+		
+		PdfPCell cell1 = new PdfPCell();
+		cell1.setBackgroundColor(BaseColor.WHITE);
+		cell1.setPadding(5);
+		Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
+		font1.setColor(BaseColor.BLACK);
+		font1.setSize(10);
+		Double totalAmount=0.00;
+		Double netBalance = (totalFeeCollection+totalSalesAmount)-(totalPurchaseAmount+totalOtherPaymentsAmount);
+		table.addCell(getCell(cell1, "Total Fee Collection", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1,  String.valueOf(totalFeeCollection), font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, "", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, "Total Purchase Amount", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, "", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1,String.valueOf(totalPurchaseAmount),font1,5,Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, "Total Sales Amount", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, String.valueOf(totalSalesAmount), font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1,"",font1,5,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1, "Total Other Payments", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1, "", font1, 1, Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1,String.valueOf(totalOtherPaymentsAmount),font1,1,Element.ALIGN_CENTER));
+		table.addCell(getCell(cell1," ",font1,3,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,"Total Earnings : ",font1,2,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(totalFeeCollection+totalSalesAmount),font1,1,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,"Total Expenses : ",font1,2,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(totalPurchaseAmount+totalOtherPaymentsAmount),font1,1,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,"Net Balance : ",font1,2,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(netBalance),font1,1,Element.ALIGN_RIGHT));
+		doc.add(table);
+		
+	}
+
+
+
+	private void generatePDFForFeeCollectionPending(Map<String, Object> model,
+			Document doc, PdfWriter writer, HttpServletRequest request,
+			HttpServletResponse response) throws DocumentException {
+		List<StudentFeeDetails> studentFixedFeeDetailsList = (List<StudentFeeDetails>) model.get("studentFixedFeeDetails");
+		Map<String,String> enrolementFatherMap = (Map<String,String> ) model.get("enrolementFatherMap");
+		String month = (String) model.get("month");
+		String batch = (String) model.get("batch");
+		String session = (String) model.get("session");
+		doc.add(new Paragraph("Fee Collection Pending Report"));
+		doc.add(new Paragraph("Session : "+session));
+		doc.add(new Paragraph("batch : "+ batch));
+		doc.add(new Paragraph("Month : "+month));
+		
+		PdfPTable table = new PdfPTable(6);
+		table.setWidthPercentage(100.0f);
+		table.setWidths(new float[] {2.2f, 2.0f, 2.2f, 3.0f, 3.0f,2.0f});
+		table.setSpacingBefore(10);
+		
+		// define font for table header row
+		Font font = FontFactory.getFont(FontFactory.HELVETICA);
+		font.setColor(BaseColor.WHITE);
+		font.setSize(10);
+		
+		// define table header cell
+		PdfPCell cell = new PdfPCell();
+		cell.setBackgroundColor(BaseColor.BLUE);
+		cell.setPadding(5);
+		
+			
+		
+		cell.setPhrase(new Phrase("Enrolement No", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Student Name", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Batch", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Month", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Parent Name", font));
+		table.addCell(cell);
+		
+		cell.setPhrase(new Phrase("Pending Amount", font));
+		table.addCell(cell);
+		
+		PdfPCell cell1 = new PdfPCell();
+		cell1.setBackgroundColor(BaseColor.WHITE);
+		cell1.setPadding(5);
+		Font font1 = FontFactory.getFont(FontFactory.HELVETICA);
+		font1.setColor(BaseColor.BLACK);
+		font1.setSize(10);
+		Double totalAmount=0.00;
+		for(StudentFeeDetails detail: studentFixedFeeDetailsList){
+			if(detail.getPreviousDue()!=0.0 && detail.getPreviousDue()!=null){
+			Double due = detail.getPreviousDue();
+			
+			table.addCell(getCell(cell1,detail.getEnrolementNo(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getStudentName(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getBatch(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,detail.getMonth(),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(enrolementFatherMap.get(detail.getEnrolementNo())),font1,1,Element.ALIGN_CENTER));
+			table.addCell(getCell(cell1,String.valueOf(due),font1,1,Element.ALIGN_CENTER));
+			totalAmount=totalAmount+due;
+			}
+		}
+		table.addCell(getCell(cell1,"Total Collection ",font1,5,Element.ALIGN_RIGHT));
+		table.addCell(getCell(cell1,String.valueOf(totalAmount),font1,1,Element.ALIGN_RIGHT));
+		doc.add(table);
+		
+	}
+
+
 
 	private void generatePDFForPendingTransportFee(Map<String, Object> model,
 			Document doc, PdfWriter writer, HttpServletRequest request,
@@ -108,7 +263,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 		font1.setSize(10);
 		Double totalAmount=0.00;
 		for(StudentFeeDetails detail: studentFixedFeeDetailsList){
-			
+			if(detail.getTransportDues()!=0.00 && detail.getTransportDues()!=null){
 			table.addCell(getCell(cell1,detail.getEnrolementNo(),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,detail.getStudentName(),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,detail.getBatch(),font1,1,Element.ALIGN_CENTER));
@@ -116,6 +271,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 			table.addCell(getCell(cell1,String.valueOf(enrolementFatherMap.get(detail.getEnrolementNo())),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,String.valueOf(detail.getTransportDues()),font1,1,Element.ALIGN_CENTER));
 			totalAmount=totalAmount+detail.getTransportDues();
+			}
 		}
 		table.addCell(getCell(cell1,"Total Collection ",font1,5,Element.ALIGN_RIGHT));
 		table.addCell(getCell(cell1,String.valueOf(totalAmount),font1,1,Element.ALIGN_RIGHT));
@@ -208,6 +364,8 @@ public class PDFBuilder extends AbstractITextPdfView {
 		List<StudentFeeDetails> studentFixedFeeDetailsList = (List<StudentFeeDetails>) model.get("studentFixedFeeDetails");
 		Map<String,String> enrolementFatherMap = (Map<String,String> ) model.get("enrolementFatherMap");
 		String month = (String) model.get("month");
+		String session = (String) model.get("session");
+		String batch = (String) model.get("batch");
 		doc.add(new Paragraph("Fee Collection Details"));
 		doc.add(new Paragraph("Month : "+month));
 		
@@ -259,6 +417,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 		font1.setSize(5);
 		Double totalAmount=0.00;
 		for(StudentFeeDetails detail: studentFixedFeeDetailsList){
+			if(month.equalsIgnoreCase(detail.getMonth()) && session.equalsIgnoreCase(detail.getSession()) && batch.equalsIgnoreCase(detail.getBatch())){
 			table.addCell(getCell(cell1,detail.getDateOfPayment(),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,detail.getSession(),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,detail.getBatch(),font1,1,Element.ALIGN_CENTER));
@@ -268,6 +427,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 			table.addCell(getCell(cell1,String.valueOf(detail.getReceiptNo()),font1,1,Element.ALIGN_CENTER));
 			table.addCell(getCell(cell1,String.valueOf(detail.getAmountReceived()),font1,1,Element.ALIGN_CENTER));
 			totalAmount=totalAmount+detail.getAmountReceived();
+			}
 		}
 		table.addCell(getCell(cell1,"Total Collection of "+month,font1,7,Element.ALIGN_RIGHT));
 		table.addCell(getCell(cell1,String.valueOf(totalAmount),font1,1,Element.ALIGN_RIGHT));

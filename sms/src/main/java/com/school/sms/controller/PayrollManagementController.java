@@ -21,6 +21,7 @@ import com.school.sms.constants.Constants;
 import com.school.sms.model.Department;
 import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.GradeMaster;
+import com.school.sms.model.OtherPayments;
 import com.school.sms.model.SalaryMaster;
 import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.service.PayrollManagementService;
@@ -523,4 +524,6 @@ public class PayrollManagementController {
 	}
 	
 	/******** Salary Master ends **********/
+	
+	
 }

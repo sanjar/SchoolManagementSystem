@@ -45,6 +45,23 @@ public class PurchaseController {
 	private PurchaseService purchaseService;
 
 	
+	
+	@RequestMapping(value = "admin/purchase/purchaseReceiptList", method = RequestMethod.GET)
+	public ModelAndView purchase() {
+		List<PurchaseReceipt> purchaseReceipts = new ArrayList<PurchaseReceipt>();
+		purchaseReceipts = purchaseService.loadPurchaseReceipts();
+		ModelAndView model = new ModelAndView("purchase_receipt_list");
+		
+		model.addObject("purchaseReceipts", purchaseReceipts);
+		//model.setViewName("purchase_form");
+
+		return model;
+
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "admin/purchase/manageCustomer", method = RequestMethod.GET)
 	public ModelAndView manageCustomer() {
 		customerIndex=-1;

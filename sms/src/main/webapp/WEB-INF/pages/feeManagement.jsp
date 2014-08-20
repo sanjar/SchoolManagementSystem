@@ -66,7 +66,7 @@
 				<span class="hidden">Navigation:</span> <a id="manageFixedFee"
 					href="manageFixedFee">Manage Fixed Fee</a> | <a id="manageVariableFee" href="manageVariableFee">Manage
 					Variable Fee</a> | <a id="manageDiscountsAndConcessions" href="manageDiscountsAndConcessions">Manage
-					Discounts and Concessions</a> | <a id="feePayment" href="feePayment">Fee Payment</a> |
+					Discounts and Concessions</a> | <a id="feePayment" href="feePayment">Fee Payment</a> |<a id="manageDepartmentMaster" href="otherPayments">Other Payments</a>
 
 			</p>
 		</div>

@@ -120,6 +120,18 @@ public class PurchaseServiceImpl implements PurchaseService{
 		return purchaseDao.findSalesReceipt(challanNo);
 	}
 
+	@Override
+	public List<PurchaseReceipt> loadPurchaseReceipts() {
+		// TODO Auto-generated method stub
+		return purchaseDao.loadPurchaseReceipts();
+	}
+
+	@Override
+	public List<SalesReceipt> loadSalesReceipts() {
+		// TODO Auto-generated method stub
+		return purchaseDao.loadSalesReceipts();
+	}
+
 	
 	
 }

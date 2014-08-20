@@ -13,6 +13,7 @@ import com.school.sms.dao.FixedFeeDao;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.GradeMaster;
+import com.school.sms.model.OtherPayments;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
@@ -145,9 +146,51 @@ public class FixedFeeDaoImpl implements FixedFeeDao {
 	}
 
 	@Override
-	public void saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils) {
-		entityManager.merge(studentFeeDeatils);
+	public StudentFeeDetails saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils) {
+		StudentFeeDetails details=entityManager.merge(studentFeeDeatils);
 		entityManager.flush();
-		
+		return details;
+	}
+
+	@Override
+	public OtherPayments findOtherPayments(String receiptNo, String mobileNo,
+			String name) {
+		String receiptWhereClause= "";
+		String mobileNoWhereClause="";
+		String nameWhereClause= "";
+		if(!receiptNo.isEmpty()){
+			receiptWhereClause = "o.receiptNo =" + "'"+receiptNo+"'";
+		}
+		if(!mobileNo.isEmpty()){
+			String s = "o.mobileNo =" + "'"+mobileNo+"'";
+			mobileNoWhereClause = receiptNo.isEmpty()?s:"and"+s;
+		}
+		if(!name.isEmpty()){
+			String s = "o.mobileNo =" + "'"+mobileNo+"'";
+			nameWhereClause= name.isEmpty()?s:"and"+s;
+		}
+		if(entityManager.createQuery("FROM OtherPayments o WHERE " +receiptWhereClause +mobileNoWhereClause+nameWhereClause).getResultList().size()>0){
+			return (OtherPayments) entityManager.createQuery("FROM OtherPayments o WHERE " +receiptWhereClause +mobileNoWhereClause+nameWhereClause).getResultList().get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public OtherPayments processOtherPayment(OtherPayments otherPayments) {
+		OtherPayments otherPayments2=entityManager.merge(otherPayments);
+		entityManager.flush();
+		return otherPayments2;
+	}
+
+	@Override
+	public List<StudentFeeDetails> loadAllStudentFeeDetails() {
+		Query query = entityManager.createQuery("FROM StudentFeeDetails");
+		return query.getResultList();
+	}
+
+	@Override
+	public List<OtherPayments> loadOtherPayments() {
+		Query query = entityManager.createQuery("FROM OtherPayments");
+		return query.getResultList();
 	}
 }

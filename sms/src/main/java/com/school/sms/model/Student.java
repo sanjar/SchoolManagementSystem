@@ -41,6 +41,9 @@ public class Student {
 	@Column(name="father_name")
 	private String fathername;
 	
+	@Column(name="parent_mobile_no")
+	private String parentMobileNo;
+	
 	@Column(name="date_of_admission")
 	private String dateOfAdmission;
 	
@@ -178,6 +181,12 @@ public class Student {
 	}
 	public void setRoll(Integer roll) {
 		this.roll = roll;
+	}
+	public String getParentMobileNo() {
+		return parentMobileNo;
+	}
+	public void setParentMobileNo(String parentMobileNo) {
+		this.parentMobileNo = parentMobileNo;
 	}
 	
 	

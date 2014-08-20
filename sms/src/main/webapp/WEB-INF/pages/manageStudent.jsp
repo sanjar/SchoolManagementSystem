@@ -163,6 +163,9 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Mother Name<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="motherName" class="fl" path="motherName" cssStyle="margin-right: 10px;"/> 
 				</li>
+				<li class="f"><label for="name" class="fl">Parent Mobile No</label> 
+						<form:input type="text" size="25" id="parentMobileNo" class="fl" path="parentMobileNo" cssStyle="margin-right: 10px;"/> 
+				</li>
 				<li class="f"><label for="name" class="fl">Date Of Addmission<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="dateOfAdmission" class="fl dateField" path="dateOfAdmission" readonly="true" style="margin-right:10px"/> 
 				</li>

@@ -170,4 +170,16 @@ private EntityManager entityManager;
 		}
 		return null;
 	}
+
+	@Override
+	public List<PurchaseReceipt> loadPurchaseReceipts() {
+		Query query = entityManager.createQuery("FROM PurchaseReceipt p order by p.receiptNo DESC");
+		return query.getResultList();
+	}
+
+	@Override
+	public List<SalesReceipt> loadSalesReceipts() {
+		Query query = entityManager.createQuery("FROM SalesReceipt p order by p.challanNo DESC");
+		return query.getResultList();
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.school.sms.dao.FixedFeeDao;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
+import com.school.sms.model.OtherPayments;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
@@ -111,8 +112,29 @@ public class FeeManagementServiceImpl implements FeeManagementService {
 	}
 
 	@Override
-	public void saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils) {
-		fixedFeeDao.saveStudentFeeDetails(studentFeeDeatils);
+	public StudentFeeDetails saveStudentFeeDetails(StudentFeeDetails studentFeeDeatils) {
+		return fixedFeeDao.saveStudentFeeDetails(studentFeeDeatils);
 		
+	}
+
+	@Override
+	public OtherPayments findOtherPayments(String receiptNo, String mobileNo,
+			String name) {
+		return fixedFeeDao.findOtherPayments(receiptNo, mobileNo, name);
+	}
+
+	@Override
+	public OtherPayments processOtherPayment(OtherPayments otherPayments) {
+		return fixedFeeDao.processOtherPayment(otherPayments);
+	}
+
+	@Override
+	public List<StudentFeeDetails> loadAllStudentFeeDetails() {
+		return fixedFeeDao.loadAllStudentFeeDetails();
+	}
+
+	@Override
+	public List<OtherPayments> loadOtherPayments() {
+		return fixedFeeDao.loadOtherPayments();
 	}
 }

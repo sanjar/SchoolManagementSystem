@@ -74,12 +74,10 @@
 		
 		$("#feePayment").validate({
 			rules: {
-				enrolementNo:"required",
-				receiptNo:"required"
+				enrolementNo:"required"
 			},
 			messages: {
-				enrolementNo:"<br>Please enter Enrolement No",
-				receiptNo:"<br>Please enter Receipt No"
+				enrolementNo:"<br>Please enter Enrolement No"
 			}
 			
 		});
@@ -122,14 +120,12 @@
 						<label style="color:red">No Student details found</label>
 						</li>
 						</c:if>
-							<li class="f"><label for="name" class="fl">Manual
-									Reciept Number:</label> <form:input type="text" size="15" id="receiptNo"
+							<li class="f"><label for="name" class="fl">Reciept Number:</label> <form:input type="text" size="15" id="receiptNo"
 								class="fl numeric" path="receiptNo" /></li>
-								<li class="f digit" style="color: Red; display: none">
+								<!-- <li class="f digit" style="color: Red; display: none">
 								<span>* Input digits (0 - 9)</span>
-								</li>
-							<li class="f"><label for="name" class="fl">Enter
-									Enrollment Number:</label> <form:input type="text" size="15" id="enrolementNo"
+								</li> -->
+							<li class="f"><label for="name" class="fl">Enrollment Number:</label> <form:input type="text" size="15" id="enrolementNo"
 								class="fl" path="enrolementNo" /></li>
 							<li class="f"><label for="name" class="fl">Select Batch </label> 
 								<form:select
@@ -147,13 +143,28 @@
 								<span>${command.batch}</span>
 								
 								</li>
-								
 								<li class="f"><label for="name" class="fl">Student Session:</label>
-								<%-- <span>${command.session}</span> --%>
-								<form:input type="text" size="15" id="session"
-								class="fl" path="session" />
+				<%-- <option value="<%=request.getSession().getAttribute("currentSavedSession") %>"><%=request.getSession().getAttribute("currentSavedSession") %></option> --%>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
+				<form:select
+						path="session">
+						<option value="-1">Please Select</option>
+						<c:forEach items="${sessionList}" var="session1" varStatus="loop">
+						<c:choose>
+							<c:when test="${session1==command.session}">
+								<option value="${session1}" selected="selected">${session1}</option>
+							</c:when>
+							<c:when test="${session1==currentSession}">
+								<option value="${session1}" selected="selected">${session1}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${session1}">${session1}</option>
+							</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+					</form:select></li>
 								
-								</li>
 								
 								<li class="f"><label for="name" class="fl">select Month:</label> 
 										

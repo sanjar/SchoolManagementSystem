@@ -47,4 +47,8 @@ public interface PurchaseDao {
 
 	SalesReceipt findSalesReceipt(Integer challanNo);
 
+	List<PurchaseReceipt> loadPurchaseReceipts();
+
+	List<SalesReceipt> loadSalesReceipts();
+
 }

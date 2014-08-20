@@ -31,15 +31,15 @@ public class SalesReceiptItem {
 	private String type	;
 	
 	@Column(name="quantity_box")
-	private Double quantityBox;
+	private Double quantityBox=0.00;
 	
 	
 	
 	@Column(name="discount")
-	private Double discount;  /// may be in percentage....
+	private Double discount=0.00;  /// may be in percentage....
 	
 	@Column(name="total_amount")
-	private Double totalAmount;
+	private Double totalAmount=0.00;
 
 	public Integer getItemId() {
 		return itemId;

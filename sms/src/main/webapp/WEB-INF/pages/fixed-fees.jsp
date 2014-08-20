@@ -66,12 +66,17 @@
 				</li>
 
 				<li class="f"><label for="name" class="fl">Session:</label>
+				<%-- <option value="<%=request.getSession().getAttribute("currentSavedSession") %>"><%=request.getSession().getAttribute("currentSavedSession") %></option> --%>
+				<c:set var="currentSession" value="<%=request.getSession().getAttribute(\"currentSavedSession\") %>"></c:set>
 				<form:select
 						path="session">
 						<option value="-1">Please Select</option>
 						<c:forEach items="${sessionList}" var="session1" varStatus="loop">
 						<c:choose>
 							<c:when test="${session1==command.session}">
+								<option value="${session1}" selected="selected">${session1}</option>
+							</c:when>
+							<c:when test="${session1==currentSession}">
 								<option value="${session1}" selected="selected">${session1}</option>
 							</c:when>
 							<c:otherwise>

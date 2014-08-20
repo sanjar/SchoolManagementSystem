@@ -171,8 +171,8 @@
     <th scope="row">${x+1}</th>
     <td style="width: 100px"><form:input  path="salesReceiptItemList[${x}].productCode" id="productCode" style="width: 100px"/></td>
     <td style="width: 300px"><form:input path="salesReceiptItemList[${x}].description" id="description" style="width: 300px"/></td>
-    <td style="width: 78px"><form:input path="salesReceiptItemList[${x}].quantityBox"  id="quantityBox" style="width: 78px"/></td>
     <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].type"  id="type" style="width: 100px"/></td>
+    <td style="width: 78px"><form:input path="salesReceiptItemList[${x}].quantityBox"  id="quantityBox" style="width: 78px"/></td>
     <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].discount"  id="discount" style="width: 100px"/></td>
     <td style="width: 100px"><form:input path="salesReceiptItemList[${x}].totalAmount"  id="totalAmount" style="width: 100px"/></td>
     <form:input type="hidden" path="salesReceiptItemList[${x}].salesReceipt.challanNo"/>

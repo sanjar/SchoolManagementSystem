@@ -28,22 +28,22 @@ public class PurchaseReceiptItem {
 	private String description;
 	
 	@Column(name="purchase_price")
-	private Double purchasePrice;
+	private Double purchasePrice = 0.00;
 	
 	@Column(name="quantity_box")
-	private Double quantityBox;
+	private Double quantityBox = 0.00;
 	
 	@Column(name="quantity_unit")
-	private Double quantityUnit;
+	private Double quantityUnit = 0.00;
 	
 	@Column(name="skt_type")
 	private String sktType;
 	
 	@Column(name="discount")
-	private Double discount;  /// may be in percentage....
+	private Double discount=0.00;  /// may be in percentage....
 	
 	@Column(name="total_amount")
-	private Double totalAmount;
+	private Double totalAmount =0.00;
 	
 	@Column(name="ap")
 	private String AP;
