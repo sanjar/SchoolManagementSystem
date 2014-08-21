@@ -54,4 +54,10 @@ public interface PurchaseDao {
 
 	List<GeneralLedgerEntry> loadGeneralLedgers();
 
+	GeneralLedgerEntry findGeneralLedgerEntry(Integer glCode);
+
+	GeneralLedgerEntry updateSalesReceipt(GeneralLedgerEntry entry);
+
+	void deleteGeneralLedgerEntry(GeneralLedgerEntry generalLedger);
+
 }

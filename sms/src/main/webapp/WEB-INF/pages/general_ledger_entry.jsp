@@ -73,6 +73,12 @@ $(document).ready(function(){
 			}
 			
 		});
+	 if('${disableNext}'){
+ 		$('#nextButton').attr('disabled','disabled');
+ 	}
+ 	if('${disablePrevious}'){
+ 		$('#previousButton').attr('disabled','disabled');
+ 	}
 });
 
 </script>
@@ -99,8 +105,8 @@ $(document).ready(function(){
 	</div>
      <article>
 
-		<form:form class="mrg-top" id="manageStudent"
-			action="manageStudent">
+		<form:form class="mrg-top" id="generalLedger"
+			action="generalLedger" method="POST">
 
 			<ul>
 
@@ -112,11 +118,14 @@ $(document).ready(function(){
 				</c:if>
 				
 				<li class="f">
-					<c:if test="${studentSaved}">
-						<label style="color: green">Student Saved!!!</label>
-					</c:if> <c:if test="${studentDeactivated}">
-						<label style="color: green">Student deactivated!!!</label>
+					<c:if test="${generalLedgerSaved}">
+						<label style="color: green">General Ledger Saved!!!</label>
+					</c:if> <c:if test="${generalLedgerDeleted}">
+						<label style="color: green">General Ledger Delelted!!!</label>
 					</c:if> 
+					<c:if test="${noGeneralLedgerFound}">
+						<span style="color:red">No General Ledger Found.</span>
+					</c:if>
 				</li>
 	
 				<li class="f"><label for="name" class="fl">GL Code<span style="color: red">*</span></label> 
@@ -150,7 +159,7 @@ $(document).ready(function(){
 						<form:input type="text" size="25" id="TDSPercentage" class="fl" path="TDSPercentage" cssStyle="margin-right: 10px;"/> 
 				</li>
 				<li class="f"><label for="name" class="fl">STX Percentage</label> 
-						<form:input type="text" size="25" id="STXPercentage" class="fl dateField" path="STXPercentage" readonly="true" style="margin-right:10px"/> 
+						<form:input type="text" size="25" id="STXPercentage" class="fl" path="STXPercentage" style="margin-right:10px"/> 
 				</li>
 				
 				<li class="f"><label for="name" class="fl">investment </label> 

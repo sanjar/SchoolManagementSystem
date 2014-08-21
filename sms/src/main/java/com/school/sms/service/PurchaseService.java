@@ -52,4 +52,12 @@ public interface PurchaseService {
 
 	List<GeneralLedgerEntry> loadGeneralLedgers();
 
+	GeneralLedgerEntry findGeneralLedgerEntry(Integer valueOf);
+
+	GeneralLedgerEntry updateGeneralLedgerEntry(GeneralLedgerEntry generalLedger);
+
+	void deleteGeneralLedgerEntry(GeneralLedgerEntry generalLedger);
+
+	
+
 }

@@ -189,4 +189,28 @@ private EntityManager entityManager;
 		Query query = entityManager.createQuery("FROM GeneralLedgerEntry p order by p.glCode DESC");
 		return query.getResultList();
 	}
+
+	@Override
+	public GeneralLedgerEntry findGeneralLedgerEntry(Integer glCode) {
+		List list= entityManager.createQuery("FROM GeneralLedgerEntry p WHERE p.glCode="+"'"+glCode+"'").getResultList();
+		if(list.size()>0){
+			return (GeneralLedgerEntry) list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public GeneralLedgerEntry updateSalesReceipt(GeneralLedgerEntry entry) {
+		GeneralLedgerEntry entry2 = entityManager.merge(entry);
+		entityManager.flush();
+		return entry2;
+	}
+
+	@Override
+	public void deleteGeneralLedgerEntry(GeneralLedgerEntry generalLedger) {
+		GeneralLedgerEntry entry = entityManager.find(GeneralLedgerEntry.class,generalLedger.getGlCode());
+		entityManager.remove(entry);
+		entityManager.flush();
+		
+	}
 }

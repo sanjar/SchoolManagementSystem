@@ -138,6 +138,25 @@ public class PurchaseServiceImpl implements PurchaseService{
 		return purchaseDao.loadGeneralLedgers();
 	}
 
+	@Override
+	public GeneralLedgerEntry findGeneralLedgerEntry(Integer glCode) {
+		return purchaseDao.findGeneralLedgerEntry(glCode);
+	}
+
+	@Override
+	public GeneralLedgerEntry updateGeneralLedgerEntry(
+			GeneralLedgerEntry entry) {
+		return purchaseDao.updateSalesReceipt(entry);
+	}
+
+	@Override
+	public void deleteGeneralLedgerEntry(GeneralLedgerEntry generalLedger) {
+		purchaseDao.deleteGeneralLedgerEntry(generalLedger);
+		
+	}
+
+	
+
 	
 	
 }
