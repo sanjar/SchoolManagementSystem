@@ -9,6 +9,7 @@
        	 history.forward();
     	</script>
         <!-- CSS Reset -->
+        <link rel="stylesheet" href="<c:url value='/resources/css/form3.css'/>" />
        <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css' />" type="text/css"
 	media="screen" />
@@ -46,30 +47,32 @@ $(document).ready(function(){
 			rules: {
 				/* enrolementNo:"required", */
 				firstName:"required",
-				lastName:"required",
-				studentId:"required",
-				dateOfBirth:"required",
+				/* lastName:"required", */
+				parentMobileNo:"required", 
+				/* dateOfBirth:"required", */
 				/* mobileNo:"required", */
 				fathername:"required",
-				motherName:"required",
+				/* motherName:"required",
 				dateOfAdmission:"required",
-				address:"required",
-				currentClassBatch:"required",
-				roll:"required"
+				address:"required", */
+				currentClassSection:"required",
+				currentClassBatch:"required"
+				/* roll:"required" */
 			},
 			messages: {
 				/* enrolementNo:"Enter Enrolement No.", */
 				firstName:"Enter First Name.",
-				lastName:"Enter Last Name.",
-				studentId:"Enter Student Id.",
-				dateOfBirth:"Enter Date Of Birth.",
+				/* lastName:"Enter Last Name.", */
+				parentMobileNo:"Enter parent Mobile No.",
+				/* dateOfBirth:"Enter Date Of Birth.", */
 				/* mobileNo:"Enter Mobile No.", */
 				fathername:"Enter Father Name.",
-				motherName:"Enter mother Name.",
+				/* motherName:"Enter mother Name.",
 				dateOfAdmission:"Enter Date Of Admission.",
-				address:"Enter Address.",
-				currentClassBatch:"Enter Class",
-				roll:"Enter Roll"
+				address:"Enter Address.", */
+				currentClassSection:"Enter Section",
+				currentClassBatch:"Enter Class"
+				/* roll:"Enter Roll" */
 			}
 			
 		});
@@ -143,11 +146,11 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Middle Name</label> 
 						<form:input type="text" size="25" id="middleName" class="fl" path="middleName" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Last Name<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Last Name</label> 
 						<form:input type="text" size="25" id="lastName" class="fl" path="lastName" cssStyle="margin-right: 10px;"/> 
 				</li>
 				
-				<li class="f"><label for="name" class="fl">Date Of Birth<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Date Of Birth </label> 
 						<form:input type="text" size="25" id="dateOfBirth" class="fl dateField" path="dateOfBirth" readonly='true' style="margin-right: 10px;"/> 
 				</li>
 				<li class="f"><label for="name" class="fl">Phone No. </label> 
@@ -160,31 +163,53 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Father Name<span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="fathername" class="fl" path="fathername" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Mother Name<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Mother Name </label> 
 						<form:input type="text" size="25" id="motherName" class="fl" path="motherName" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Parent Mobile No</label> 
+				<li class="f"><label for="name" class="fl">Parent Mobile No <span style="color: red">*</span> </label> 
 						<form:input type="text" size="25" id="parentMobileNo" class="fl" path="parentMobileNo" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Date Of Addmission<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Date Of Addmission </label> 
 						<form:input type="text" size="25" id="dateOfAdmission" class="fl dateField" path="dateOfAdmission" readonly="true" style="margin-right:10px"/> 
 				</li>
 				
-				<li class="f"><label for="name" class="fl">Address<span style="color: red">*</span> </label> 
+				<li class="f"><label for="name" class="fl">Address </label> 
 						<form:input type="text" size="25" id="address" class="fl" path="address" cssStyle="margin-right: 10px;"/> 
 				</li>
 				<li class="f"><label for="name" class="fl">Current Class<span style="color: red">*</span> </label> 
-						<form:input type="text" size="25" id="currentClassBatch" class="fl" path="currentClassBatch" cssStyle="margin-right: 10px;"/> 
+				
+				
+						<form:select path="currentClassBatch" cssStyle="width:200px" >
+						<c:forEach items="${batchList}" var="batch" varStatus="loop">
+						
+							<c:choose>
+							<c:when test="${batch==command.currentClassBatch}">
+								<option value="${batch}" selected="selected">${batch}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${batch}">${batch}</option>
+							</c:otherwise>
+							</c:choose>
+
+
+
+
+						</c:forEach>
+						
+						
+						
+							<form:options items="${batchList}"/>
+						</form:select>
 				</li>
 				<li class="f"><label for="name" class="fl">Email Id </label> 
 						<form:input type="text" size="25" id="emailId" class="fl" path="emailId" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Section </label> 
+				<li class="f"><label for="name" class="fl">Section <span style="color: red">*</span></label> 
 						<form:input type="text" size="25" id="currentClassSection" class="fl" path="currentClassSection" cssStyle="margin-right: 10px;"/> 
 				</li>
 				
 				<li class="f"><label for="name" class="fl">Roll </label> 
-						<form:input type="text" size="25" id="roll" class="fl" path="roll" cssStyle="margin-right: 10px;"/> 
+						<form:input type="text" size="25" id="roll" class="fl" path="roll" cssStyle="margin-right: 10px;" readonly="true" /> 
 				</li>
 				<form:input type="hidden" path="studentId" id ="studentId"/>
 
@@ -197,6 +222,13 @@ $(document).ready(function(){
 				 <button class="left" name="action" value="first">First</button> -->
 				 <button class="left cancel" name="action" value="reset">Reset</button>
 				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
+				 
+				</li>
+				<li class="f">
+				 <label for="name" class="fl">Enter Enrolement No. to Search</label> <input
+					type="text" size="25" id="searchEnrolementNo" class="fl" name="searchEnrolementNo" style="margin-right: 10px;"/>
+				
+				<button class="left cancel" name="action" value="search">Search</button>
 				</li>
 				</ul>
 		</form:form>

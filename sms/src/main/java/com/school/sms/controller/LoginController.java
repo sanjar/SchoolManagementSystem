@@ -67,8 +67,11 @@ public class LoginController {
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", "Invalid username and password!");
+			
 		}
-
+		if(request.getParameterMap().keySet().contains("accountDisabled")){
+				model.addObject("error", "Account Disabled");
+		}
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 			model.setViewName("logout");
