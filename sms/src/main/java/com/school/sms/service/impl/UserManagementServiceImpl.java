@@ -1,5 +1,7 @@
 package com.school.sms.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -62,5 +64,17 @@ public class UserManagementServiceImpl implements UserManagementService{
 	public void updateUserRoles(String userId, String role) {
 		userDao.updateUserRoles(userId,role);
 		
+	}
+
+	@Override
+	public List<Student> loadStudents() {
+		// TODO Auto-generated method stub
+		return userDao.loadStudents();
+	}
+
+	@Override
+	public List<UserAuthenticationDetails> loadAdminUsers() {
+		// TODO Auto-generated method stub
+		return userDao.loadAdminUsers();
 	}
 }

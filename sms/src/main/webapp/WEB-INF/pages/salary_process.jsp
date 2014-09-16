@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Salary Master Form</title>
+<title>Salary Process Form</title>
 <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css' />" type="text/css"
 	media="screen" />
@@ -15,6 +15,9 @@
 	href="<c:url value='/resources/css/style4.css' />" />
 <link href='http://fonts.googleapis.com/css?family=Engagement'
 	rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js">
 <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -30,12 +33,16 @@
     </script>
     <script type="text/javascript">
     $(document).ready(function(){
-    	if('${disableNext}'){
-    		$('#nextButton').attr('disabled','disabled');
-    	}
-    	if('${disablePrevious}'){
-    		$('#previousButton').attr('disabled','disabled');
-    	}
+    	$(".dateField").datepicker({
+   		 changeMonth: true,
+   		 changeYear: true,
+   		 yearRange:'-90:+0',
+            showOn: "button",
+            dateFormat: "dd/mm/yy",
+            disabled: false,
+            buttonImage: "<c:url value='/resources/images/calendar.png'/>",
+            buttonImageOnly: true
+        });
     });
     </script>
 </head>
@@ -53,7 +60,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				|  <a href="">Contact</a> |
+				|  <a href="">Contact</a> | <a id="listProcessedSalaries" href="listProcessedSalaries">Processed Salaries List</a> 
 
 			</p>
 		</div>
@@ -100,11 +107,14 @@
 					</form:select>
 				</li>
 
-				
+				<li class="f"><label for="name" class="fl">Salary Process Date<span style="color: red">*</span> </label> 
+						<form:input type="text" size="25" id="processingDate" class="fl dateField" path="processingDate" readonly="true" style="margin-right:10px"/> 
+				</li>
 				<li class="f"><label for="name" class="fl">Comments </label> 
 						<form:textarea type="text" style="width:500px;height:41px" id="comments" class="fl" path="comments" /> 
 				</li>
 
+				
 				<br/>
 
 				<li  class="f">

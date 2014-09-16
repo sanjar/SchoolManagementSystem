@@ -1,5 +1,7 @@
 package com.school.sms.service;
 
+import java.util.List;
+
 import com.school.sms.model.Student;
 import com.school.sms.model.UserAuthenticationDetails;
 
@@ -21,6 +23,10 @@ public interface UserManagementService {
 	void deactivateUser(UserAuthenticationDetails user);
 
 	void updateUserRoles(String userId, String string);
+
+	List<Student> loadStudents();
+
+	List<UserAuthenticationDetails> loadAdminUsers();
 
 	
 

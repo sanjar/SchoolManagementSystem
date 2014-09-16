@@ -2,7 +2,7 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <html>
 <head>
-<title>SCHOOL ACCOUNTS MANAGEMENT SYSTEM</title>
+<title>User Management</title>
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
@@ -73,9 +73,9 @@ $(document).ready(function(){
 		<div>
 
 			<ul id="links">
-				<li ><a id="listAdminUsers" class="link" href="/sms/admin/userManagement/listAdminUsers">List Admin Users</a></li>
-				<li><a id="listStudents" class="link" href="/sms/admin/userManagement/listStudents">List Students</a></li>
-				<li><a id="listStudents" class="link" href="/sms/admin/userManagement/listStudents">List Suppliers/Dealers</a></li>
+				<li ><a id="listAdminUsers" class="link" href="/sms/admin/userManagement/listAdminUsers" target="_blank">List Admin Users</a></li>
+				<li><a id="listStudents" class="link" href="/sms/admin/userManagement/listStudents" target="_blank">List Students</a></li>
+				<!-- <li><a id="listStudents" class="link" href="/sms/admin/userManagement/listStudents">List Suppliers/Dealers</a></li> -->
 			</ul>
 		</div>
 	</div>

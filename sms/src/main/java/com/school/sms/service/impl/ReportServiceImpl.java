@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.school.sms.dao.ReportDao;
+import com.school.sms.model.ExtraMailRecipient;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.service.ReportService;
@@ -27,5 +28,22 @@ public class ReportServiceImpl implements ReportService{
 	public Student loadStudent(String enrolementNo) {
 		// TODO Auto-generated method stub
 		return reportDao.loadStudent(enrolementNo);
+	}
+
+	@Override
+	public void updateExtraMailRecipient(ExtraMailRecipient extraMailRecipient) {
+		reportDao.updateExtraMailRecipient(extraMailRecipient);
+		
+	}
+
+	@Override
+	public void deleteExtraMailRecipient(ExtraMailRecipient extraMailRecipient) {
+		reportDao.deleteExtraMailRecipient(extraMailRecipient);
+		
+	}
+
+	@Override
+	public List<ExtraMailRecipient> loadExtraMailRecipients() {
+		return reportDao.loadExtraMailRecipients();
 	}
 }

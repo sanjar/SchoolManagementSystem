@@ -120,6 +120,8 @@
 
 
 	<!-- ======== Main Content ======== -->
+	<center><H1>List Employee Master</H1></center>
+	<br/>
 	<div id="sidebar1">
 
 

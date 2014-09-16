@@ -43,7 +43,7 @@
     <p>
       <span class="hidden">Navigation:</span>
       <a href="/sms/home" class="highlight">Home</a> |
-      <a href="">Contact</a> |
+      <a href="">Contact</a> |<a href="listDepartmentMasters">List Department Master</a> |
      
     </p>
   </div>

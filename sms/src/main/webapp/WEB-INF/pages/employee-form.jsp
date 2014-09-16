@@ -236,7 +236,10 @@
 						<form:hidden id="gradeName" path="grade.gradeName"/>
 					</form:select>
 </li>
-
+<li  class="f">
+<label for="name" class="fl" >Phone No:<span style="color: red">*</span></label>
+            <form:input type="text" size="25" id="phoneNo" class="fl" path="phoneNo" />
+</li>
 <li  class="f">
 				 <button class="left" name="action" value="save">Save</button>
 				 <button class="left" name="action" value="delete">Delete</button>

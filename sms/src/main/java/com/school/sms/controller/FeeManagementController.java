@@ -2,6 +2,7 @@ package com.school.sms.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import com.school.sms.constants.Constants;
 import com.school.sms.model.DiscountsAndConcessions;
 import com.school.sms.model.FixedFeeBatchYearMonth;
 import com.school.sms.model.OtherPayments;
+import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.VariableFeeBatchYearMonth;
@@ -200,7 +202,16 @@ public class FeeManagementController {
 		}
 		
 	}
+	@RequestMapping(value = "/admin/listOtherPayments", method = RequestMethod.GET)
+	public ModelAndView listOtherPayments() {
 
+		ModelAndView modelAndView = new ModelAndView("listOtherPayments");
+		List<OtherPayments> list = feeService.loadOtherPayments();
+		modelAndView.addObject("listOtherPayments", list);
+		
+		return modelAndView;
+
+	}
 	@RequestMapping(value = "/admin/manageFixedFee**", method = RequestMethod.GET)
 	public ModelAndView manageFixedFeeStructure() {
 
@@ -215,8 +226,8 @@ public class FeeManagementController {
 			populateSessionBatchMonthLists();
 		}
 		model.addObject("sessionList", this.sessionList);
-		model.addObject("batchList", this.batchList);
-		model.addObject("monthList", this.monthList);
+		model.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
+		model.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 		// model.setViewName("fixed-fees");
 
 		return model;
@@ -291,8 +302,8 @@ public class FeeManagementController {
 			populateSessionBatchMonthLists();
 		}
 		modelAndView.addObject("sessionList", this.sessionList);
-		modelAndView.addObject("batchList", this.batchList);
-		modelAndView.addObject("monthList", this.monthList);
+		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
+		modelAndView.addObject("monthList", Arrays.asList(Constants.MONTH_ARRAY));
 	//	modelAndView.setViewName("fixed-fees");
 		
 		
@@ -323,7 +334,12 @@ public class FeeManagementController {
 			this.monthList.add(row.getMonth());
 			this.isAllSessionMonthBatchListPopulated = true;
 		}
-
+		Calendar now = Calendar.getInstance();
+	    int year = now.get(Calendar.YEAR);
+		String currentSession = String.valueOf(year)+"-" + String.valueOf(year+1);
+		if(!sessionList.contains(currentSession)){
+			sessionList.add(currentSession);
+		}
 	}
 
 	

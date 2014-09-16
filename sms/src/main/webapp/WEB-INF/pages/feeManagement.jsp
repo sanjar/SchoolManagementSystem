@@ -78,6 +78,8 @@
 
 
 	<!-- ======== Main Content ======== -->
+	<center><h1>List Fixed Fee Structure</h></center>
+	<br/>
 <div id="sidebar1" >							
 			
 				

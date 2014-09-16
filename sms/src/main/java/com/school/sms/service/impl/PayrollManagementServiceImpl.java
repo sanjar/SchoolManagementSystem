@@ -114,5 +114,10 @@ public class PayrollManagementServiceImpl implements PayrollManagementService{
 			SalaryProcessDetail salaryProcessDetail) {
 		payrollDao.updateSalaryProcessDetail(salaryProcessDetail);
 		
+	}
+
+	@Override
+	public List<SalaryProcessDetail> loadProcessedSalaries() {
+		return payrollDao.loadProcessedSalaries();
 	} 
 }

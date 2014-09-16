@@ -59,6 +59,27 @@ public class PurchaseController {
 
 	}
 	
+	@RequestMapping(value = "admin/purchase/listCustomers", method = RequestMethod.GET)
+	public ModelAndView listCustomers() {
+		List<Customer> customers = new ArrayList<Customer>();
+		customers = purchaseService.loadCustomerList();
+		ModelAndView model = new ModelAndView("listCustomers");
+		
+		model.addObject("listCustomers", customers);
+		return model;
+
+	}
+	
+	@RequestMapping(value = "admin/purchase/listProducts", method = RequestMethod.GET)
+	public ModelAndView listProducts() {
+		List<Product> products = new ArrayList<Product>();
+		products = purchaseService.loadProductList();
+		ModelAndView model = new ModelAndView("listProducts");
+		
+		model.addObject("listProducts", products);
+		return model;
+
+	}
 	
 	
 	

@@ -46,4 +46,6 @@ public interface PayrollManagementService {
 
 	public void updateSalaryProcessDetail(
 			SalaryProcessDetail salaryProcessDetail);
+
+	public List<SalaryProcessDetail> loadProcessedSalaries();
 }

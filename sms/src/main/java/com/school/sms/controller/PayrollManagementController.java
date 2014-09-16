@@ -52,6 +52,48 @@ public class PayrollManagementController {
 	
 	private Map<GradeMaster,List<String>>  gradeSalaryCodeMap;
 	
+	@RequestMapping(value = "/admin/payrollManagement/listGradeMasters", method = RequestMethod.GET)
+	public ModelAndView listStudents() {
+
+		ModelAndView modelAndView = new ModelAndView("listGradeMasters");
+		List<GradeMaster> list = payrollService.loadGradeMasterList();
+		modelAndView.addObject("gradeList", list);
+		
+		return modelAndView;
+
+	}
+	
+	@RequestMapping(value = "/admin/payrollManagement/listProcessedSalaries", method = RequestMethod.GET)
+	public ModelAndView listProcessedSalaries() {
+
+		ModelAndView modelAndView = new ModelAndView("listProcessedSalaries");
+		List<SalaryProcessDetail> list = payrollService.loadProcessedSalaries();
+		modelAndView.addObject("listProcessedSalaries", list);
+		
+		return modelAndView;
+
+	}
+	@RequestMapping(value = "/admin/payrollManagement/listDepartmentMasters", method = RequestMethod.GET)
+	public ModelAndView listDepartmentMasters() {
+
+		ModelAndView modelAndView = new ModelAndView("listDepartmentMasters");
+		List<Department> list = payrollService.loadDepartmentList();
+		modelAndView.addObject("departmentList", list);
+		
+		return modelAndView;
+
+	}
+	
+	@RequestMapping(value = "/admin/payrollManagement/listSalaryMasters", method = RequestMethod.GET)
+	public ModelAndView listSalaryMasters() {
+
+		ModelAndView modelAndView = new ModelAndView("listSalaryMasters");
+		List<SalaryMaster> list = payrollService.loadSalaryMasterList();
+		modelAndView.addObject("salaryList", list);
+		
+		return modelAndView;
+
+	}
 	@RequestMapping(value = "admin/payrollManagement", method = RequestMethod.GET)
 	public ModelAndView userManagement() {
 
@@ -164,6 +206,7 @@ public class PayrollManagementController {
 		else if("save".equalsIgnoreCase(action)) {
 			if (null != employeeMaster.getEmployeeId()
 					&& !employeeMaster.getEmployeeName().isEmpty()
+					&& !employeeMaster.getPhoneNo().isEmpty()
 					&& !employeeMaster.getGrade().getGradeId().equals("-1") 
 					&& !employeeMaster.getDepartment().getDepartmentId().equals("-1") 
 					&& !employeeMaster.getSalaryCode().equals("-1")) {

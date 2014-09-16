@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="">Home</a> | <a href="">Contact</a> |
+				<span class="hidden">Navigation:</span> <a href="/sms/home">Home</a> | <a href="">Contact</a> | <a href="addExtraMailRecipient">Add Extra Mail Recipient </a> | <a href="listExtraMailRecipients">List Extra Mail Recipients </a> |
 
 			</p>
 		</div>

@@ -15,11 +15,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.school.sms.constants.Constants;
+import com.school.sms.model.EmployeeMaster;
+import com.school.sms.model.ExtraMailRecipient;
 import com.school.sms.model.OtherPayments;
 import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.SalesReceipt;
@@ -27,6 +31,7 @@ import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.TransportRoutePickUp;
 import com.school.sms.service.FeeManagementService;
+import com.school.sms.service.PayrollManagementService;
 import com.school.sms.service.PurchaseService;
 import com.school.sms.service.ReportService;
 import com.school.sms.service.TransportManagementService;
@@ -52,6 +57,58 @@ public class ReportGenerationController {
 	@Resource(name = "purchaseService")
 	private PurchaseService purchaseService;
 	
+	@Resource(name = "payrollManagementService")
+	private PayrollManagementService payrollService;
+	
+	@RequestMapping(value = "/admin/addExtraMailRecipient", method = RequestMethod.GET)
+	public ModelAndView addExtraMailRecipient(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView("addExtraMailRecipient","command",new ExtraMailRecipient());
+		model.addObject("mailTypeList", Arrays.asList(Constants.MAIL_TYPE));
+		return model;
+
+	}
+	@RequestMapping(value = "/admin/addExtraMailRecipient", method = RequestMethod.POST)
+	public ModelAndView processSalesReceipt(@ModelAttribute("extraMailRecipient")ExtraMailRecipient extraMailRecipient,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView modelAndView=new ModelAndView("addExtraMailRecipient","command",extraMailRecipient);
+		
+		/*if("search".equalsIgnoreCase(action)){
+			SalesReceipt receipt= purchaseService.findSalesReceipt(Integer.valueOf(request.getParameter("challanNo")));
+			if(null==receipt){
+				modelAndView = new ModelAndView("sales_receipt","command",salesReceipt);
+				modelAndView.addObject("noSalesReceiptFound",true);
+				
+			}
+			else{
+			modelAndView = new ModelAndView("sales_receipt","command",receipt);
+			}
+						
+		}*/
+		if("save".equalsIgnoreCase(action)) {
+			if (null != extraMailRecipient.getName() && !extraMailRecipient.getName().isEmpty()) {
+				reportService.updateExtraMailRecipient(extraMailRecipient);
+				modelAndView = new ModelAndView("addExtraMailRecipient","command",extraMailRecipient);
+				modelAndView.addObject("addExtraMailRecipientSaved",true);
+			}
+			else{
+				modelAndView = new ModelAndView("addExtraMailRecipient","command",extraMailRecipient);
+				modelAndView.addObject("isFormIncomplete",true);
+			}
+		}
+		
+		else if("delete".equalsIgnoreCase(action)) {
+			reportService.deleteExtraMailRecipient(extraMailRecipient);
+			modelAndView = new ModelAndView("addExtraMailRecipient","command",new ExtraMailRecipient());
+			modelAndView.addObject("addExtraMailRecipientDeleted",true);
+		}
+	
+		else if("new".equalsIgnoreCase(action)) {
+			modelAndView = new ModelAndView("addExtraMailRecipient","command",new ExtraMailRecipient());
+		}
+		modelAndView.addObject("mailTypeList", Arrays.asList(Constants.MAIL_TYPE));
+		return modelAndView;
+	}
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.GET)
 	public ModelAndView generateReport(HttpServletRequest request) {
 
@@ -84,8 +141,15 @@ public class ReportGenerationController {
 		
 	}
 
+	@RequestMapping(value = "/admin/generateReport/send", method = RequestMethod.POST)
+	public ModelAndView send(HttpServletRequest request,@RequestParam(value = "action",required = false) String action,@RequestParam(value = "extra", required = false) String[] extra) throws ParseException {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("sms_sent_success");
+		return model;
+	}
+	
 	@RequestMapping(value = "/admin/generateReport**", method = RequestMethod.POST)
-	public ModelAndView processReport(HttpServletRequest request) throws ParseException {
+	public ModelAndView processReport(HttpServletRequest request,@RequestParam(value = "action",required = false) String action) throws ParseException {
 		ModelAndView model = new ModelAndView();
 		if(request.getParameter("action").equalsIgnoreCase("view")){
 	        if("feeCollectionRequest".equalsIgnoreCase(request.getParameter("feeCollectionRequest"))){
@@ -169,12 +233,20 @@ public class ReportGenerationController {
 	        	//model.addObject("totalOtherPaymentsAmount", totalOtherPaymentsAmount);
 	        }
 	        
+	        
 		}
       /*  request.getParameter("session");
         request.getParameter("batch");
         request.getParameter("month");*/
         
-        
+		else if("sendSMS".equalsIgnoreCase(action)){
+        	List<EmployeeMaster> employeeMasters = payrollService.loadEmployeeMasterList();
+        	List<ExtraMailRecipient> mailRecipients = reportService.loadExtraMailRecipients();
+        	model.addObject("employeeList", employeeMasters);
+        	model.addObject("extraList", mailRecipients);
+        	model.setViewName("send_sms_page");
+        	return model;
+        }
 		
 		
 

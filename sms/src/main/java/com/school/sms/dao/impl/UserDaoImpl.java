@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,5 +89,17 @@ public class UserDaoImpl implements UserDao {
 	  roles.setUserId(userId);
 	  entityManager.merge(roles);
 	  entityManager.flush();
+	}
+
+	@Override
+	public List<Student> loadStudents() {
+		Query query = entityManager.createQuery("FROM Student s where s.status=1");
+		return query.getResultList();
+	}
+
+	@Override
+	public List<UserAuthenticationDetails> loadAdminUsers() {
+		Query query = entityManager.createQuery("FROM UserAuthenticationDetails s where s.userType='ADMIN'");
+		return query.getResultList();
 	}
 }

@@ -1,5 +1,7 @@
 package com.school.sms.controller;
 
+import java.util.Calendar;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -39,11 +41,15 @@ public class LoginController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public View homePage(HttpServletRequest request) {
 		String userType = (String) request.getSession().getAttribute("userType");
-		
+		Calendar now = Calendar.getInstance();
+		int year = now.get(Calendar.YEAR);
+		String currentSession = String.valueOf(year)+"-" + String.valueOf(year+1);
 		if("Admin".equalsIgnoreCase(userType)){
+			request.getSession().setAttribute("currentSavedSession",currentSession);
 			return new RedirectView("/sms/admin");
 		}
 		if("User".equalsIgnoreCase(userType)){
+			request.getSession().setAttribute("currentSavedSession",currentSession);
 			return new RedirectView("/sms/user");
 		}
 		return new RedirectView("/sms/login");

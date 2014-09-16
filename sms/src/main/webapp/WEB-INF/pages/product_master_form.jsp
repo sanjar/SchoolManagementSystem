@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Purchase</title>
+<title>Product Master Form</title>
 <link rel="StyleSheet"
 	href="<c:url value='/resources/css/main-screen.css' />" type="text/css"
 	media="screen" />
@@ -62,7 +62,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				| <a href="">Contact</a> |
+				| <a href="">Contact</a> | <a id="listProducts" href="listProducts">List Products</a> 
 
 			</p>
 		</div>

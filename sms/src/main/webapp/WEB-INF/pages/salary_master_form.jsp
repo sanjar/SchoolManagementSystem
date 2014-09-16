@@ -71,7 +71,7 @@
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				| <a href="">Contact</a> |
+				| <a href="">Contact</a> | <a href="listSalaryMasters">List Salary Master</a> |
 
 			</p>
 		</div>
@@ -102,7 +102,7 @@
 						<form:options items="${gradeList}" itemLabel="gradeName" itemValue="gradeId"/>
 						<form:input id="gradeName" type="hidden" path="grade.gradeName"/>
 					</form:select></li>
-				<li class="f"><label for="name" class="fl">Salary Id<span style="color: red">*</span> </label>
+				<li class="f"><label for="name" class="fl">Salary Code<span style="color: red">*</span> </label>
 					<form:input type="text" size="25" id="salaryId" class="fl" path="salaryId" />
 					<button class="left" name="action" value="search" style="margin-left: 30px">Search</button>
 					<c:if test="${noSalaryMasterFound}">

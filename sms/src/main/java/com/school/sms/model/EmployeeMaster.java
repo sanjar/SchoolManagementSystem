@@ -61,6 +61,8 @@ public class EmployeeMaster {
 	@JoinColumn(name = "grade_id")
 	private GradeMaster grade;
 	
+	@Column(name="phone_no")
+	private String phoneNo;
 	
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -153,6 +155,12 @@ public class EmployeeMaster {
 	}
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 	
 }

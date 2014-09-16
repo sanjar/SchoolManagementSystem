@@ -49,6 +49,71 @@ public class UserManagementController {
 		return modelAndView;
 
 	}
+	@RequestMapping(value = "/admin/userManagement/listAdminUsers", method = RequestMethod.GET)
+	public ModelAndView listAdminUsers() {
+
+		ModelAndView modelAndView = new ModelAndView("listAdminUsers");
+		List<UserAuthenticationDetails> list = userManagementService.loadAdminUsers();
+		modelAndView.addObject("adminUsersList", list);
+		
+		return modelAndView;
+
+	}
+	@RequestMapping(value = "/admin/userManagement/listStudents", method = RequestMethod.GET)
+	public ModelAndView listStudents() {
+
+		ModelAndView modelAndView = new ModelAndView("listStudents");
+		modelAndView.addObject("classList", Arrays.asList(Constants.BATCH_ARRAY));
+		
+		return modelAndView;
+
+	}
+	
+	@RequestMapping(value = "/admin/userManagement/listStudents", method = RequestMethod.POST)
+	public ModelAndView listStudents(@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		List<Student> requestedList = new ArrayList<Student>();
+		if(action.equalsIgnoreCase("listStudents")){
+		String cl = request.getParameter("class");
+		String section = request.getParameter("section");
+		String roll = request.getParameter("roll");
+		List<Student> list = userManagementService.loadStudents();
+		requestedList   = getStudentsList(cl,section,roll,list);
+		}
+		ModelAndView modelAndView = new ModelAndView("listStudents");
+		modelAndView.addObject("classList", Arrays.asList(Constants.BATCH_ARRAY));
+		modelAndView.addObject("studentList", requestedList);
+		
+		return modelAndView;
+
+	}
+	private List<Student> getStudentsList(String cl, String section,
+			String roll, List<Student> list) {
+		List<Student> list2 = new ArrayList<Student>();
+		for(Student student : list){
+			if(student.getCurrentClassBatch().equalsIgnoreCase(cl)){
+				
+				if(section !=null && !section.isEmpty()){
+					if(section.equalsIgnoreCase(student.getCurrentClassSection())){
+						
+					if(roll !=null && !roll.isEmpty()){
+						if(roll.equalsIgnoreCase(String.valueOf(student.getRoll()))){
+							list2.add(student);
+						}
+					}
+						else{
+							list2.add(student);
+						}
+		
+				}
+				}
+				else{
+					list2.add(student);
+				}
+			}
+		}
+		return list2;
+	}
+
 	@RequestMapping(value = "/admin/userManagement/manageStudent", method = RequestMethod.POST)
 	public ModelAndView manageStudent(@ModelAttribute("student")Student student,
 			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {

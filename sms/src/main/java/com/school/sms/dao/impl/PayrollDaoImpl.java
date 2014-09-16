@@ -158,4 +158,10 @@ public class PayrollDaoImpl implements PayrollDao{
 		
 	}
 
+	@Override
+	public List<SalaryProcessDetail> loadProcessedSalaries() {
+		Query query = entityManager.createQuery("FROM SalaryProcessDetail s order by s.salaryProcessId ASC");
+		return query.getResultList();
+	}
+
 }
