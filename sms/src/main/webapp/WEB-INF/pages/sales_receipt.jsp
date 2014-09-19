@@ -67,7 +67,7 @@
     <p>
       <span class="hidden">Navigation:</span>
       <a href="/sms/home" class="highlight">Home</a> |
-      <a href="">Contact</a> |
+      <a href="">Contact</a> | <a id="listStudents" class="link" href="/sms/admin/userManagement/listStudents" target="_blank">List Students</a>
      
     </p>
   </div>

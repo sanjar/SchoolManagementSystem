@@ -36,6 +36,7 @@ public class UserManagementController {
 		ModelAndView modelAndView = new ModelAndView("manageStudent", "command",
 				new Student());
 		modelAndView.addObject("batchList", Arrays.asList(Constants.BATCH_ARRAY));
+		modelAndView.addObject("sectionList", Arrays.asList(Constants.CLASS_SECTIONS));
 		return modelAndView;
 
 	}
@@ -64,6 +65,7 @@ public class UserManagementController {
 
 		ModelAndView modelAndView = new ModelAndView("listStudents");
 		modelAndView.addObject("classList", Arrays.asList(Constants.BATCH_ARRAY));
+		modelAndView.addObject("sectionList", Arrays.asList(Constants.CLASS_SECTIONS));
 		
 		return modelAndView;
 

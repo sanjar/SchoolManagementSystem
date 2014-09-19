@@ -83,8 +83,12 @@
 						</c:forEach>
 					</select>
 					
-					<label for="name" class="fl" style="margin-top:8px;width: 60px">Section </label> <input
-					type="text" size="25" id="section" name="section" class="fl"/>
+					<label for="name" class="fl" style="margin-top:8px;width: 60px">Section </label> 
+					<select class="fl" name="class">
+						<c:forEach items="${sectionList}" var="x">
+						<option value="${x}">${x}</option>
+						</c:forEach>
+					</select>
 					
 					<label for="name" class="fl" style="margin-top:8px;width: 60px;margin-left: 40px">Roll </label> <input
 					type="text" size="25" id="roll" name= "roll" class="fl" />

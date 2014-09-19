@@ -180,7 +180,7 @@ $(document).ready(function(){
 				
 				
 						<form:select path="currentClassBatch" cssStyle="width:200px" >
-						<c:forEach items="${batchList}" var="batch" varStatus="loop">
+						<%-- <c:forEach items="${batchList}" var="batch" varStatus="loop">
 						
 							<c:choose>
 							<c:when test="${batch==command.currentClassBatch}">
@@ -194,7 +194,7 @@ $(document).ready(function(){
 
 
 
-						</c:forEach>
+						</c:forEach> --%>
 						
 						
 						
@@ -204,8 +204,13 @@ $(document).ready(function(){
 				<li class="f"><label for="name" class="fl">Email Id </label> 
 						<form:input type="text" size="25" id="emailId" class="fl" path="emailId" cssStyle="margin-right: 10px;"/> 
 				</li>
-				<li class="f"><label for="name" class="fl">Section <span style="color: red">*</span></label> 
-						<form:input type="text" size="25" id="currentClassSection" class="fl" path="currentClassSection" cssStyle="margin-right: 10px;"/> 
+				<li class="f"><label for="name" class="fl">Section <span style="color: red">*</span></label>
+				
+					<form:select path="currentClassSection" cssStyle="width:200px" >
+						<form:options items="${sectionList}"/>
+					</form:select>
+				
+						<%-- <form:input type="text" size="25" id="currentClassSection" class="fl" path="currentClassSection" cssStyle="margin-right: 10px;"/> --%> 
 				</li>
 				
 				<li class="f"><label for="name" class="fl">Roll </label> 
