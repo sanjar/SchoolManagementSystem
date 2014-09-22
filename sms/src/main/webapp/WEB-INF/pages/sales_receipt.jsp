@@ -50,6 +50,62 @@
     	if('${disablePrevious}'){
     		$('#previousButton').attr('disabled','disabled');
     	} */
+    	
+    	$( "#customerType" ).change(function() {
+    		 var str = "";
+    		 $( "#customerCode" ).val("");
+    		 //alert("pppppppppppp");
+    		 if($(  "#customerType").val()=='STUDENT'){
+    			//// alert("pppppppppppp");
+				 $("#studentEnrolCode").show();
+				 $("#custCode").hide();
+			 }
+			 else{
+				// alert("else");
+				 $("#custCode").show();
+				 $("#studentEnrolCode").hide();
+			 }
+    		 
+    		     		});
+    	 if($(  "#customerType").val()=='STUDENT'){
+ 			//// alert("pppppppppppp");
+				 $("#studentEnrolCode").show();
+				 $("#custCode").hide();
+			 }
+			 else{
+				// alert("else");
+				 $("#custCode").show();
+				 $("#studentEnrolCode").hide();
+			 }
+    	 
+    	 $( "#customerCode" ).change(function() {
+    		 //var list = ${customerList};
+    		// var size = ${customerList.size()};
+    		
+    		var map;
+    		var cutomerType="";
+    		 if($(  "#customerType").val()=='STUDENT'){
+    			 var map = ${studentIdMap};
+    			 cutomerType="Student";
+    		 }
+    		 else{
+    			 var map = ${customerIdMap};
+    			 cutomerType="Customer";
+    		 }
+    		 var isFound = false;
+			 $.each(map, function (key, value) {
+				 if($( "#customerCode" ).val()==key){
+					 $("#customerName").val(value);
+					 isFound=true;
+					 //break;
+				 }
+
+			 });
+			 if(!isFound){
+				 $("#customerName").val("");
+				 alert(cutomerType +" does not exists");
+			 }
+    	 });
     });
     
     </script>
@@ -111,10 +167,10 @@
 				
         <li class="f">
         
-        	<label for="name" class="fl">Challan No. </label>
+        	<label for="name" class="fl">Challan No. <span style="color: red">*</span></label>
             <form:input type="text" size="20" id="challanNo" class="fl" path="challanNo" readonly="false"/>
            
-            <label for="name" class="fl" style="margin-left: 53px">Date </label>
+            <label for="name" class="fl" style="margin-left: 68px">Date <span style="color: red">*</span></label>
             <form:input type="text" size="20" id="challanDate"  class="fl" path="challanDate"/>
             
             <label for="name" class="fl" style="margin-left: 53px">Invoice No. </label>
@@ -122,18 +178,25 @@
             
 </li>
         <li  class="f">
-        
-            <label for="name" class="fl">Customer Name </label>
-            <form:input type="text" size="20" id="customerName"  class="fl" path="customerName"/>
-            <label for="name" class="fl" style="margin-left: 53px">Customer Code </label>
+        	<label for="name" class="fl" style="width: 120px">Customer Type<span style="color: red">*</span> </label>
+            <form:select id="customerType" path="customerType" >
+            	<form:options items="${customerTypeList}" />
+            </form:select>
+            	<label for="name" class="fl" style="" id="studentEnrolCode" hidden="true">Enrolement No<span style="color: red">*</span></label>
+            	<label for="name" class="fl" id="custCode" hidden="true">Customer Code<span style="color: red">*</span> </label>
             <form:input type="text" size="20" id="customerCode"  class="fl" path="customerCode"/>
-             <label for="name" class="fl" style="margin-left: 53px">Sale Type </label>
+            <label for="name" class="fl" style="margin-left: 53px">Name <span style="color: red">*</span></label>
+            <form:input type="text" size="20" id="customerName"  class="fl" path="customerName" readonly='true'/>
+            
+             
+        </li>
+        	
+		<li class="f">
+		<label for="name" class="fl" style="width: 120px">Sale Type </label>
             <form:select id="saleType" path="saleType" >
             	<form:options items="${saleTypeList}" />
             </form:select>
-        </li>
-        	
-
+		</li>
  
 
 <li  class="f">
@@ -144,10 +207,7 @@
 				 <button class="left" name="exit" value="exit" onclick="window.close(); return false;">Exit</button>
 				 <button class="left" name="action" value="search">Search</button>
 				 <button class="left" name="action" value="calculate">Calculate Now</button>
-				 <!-- <button id="nextButton" class="left" name="action" value="next">Next</button>
-				 <button id="previousButton" class="left" name="action" value="previous">Previous</button>
-				 <button class="left" name="action" value="last">Last</button>
-				 <button class="left" name="action" value="first">First</button> -->
+				 
 				</li>
 
 </ul>

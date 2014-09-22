@@ -343,7 +343,7 @@ public class PurchaseController {
 		}
 		else if("calculate".equalsIgnoreCase(action)) {
 			calculateAmount(purchaseReceipt);
-			modelAndView = new ModelAndView("sales_receipt","command",purchaseReceipt);
+			modelAndView = new ModelAndView("purchase_receipt","command",purchaseReceipt);
 		}
 		
 	   modelAndView.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));

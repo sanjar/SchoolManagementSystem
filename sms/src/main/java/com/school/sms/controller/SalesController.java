@@ -2,7 +2,9 @@ package com.school.sms.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +17,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.school.sms.constants.Constants;
+import com.school.sms.model.Customer;
 import com.school.sms.model.PurchaseReceipt;
 import com.school.sms.model.PurchaseReceiptItem;
 import com.school.sms.model.SalesReceipt;
 import com.school.sms.model.SalesReceiptItem;
+import com.school.sms.model.Student;
 import com.school.sms.service.PurchaseService;
+import com.school.sms.service.UserManagementService;
+
+import org.json.JSONObject;
 
 @Controller
 public class SalesController {
 
 	@Resource(name = "purchaseService")
 	private PurchaseService purchaseService;
+	
+	@Resource(name = "userManagementService")
+	private UserManagementService userManagementService;
 	
 	@RequestMapping(value = "admin/purchase/salesReceiptList", method = RequestMethod.GET)
 	public ModelAndView purchase() {
@@ -47,9 +57,34 @@ public class SalesController {
 		salesReceipt.setChallanNo(purchaseService.getcurrentChallanNo()+1);
 		ModelAndView model = new ModelAndView("sales_receipt","command",salesReceipt);
 		model.addObject("saleTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
+		model.addObject("customerTypeList", Arrays.asList(Constants.SUPPLIER_CUSTOMER_TYPE));
+		List<Student> students =  userManagementService.loadStudents();
+		model.addObject("studentList", students);
+		List<Customer> customers = purchaseService.loadCustomerList();
+		model.addObject("customerList", customers);
+		model.addObject("customerIdMap", getCustomerIdMap(customers));
+		model.addObject("studentIdMap", getStudentIdMap(students));
 		return model;
 
 	}
+
+	private JSONObject getStudentIdMap(List<Student> students) {
+		JSONObject map = new JSONObject();
+		for(Student s : students){
+			map.put(String.valueOf(s.getEnrolementNo()), s.getFirstName()+" "+s.getMiddleName() + " "+s.getLastName());
+		}
+		return map;
+	}
+
+
+	private JSONObject getCustomerIdMap(List<Customer> customers) {
+		JSONObject map = new JSONObject();
+		for(Customer c : customers){
+			map.put(String.valueOf(c.getCustomerCode()), c.getCustomerName());
+		}
+		return map;
+	}
+
 
 	@RequestMapping(value = "/admin/purchase/processSalesReceipt", method = RequestMethod.POST)
 	public ModelAndView processSalesReceipt(@ModelAttribute("salesReceipt")SalesReceipt salesReceipt,
@@ -71,7 +106,7 @@ public class SalesController {
 						
 		}
 		else if("save".equalsIgnoreCase(action)) {
-			if (null != salesReceipt.getChallanNo() && !salesReceipt.getChallanDate().isEmpty()) {
+			if (null != salesReceipt.getChallanNo() && !salesReceipt.getChallanDate().isEmpty() && null!=salesReceipt.getCustomerCode() && !salesReceipt.getCustomerName().isEmpty()) {
 				gatherAddedItems(salesReceipt);
 				calculateAmount(salesReceipt);
 				purchaseService.updateSalesReceipt(salesReceipt);
@@ -79,7 +114,7 @@ public class SalesController {
 				modelAndView.addObject("salesReceiptSaved",true);
 			}
 			else{
-				modelAndView = new ModelAndView("","command",salesReceipt);
+				modelAndView = new ModelAndView("sales_receipt","command",salesReceipt);
 				modelAndView.addObject("isFormIncomplete",true);
 			}
 		}
@@ -94,6 +129,13 @@ public class SalesController {
 		}
 	   modelAndView.addObject("yesNoList", Arrays.asList(Constants.YES_NO_ARRAY));
 	   modelAndView.addObject("saleTypeList", Arrays.asList(Constants.PURCHASE_TYPE_ARRAY));
+	   modelAndView.addObject("customerTypeList", Arrays.asList(Constants.SUPPLIER_CUSTOMER_TYPE));
+	   List<Student> students =  userManagementService.loadStudents();
+	   modelAndView.addObject("studentList", students);
+		List<Customer> customers = purchaseService.loadCustomerList();
+		modelAndView.addObject("customerList", customers);
+		
+		modelAndView.addObject("customerIdMap", getCustomerIdMap(customers));
 		return modelAndView;
 	}
 	

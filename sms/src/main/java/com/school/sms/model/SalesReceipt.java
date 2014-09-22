@@ -28,6 +28,11 @@ public class SalesReceipt {
 	@Column(name="challan_date")
 	private String challanDate;
 	
+	@Column(name="customer_type")
+	private String customerType;
+	
+	
+	
 	@Column(name="customer_code")
 	private Integer customerCode;
 	
@@ -176,6 +181,14 @@ public class SalesReceipt {
 
 	public void setNetValue(Double netValue) {
 		this.netValue = netValue;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 	
 	
