@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.school.sms.dao.ReportDao;
 import com.school.sms.model.Customer;
 import com.school.sms.model.ExtraMailRecipient;
+import com.school.sms.model.SendCustomSMS;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 
@@ -56,6 +57,18 @@ private EntityManager entityManager;
 	@Override
 	public List<ExtraMailRecipient> loadExtraMailRecipients() {
 		Query query = entityManager.createQuery("FROM ExtraMailRecipient s order by s.extraRecipientId ASC");
+		return query.getResultList();
+	}
+
+	@Override
+	public void sendCustomSMS(SendCustomSMS sendCustomSMS) {
+		entityManager.merge(sendCustomSMS);
+		entityManager.flush();
+	}
+
+	@Override
+	public List<SendCustomSMS> loadSentMessages() {
+		Query query = entityManager.createQuery("FROM SendCustomSMS s order by s.customSMSId ASC");
 		return query.getResultList();
 	}
 

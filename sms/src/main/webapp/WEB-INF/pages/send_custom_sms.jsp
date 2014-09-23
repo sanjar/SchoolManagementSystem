@@ -40,25 +40,20 @@ $(document).ready(function(){
          buttonImageOnly: true
      });
 	 
-	 $("#otherPayments").validate({
+	 $("#sendCustomSMS").validate({
 			rules: {
 				/* enrolementNo:"required", */
-				name:"required",
+				
 				mobileNo:"required",
-				address:"required",
-				purpose:"required",
-				paymentAmount:"required",
-				paymentDate:"required"
+				smsContent:"required",
+				date:"required"
 				
 			},
 			messages: {
 				/* enrolementNo:"Enter Enrolement No.", */
-				name:"Enter Name.",
 				mobileNo:"Enter Mobile No.",
-				address:"Enter Address.",
-				purpose:"Enter Purpose of Payment.",
-				paymentAmount:"Enter Amount Paid.",
-				paymentDate:"Enter Payment Date."
+				smsContent:"Enter SMS Content.",
+				date:"Enter Date."
 				
 			}
 			
@@ -82,7 +77,7 @@ $(document).ready(function(){
 		<div class="subheader">
 			<p>
 				<span class="hidden">Navigation:</span> <a href="/sms/home" class="highlight">Home</a>
-				| <a href="">Contact</a> | 
+				| <a href="">Contact</a> | <a href="listSentMessages">List Sent Messages(SMS)</a> | 
 
 			</p>
 		</div>
@@ -97,11 +92,11 @@ $(document).ready(function(){
 				<li class="f">
 					<h3 class="back">Send Custom SMS</h3>
 				</li>
-				<%-- <c:if test="${noOtherPaymentFound}">
-						<span style="color: red">Atleast Receipt, Mobile No or Name is required for Search.</span>
-				</c:if> --%>
+				
 				<c:if test="${smsSent}">
+				<li class="f">
 						<label style="color: green">SMS Sent!!!</label>
+						</li>
 					</c:if> 
 				<li class="f"><label for="name" class="fl">Mobile No</label> 
 				<form:input	type="text" size="25" id="mobileNo" class="fl" path="mobileNo" cssStyle="margin-right: 10px;"/> 

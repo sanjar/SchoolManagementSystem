@@ -23,9 +23,7 @@
 	type="text/javascript" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script> --%>
- <script>
-        history.forward();
-    </script>
+ 
 <script type="text/javascript">
 
 
@@ -114,7 +112,7 @@ $(document).ready(function(){
 
 		<div class="subheader">
 			<p>
-				<span class="hidden">Navigation:</span> <a href="/sms/home">Home</a> | <a href="">Contact</a> | <a href="addExtraMailRecipient">Add Extra Mail Recipient </a> | <a href="listExtraMailRecipients">List Extra Mail Recipients </a> |
+				<span class="hidden">Navigation:</span> <a href="/sms/home">Home</a> | <a href="">Contact</a> | <a href="addExtraMailRecipient">Add Extra Mail Recipient </a> | <a href="listExtraMailRecipients">List Extra Mail Recipients </a> |<a href="sendCustomSMS">Send Custom SMS </a> |
 
 			</p>
 		</div>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.school.sms.dao.ReportDao;
 import com.school.sms.model.ExtraMailRecipient;
+import com.school.sms.model.SendCustomSMS;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.service.ReportService;
@@ -45,5 +46,16 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public List<ExtraMailRecipient> loadExtraMailRecipients() {
 		return reportDao.loadExtraMailRecipients();
+	}
+
+	@Override
+	public void sendCustomSMS(SendCustomSMS sendCustomSMS) {
+		reportDao.sendCustomSMS(sendCustomSMS);
+		
+	}
+
+	@Override
+	public List<SendCustomSMS> loadSentMessages() {
+		return reportDao.loadSentMessages();
 	}
 }

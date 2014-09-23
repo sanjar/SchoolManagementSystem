@@ -26,7 +26,9 @@ import com.school.sms.model.EmployeeMaster;
 import com.school.sms.model.ExtraMailRecipient;
 import com.school.sms.model.OtherPayments;
 import com.school.sms.model.PurchaseReceipt;
+import com.school.sms.model.SalaryProcessDetail;
 import com.school.sms.model.SalesReceipt;
+import com.school.sms.model.SendCustomSMS;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 import com.school.sms.model.TransportRoutePickUp;
@@ -59,6 +61,39 @@ public class ReportGenerationController {
 	
 	@Resource(name = "payrollManagementService")
 	private PayrollManagementService payrollService;
+	
+	@RequestMapping(value = "/admin/sendCustomSMS", method = RequestMethod.GET)
+	public ModelAndView sendCustomSMSForm(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView("send_custom_sms","command",new SendCustomSMS());
+	//	model.addObject("mailTypeList", Arrays.asList(Constants.MAIL_TYPE));
+		return model;
+
+	}
+	@RequestMapping(value = "/admin/listSentMessages", method = RequestMethod.GET)
+	public ModelAndView listSentMessages(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView("listSentMessages");
+		List<SendCustomSMS> customSMSs = reportService.loadSentMessages();
+		model.addObject("listSentMessages", customSMSs);
+		return model;
+
+	}
+	@RequestMapping(value = "/admin/sendCustomSMS", method = RequestMethod.POST)
+	public ModelAndView sendCustomSMS(@ModelAttribute("sendCustomSMS")SendCustomSMS sendCustomSMS,
+			@RequestParam(value = "action",required = false) String action,HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("send_custom_sms","command",new SendCustomSMS());
+		
+		if("send".equalsIgnoreCase(action)) {
+			reportService.sendCustomSMS(sendCustomSMS);
+			modelAndView.addObject("smsSent",true);
+			}
+			else{
+				modelAndView = new ModelAndView("send_custom_sms","command",new SendCustomSMS());
+			}
+		return modelAndView;
+	}
+
 	
 	@RequestMapping(value = "/admin/addExtraMailRecipient", method = RequestMethod.GET)
 	public ModelAndView addExtraMailRecipient(HttpServletRequest request) {

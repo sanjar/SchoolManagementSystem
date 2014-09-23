@@ -3,6 +3,7 @@ package com.school.sms.service;
 import java.util.List;
 
 import com.school.sms.model.ExtraMailRecipient;
+import com.school.sms.model.SendCustomSMS;
 import com.school.sms.model.Student;
 import com.school.sms.model.StudentFeeDetails;
 
@@ -17,5 +18,9 @@ public interface ReportService {
 	void deleteExtraMailRecipient(ExtraMailRecipient extraMailRecipient);
 
 	List<ExtraMailRecipient> loadExtraMailRecipients();
+
+	void sendCustomSMS(SendCustomSMS sendCustomSMS);
+
+	List<SendCustomSMS> loadSentMessages();
 
 }
